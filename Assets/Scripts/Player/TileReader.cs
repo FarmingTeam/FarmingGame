@@ -22,10 +22,10 @@ public class TileReader : MonoBehaviour
         Vector3Int c = CurrentCell;
         var neartiles = new Vector3Int[]
         {
-            new Vector3Int(0, 1, 0),
-            new Vector3Int(0, -1, 0),
-            new Vector3Int(-1, 0, 0),
-            new Vector3Int(1, 0, 0)
+            new Vector3Int(0, 1),
+            new Vector3Int(0, -1),
+            new Vector3Int(-1, 0),
+            new Vector3Int(1, 0)
         };
 
         foreach (var off in neartiles)
@@ -38,5 +38,14 @@ public class TileReader : MonoBehaviour
         return null;
     }
 
-    // 현재 좌표 타일맵에서 끌어오는 역할
+    private void Start()
+    {
+        InvokeRepeating(nameof(LogPosition), 0.5f, 0.5f);
+    }
+
+    private void LogPosition()
+    {
+        Debug.Log($"{CurrentCell}");
+    }
+
 }

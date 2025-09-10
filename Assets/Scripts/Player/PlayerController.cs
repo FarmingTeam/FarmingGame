@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     Vector2 moveInput;
 
+
     private void Update()
     {
 
