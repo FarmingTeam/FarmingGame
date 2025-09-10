@@ -12,13 +12,14 @@ public enum ItemType
 }
 
 [Serializable]
-public class ItemData: ScriptableObject
+public class ItemData:ScriptableObject
 {
     public int itemID;
     public string itemName;
     public string itemDescription;
     public string itemPath;
     public ItemType itemType;
+    public Sprite itemIcon;
 
     public ItemData(int itemID, string itemName, string itemDescription, string itemPath, string itemType)
     {
