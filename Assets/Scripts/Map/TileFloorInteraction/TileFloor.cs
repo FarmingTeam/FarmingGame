@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[System.Serializable]
 public enum FloorInteractionType
 {
     None = 0,
     Dirt,
     WetDirt,
-    Water,
-    Tree,
-    Rock
+    Water
 }
 
 //레이어 1번

@@ -8,12 +8,29 @@ using UnityEngine.Tilemaps;
 //레이어 1번, 2번에 대한 정보 저장용
 public class TileControl : Singleton<TileControl>
 {
-    [SerializeField] public TileFloor[] tileStates;
+    [SerializeField] public TileFloor[] tileFloors;
     [SerializeField] public TileObject[] tileObjects;
+
+    readonly public Dictionary<FloorInteractionType, TileFloorInteraction> FLOORACTIONPAIR = new Dictionary<FloorInteractionType, TileFloorInteraction>
+    {
+        { FloorInteractionType.None, new GrassTileBehaviour()},
+        { FloorInteractionType.Dirt, new DirtTileBehaviour()},
+        { FloorInteractionType.WetDirt, new WetDirtTileBehaviour()},
+        { FloorInteractionType.Water, new WaterTileBehaviour()}
+    };
+
+    readonly public Dictionary<ObjectInteractionType, TileObjectInteraction> OBJECTACTIONPAIR = new Dictionary<ObjectInteractionType, TileObjectInteraction>
+    {
+        { ObjectInteractionType.None, null},
+        { ObjectInteractionType.Tree, new TreeTileBehaviour()},
+        { ObjectInteractionType.Rock, new RockTileBehaviour()}
+
+    };
+
 
     public TileFloor GetTileFloorByType(FloorInteractionType type)
     {
-        TileFloor result = tileStates.First(state => state.floorType == type);
+        TileFloor result = tileFloors.First(state => state.floorType == type);
         return result;
     }
 

@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Interaction
+  - Map
   - 
   - 
   - 
@@ -41,9 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Interaction
+  - name: Map
     uniqueID: 74583783
-    locked: 0
-  - name: Ground
-    uniqueID: 3122787483
     locked: 0
