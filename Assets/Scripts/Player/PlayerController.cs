@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [Header("Common")]
     public float moveSpeed = 2f; // 플레이어 이동속도
 
-    public Rigidbody2D rigidbody;
+    public new Rigidbody2D rigidbody;
 
     Vector2 moveInput;
 
