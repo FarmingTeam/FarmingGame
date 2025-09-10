@@ -1,32 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public List<ItemData> itemdatalist = new List<ItemData>();
+    public List<Item> playerInventoryList = new List<Item>();
 
-    
+    [SerializeField] UIInventory uiInventory;
+    [SerializeField] Button carrotbutton;
+    [SerializeField] Button pumpkinButton;
+    public int InventoryMaxNum { get; } = 10;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        carrotbutton.onClick.AddListener(() => AdditemsByID(1));
+        pumpkinButton.onClick.AddListener(() => AdditemsByID(2));
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public Item CreateRuntimeItemData(ItemData itemData)
     {
-     
+        return new Item(itemData);
     }
 
-    public void Additems()
-        
+    public void AdditemsByID(int itemID)     
     {
-        ItemData itemData = ResourceManager.Instance.GetItem(1);
-        ItemData itemData1 = ResourceManager.Instance.GetItem(2);
-
-        itemdatalist.Add(itemData);
-        itemdatalist.Add(itemData1);
+        ItemData itemdata= ResourceManager.Instance.GetItem(itemID);
+        if(itemdata.isStackable)
+        {
+            foreach(var inventoryItem in playerInventoryList)
+            {
+                if(inventoryItem.itemData.itemID == itemID)
+                {
+                    if(inventoryItem.itemData.maxQuantity>inventoryItem.currentQuantity)
+                    {
+                        inventoryItem.currentQuantity++;
+                        uiInventory.RefreshAllSlots();
+                        return;
+                    }
+                }
+            }
+            
+        }
+        if(playerInventoryList.Count>=InventoryMaxNum)
+        {
+            Debug.Log("인벤토리가 꽉 차 더이상 아이템을 담을 수 없습니다");
+            return;
+        }
+        Item item= CreateRuntimeItemData(itemdata);
+        playerInventoryList.Add(item);
+        uiInventory.SetItemsUI(item);
+        //빈 슬롯에 아이템 추가
     }
 }
