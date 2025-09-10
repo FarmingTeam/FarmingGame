@@ -16,5 +16,27 @@ public class TileReader : MonoBehaviour
         return tilemap.GetTile(CurrentCell);
     }
 
+    public TileBase NearTile()
+    {
+        // 주변 셀들의 좌표를 생성 및 갱신(상하좌우 1칸)
+        Vector3Int c = CurrentCell;
+        var neartiles = new Vector3Int[]
+        {
+            new Vector3Int(0, 1, 0),
+            new Vector3Int(0, -1, 0),
+            new Vector3Int(-1, 0, 0),
+            new Vector3Int(1, 0, 0)
+        };
+
+        foreach (var off in neartiles)
+        {
+            var cell = c + off;
+            var t = tilemap.GetTile(cell);
+            if (t != null) return t;
+        }
+
+        return null;
+    }
+
     // 현재 좌표 타일맵에서 끌어오는 역할
 }
