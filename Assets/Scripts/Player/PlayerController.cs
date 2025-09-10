@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     public InputActionReference moveAction;
     public InputActionReference interactAction;
 
+    [Header("Animation")]
+    public Animator animator;
+
     [Header("Common")]
     public float moveSpeed = 2f; // 플레이어 이동속도
 
@@ -31,6 +34,11 @@ public class PlayerController : MonoBehaviour
     {
         if (moveAction == null) return;
         moveInput = moveAction.action.ReadValue<Vector2>(); // 이동 구현
+
+        animator.SetBool("IsMoveFront", moveInput.y < 0);
+        animator.SetBool("IsMoveBack", moveInput.y > 0);
+        animator.SetBool("IsMoveLeft", moveInput.x < 0);
+        animator.SetBool("IsMoveRight", moveInput.x > 0);
     }
 
     private void FixedUpdate()
@@ -42,4 +50,5 @@ public class PlayerController : MonoBehaviour
             rigidbody.velocity = v * moveSpeed;
         }
     }
+
 }

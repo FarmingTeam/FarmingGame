@@ -437,6 +437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2094467574}
   - component: {fileID: 2094467573}
+  - component: {fileID: 2094467575}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -458,6 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAction: {fileID: 1956949743278524940, guid: d09204631a350b14cb018d306da035cf, type: 3}
   interactAction: {fileID: -972534505359974067, guid: d09204631a350b14cb018d306da035cf, type: 3}
+  animator: {fileID: 1759470726}
   moveSpeed: 2
   rigidbody: {fileID: 1988059721}
 --- !u!4 &2094467574
@@ -475,6 +477,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2094467575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094467572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22431926103aa1a4193df48b787ede26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pivot: {fileID: 1988059720}
+  grid: {fileID: 0}
+  tilemap: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
