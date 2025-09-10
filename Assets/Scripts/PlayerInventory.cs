@@ -53,4 +53,18 @@ public class PlayerInventory : MonoBehaviour
         uiInventory.SetItemsUI(item);
         //빈 슬롯에 아이템 추가
     }
+
+    public void OpenSeedBasket()
+    {
+        //플레이어 인벤토리에 있는 씨앗들 설정
+        List<Item> seeds= new List<Item>();
+        foreach(var item in playerInventoryList)
+        {
+            if(item.itemData.itemType==ItemType.Seed)
+            {
+                seeds.Add(item);
+            }
+            //그다음 씨앗들을 띄우고 그중에서 선택하게 한다
+        }
+    }
 }
