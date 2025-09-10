@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public TileState tileState;
+    public TileFloor tileState;
 
 }

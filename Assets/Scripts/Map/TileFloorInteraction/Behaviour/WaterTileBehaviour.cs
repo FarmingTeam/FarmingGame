@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterTileBehaviour : ITileInteraction
+public class WaterTileBehaviour : TileFloorInteraction
 {
-    public override TileState Interaction(int tool)
+    public override TileFloor Interaction(int tool)
     {
         //만약 물뿌리개를 들고있다면으로 수정
         if (tool == 0)
         {
-            return TileControl.Instance.GetTileStateByType(TileInteractionType.Water);
+            //pass
         }
         return null;
     }

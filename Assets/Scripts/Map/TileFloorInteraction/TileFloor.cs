@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public enum TileInteractionType
+public enum FloorInteractionType
 {
     None = 0,
     Dirt,
@@ -14,20 +14,20 @@ public enum TileInteractionType
     Rock
 }
 
-
+//레이어 1번
+//타일 바닥 자체의 기능들
 [System.Serializable]
-[CreateAssetMenu(fileName = "TileInfo", menuName = "ScriptableObject/TileInfo")]
-public class TileState : ScriptableObject
+[CreateAssetMenu(fileName = "TileFloor", menuName = "TileInfo/Floor")]
+public class TileFloor : ScriptableObject
 {
-    public TileInteractionType tileType;
+    public FloorInteractionType floorType;
     public TileBase tileBase;
-    public bool isCollidable;
     public Color tileColor;
-    public ITileInteraction interaction;
+    public TileFloorInteraction interaction;
 
     private void Awake()
     {
-        switch (tileType)
+        switch (floorType)
         {
             default:
                 return;

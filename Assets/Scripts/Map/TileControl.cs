@@ -5,14 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-
+//레이어 1번, 2번에 대한 정보 저장용
 public class TileControl : Singleton<TileControl>
 {
-    [SerializeField] public TileState[] tileStates;
+    [SerializeField] public TileFloor[] tileStates;
+    [SerializeField] public TileObject[] tileObjects;
 
-    public TileState GetTileStateByType(TileInteractionType type)
+    public TileFloor GetTileFloorByType(FloorInteractionType type)
     {
-        TileState result = tileStates.First(state => state.tileType == type);
+        TileFloor result = tileStates.First(state => state.floorType == type);
+        return result;
+    }
+
+    public TileObject GetTileObjectByType(ObjectInteractionType type)
+    {
+        TileObject result = tileObjects.First(state => state.objectType == type);
         return result;
     }
 }

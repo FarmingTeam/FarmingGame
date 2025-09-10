@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WetDirtTileBehaviour : ITileInteraction
+public class WetDirtTileBehaviour : TileFloorInteraction
 {
-    public override TileState Interaction(int tool)
+    public override TileFloor Interaction(int tool)
     {
         return null;
     }
