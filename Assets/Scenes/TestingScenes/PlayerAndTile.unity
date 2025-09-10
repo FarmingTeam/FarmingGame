@@ -681,6 +681,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3008501052080324501, guid: 2a296ff0709c11243b8b8b574048c424, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7219497536545761582, guid: 2a296ff0709c11243b8b8b574048c424, type: 3}
       propertyPath: m_SortingOrder
       value: 100
@@ -774,6 +778,11 @@ Transform:
   - {fileID: 1612236701}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1676854893 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6591854417893802541, guid: 987182e91e4f9ff4cb48735afbd5ec18, type: 3}
+  m_PrefabInstance: {fileID: 2013975568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1866872856 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4657490223013611213, guid: 2a296ff0709c11243b8b8b574048c424, type: 3}
@@ -2026,13 +2035,89 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6591854417893802541, guid: 987182e91e4f9ff4cb48735afbd5ec18, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2013975573}
   m_SourcePrefab: {fileID: 100100000, guid: 987182e91e4f9ff4cb48735afbd5ec18, type: 3}
 --- !u!4 &2013975569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 56239016899824372, guid: 987182e91e4f9ff4cb48735afbd5ec18, type: 3}
   m_PrefabInstance: {fileID: 2013975568}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2013975573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676854893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: d09204631a350b14cb018d306da035cf, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2013975575}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 42205d4e-1d18-4141-a2a5-d0d96f8509ca
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6be526bc-3114-45a9-bb1f-8c6443fe11cf
+    m_ActionName: Player/Interaction[/Mouse/leftButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 1243217070}
+--- !u!114 &2013975575 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 893909465678430567, guid: 987182e91e4f9ff4cb48735afbd5ec18, type: 3}
+  m_PrefabInstance: {fileID: 2013975568}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676854893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9828d2b2286cc5f40bd1bc1bad27155a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2062166367
 GameObject:
   m_ObjectHideFlags: 0

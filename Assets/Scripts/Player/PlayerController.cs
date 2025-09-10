@@ -6,9 +6,6 @@ using Unity.Mathematics;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Input System")] // 인풋시스템 연결
-    public InputActionReference moveAction;
-    public InputActionReference interactAction;
 
     [Header("Animation")]
     public Animator animator;
@@ -20,28 +17,27 @@ public class PlayerController : MonoBehaviour
 
     Vector2 moveInput;
 
-    private void OnEnable()
-    {
-        if (moveAction != null) moveAction.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        if (moveAction != null) moveAction.action.Disable();
-    }
-
     private void Update()
     {
-        if (moveAction == null) return;
-        moveInput = moveAction.action.ReadValue<Vector2>(); // 이동 구현
 
-        animator.SetBool("IsMoveFront", moveInput.y < 0);
-        animator.SetBool("IsMoveBack", moveInput.y > 0);
-        animator.SetBool("IsMoveLeft", moveInput.x < 0);
-        animator.SetBool("IsMoveRight", moveInput.x > 0);
+        AnimChange();
+        
     }
 
     private void FixedUpdate()
+    {
+        OnMoving();
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+            moveInput = context.ReadValue<Vector2>(); // 이동 구현
+        else if (context.phase == InputActionPhase.Canceled)
+            moveInput = Vector2.zero;
+    }
+
+    private void OnMoving()
     {
         if (rigidbody != null)
         {
@@ -49,6 +45,14 @@ public class PlayerController : MonoBehaviour
             if (v.sqrMagnitude > 1f) v = v.normalized; // 대각선 이동 구현
             rigidbody.velocity = v * moveSpeed;
         }
+    }
+
+    private void AnimChange()
+    {
+        animator.SetBool("IsMoveFront", moveInput.y < 0);
+        animator.SetBool("IsMoveBack", moveInput.y > 0);
+        animator.SetBool("IsMoveLeft", moveInput.x < 0);
+        animator.SetBool("IsMoveRight", moveInput.x > 0);
     }
 
 }
