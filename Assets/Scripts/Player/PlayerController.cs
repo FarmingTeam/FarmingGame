@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerController : MonoBehaviour
 {
@@ -45,6 +46,45 @@ public class PlayerController : MonoBehaviour
             return;
         }
     }
+
+    public void OnQuickSlot(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+
+        int slot = ResolveQuickslotFromContext(context);
+        if (slot < 1 || slot > 6) return;
+
+        HandleQuickslot(slot);
+    }
+
+    private int ResolveQuickslotFromContext(InputAction.CallbackContext context)
+    {
+        var action = context.action;
+        int binding = action?.GetBindingIndexForControl(context.control) ?? -1;
+        if (binding >= 0 && binding < action.bindings.Count)
+        {
+            var number = action.bindings[binding].name;
+            if (int.TryParse(number, out int slotByNumber)) return slotByNumber;
+        }
+
+        if (context.control is KeyControl key)
+        {
+            switch (key.keyCode)
+            {
+                case Key.Digit1: return 1;
+                case Key.Digit2: return 2;
+                case Key.Digit3: return 3;
+                case Key.Digit4: return 4;
+                case Key.Digit5: return 5;
+                case Key.Digit6: return 6;
+            }
+        }
+
+        return 0;
+    }
+
+    protected virtual void HandleQuickslot(int slot) { }
+    // ToolPivot에서 오버라이드해서 실제 교체 로직 수행
 
     private void OnMoving()
     {
