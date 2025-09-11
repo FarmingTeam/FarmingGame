@@ -35,14 +35,19 @@ public class UIToolBar : MonoBehaviour
         }
     }
 
-
-    public void RefreshAllEquipmentSlots()
+    private void Update()
     {
-        foreach (var slot in quickSlotList)
+        if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            slot.RefreshSlotEquipment();
+            
         }
+
+
     }
+
+
+
+    
     
 
     

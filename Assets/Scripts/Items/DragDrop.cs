@@ -59,18 +59,19 @@ public class DragDrop : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
 
         var result = eventData.pointerCurrentRaycast;
 
-
-        if(result.gameObject==null)
+        var dragDrop = result.gameObject.GetComponent<DragDrop>();
+        if (result.gameObject==null)
         {
             transform.SetParent(quickSlot.transform);
             transform.localPosition = Vector3.zero;
         }
-        else if (result.gameObject.GetComponent<DragDrop>() != null)
+        else if ( dragDrop!= null)
         {
 
-            //이 오브젝트랑 자리바꾸기/ 데이터도 바꾸기
+            //이 오브젝트랑 자리바꾸기(이미 데이터는 자리바꾸면서 자동으로 바꿔짐)
             result.gameObject.transform.SetParent(quickSlot.transform);  //기존에 그 슬롯에 있던건 이 슬롯에 자식으로 들어가서 자리세팅
             result.gameObject.transform.localPosition = Vector3.zero;
+            quickSlot.slotEquipment = dragDrop.equipment;
 
 
         }
@@ -78,6 +79,7 @@ public class DragDrop : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
         {
             transform.SetParent(quickSlot.transform);
             transform.localPosition=Vector3.zero;
+            
             
         }
 
