@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WetDirtTileBehaviour : TileFloorInteraction
 {
-    public override TileFloor Interaction(int tool)
+    public override TileFloor Interaction(EquipmentType tool)
     {
         return null;
     }
