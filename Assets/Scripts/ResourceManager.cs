@@ -8,13 +8,13 @@ public class ResourceManager : Singleton<ResourceManager>
     
     Dictionary<int, ItemData> itemDataDic=new Dictionary<int,ItemData>();
     Dictionary<int, Equipment> equipmentDataDIc = new Dictionary<int, Equipment>();
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         SetItem();
-        
-            
-        
-    }
+        SetEquipment();
+    } 
+    
 
 
     void SetItem()
@@ -60,6 +60,7 @@ public class ResourceManager : Singleton<ResourceManager>
     void SetEquipment()
     {
         TextAsset itemCSVText = Resources.Load<TextAsset>("ItemData/ItemDataCSV/EquipmentExcel");
+
         string[] rows = itemCSVText.text.Split('\n');
         for (int i = 1; i < rows.Length; i++)
         {
@@ -83,6 +84,7 @@ public class ResourceManager : Singleton<ResourceManager>
     {
         if (equipmentDataDIc.TryGetValue(equipmentID, out Equipment equipment))
         {
+            equipment.equipmentIcon= Resources.Load < Sprite > ("ItemData/CarrotSeed"); //테스트용 추후 지울예정
             //equipment.equipmentIcon = Resources.Load<Sprite>($"ItemData/{equipment.equipmentPath}");
             return equipment;
         }
