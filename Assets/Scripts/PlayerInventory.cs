@@ -12,6 +12,8 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] Button pumpkinButton;
     public int InventoryMaxNum { get; } = 10;
 
+
+    public Equipment selectedEquipment;
     private void Start()
     {
         carrotbutton.onClick.AddListener(() => AdditemsByID(1));
@@ -53,6 +55,9 @@ public class PlayerInventory : MonoBehaviour
         uiInventory.SetItemsUI(item);
         //빈 슬롯에 아이템 추가
     }
+
+
+
 
     public void OpenSeedBasket()
     {
