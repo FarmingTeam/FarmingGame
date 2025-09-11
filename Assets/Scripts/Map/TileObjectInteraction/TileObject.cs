@@ -8,7 +8,8 @@ public enum ObjectInteractionType
 {
     None = 0,
     Tree,
-    Rock
+    Rock,
+    House
 }
 //레이어 2번
 //타일 위에 올라가는 나무 씨앗 등 오브젝트
