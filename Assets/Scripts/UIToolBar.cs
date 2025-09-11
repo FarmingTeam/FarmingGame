@@ -35,5 +35,15 @@ public class UIToolBar : MonoBehaviour
         }
     }
 
+
+    public void RefreshAllEquipmentSlots()
+    {
+        foreach (var slot in quickSlotList)
+        {
+            slot.RefreshSlotEquipment();
+        }
+    }
+    
+
     
 }

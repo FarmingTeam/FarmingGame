@@ -19,8 +19,8 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler
 
     public void RefreshSlotEquipment() //이건 나중에 어디서 일괄처리해주는게 나을듯
     {
-        dragDropEquipment= GetComponentInChildren<DragDrop>();
-        slotEquipment= dragDropEquipment.equipment;
+        //dragDropEquipment= GetComponentInChildren<DragDrop>();
+        //slotEquipment= dragDropEquipment.equipment;
     }
     public void OnDrop(PointerEventData eventData)
     {
@@ -29,7 +29,8 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler
             
             eventData.pointerDrag.transform.SetParent(this.transform);
             eventData.pointerDrag.transform.localPosition = Vector3.zero;
-            RefreshSlotEquipment();
+            toolbar.RefreshAllEquipmentSlots();
+
             
         }
         
