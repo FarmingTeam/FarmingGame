@@ -24,7 +24,6 @@ public class TileControl : Singleton<TileControl>
         { ObjectInteractionType.None, null},
         { ObjectInteractionType.Tree, new TreeTileBehaviour()},
         { ObjectInteractionType.Rock, new RockTileBehaviour()}
-
     };
 
 

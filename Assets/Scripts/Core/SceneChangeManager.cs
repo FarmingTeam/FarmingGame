@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneChangeManager : Singleton<SceneChangeManager>
 {
-    public const string FARMSCENE = "TestFarmScene";
-    public const string HOUSESCENE = "TestInHouseScene";
+    public const string FARMSCENE = "TestFarm";
+    public const string HOUSESCENE = "TestInHouse";
 
     //How to use
     /*
@@ -18,8 +18,15 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     public void ChangeScene(string scenename)
     {
         //전처리
-        SceneManager.LoadScene(scenename);
+        //TileSave
+
+        //StringBuilder로 Refactor 필요
+        SceneManager.LoadScene(scenename + "Scene");
+
+
         //후처리
+        //TileLoad
+
     }
 
     
