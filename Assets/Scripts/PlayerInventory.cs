@@ -6,20 +6,12 @@ using UnityEngine.UI;
 public class PlayerInventory : MonoBehaviour
 {
     public List<Item> playerInventoryList = new List<Item>();
-
+    
     [SerializeField] UIInventory uiInventory;
-    [SerializeField] Button carrotbutton;
-    [SerializeField] Button pumpkinButton;
     public int InventoryMaxNum { get; } = 10;
 
 
     public Equipment selectedEquipment;
-    private void Start()
-    {
-        carrotbutton.onClick.AddListener(() => AdditemsByID(1));
-        pumpkinButton.onClick.AddListener(() => AdditemsByID(2));
-        
-    }
 
     public Item CreateRuntimeItemData(ItemData itemData)
     {

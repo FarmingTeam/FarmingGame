@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class TileFloorInteraction
 {
-    public abstract TileFloor Interaction(int tool);
+    public abstract TileFloor Interaction(EquipmentType tool);
 }

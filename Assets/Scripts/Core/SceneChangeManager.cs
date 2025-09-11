@@ -18,14 +18,11 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     public void ChangeScene(string scenename)
     {
         //전처리
-        //TileSave
-
         //StringBuilder로 Refactor 필요
         SceneManager.LoadScene(scenename + "Scene");
 
 
         //후처리
-        //TileLoad
 
     }
 

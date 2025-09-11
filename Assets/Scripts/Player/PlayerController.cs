@@ -6,7 +6,6 @@ using Unity.Mathematics;
 
 public class PlayerController : MonoBehaviour
 {
-
     [Header("Animation")]
     public Animator animator;
 
@@ -36,6 +35,15 @@ public class PlayerController : MonoBehaviour
             moveInput = context.ReadValue<Vector2>(); // 이동 구현
         else if (context.phase == InputActionPhase.Canceled)
             moveInput = Vector2.zero;
+    }
+
+    public void OnInteractionAction(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            //Refactor : Fill the Blank
+            return;
+        }
     }
 
     private void OnMoving()

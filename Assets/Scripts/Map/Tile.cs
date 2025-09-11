@@ -21,12 +21,12 @@ public class Tile
         this.objectInteractionType = objectInteraction;
     }
 
-    public void OnInteract(int tool)
-    {
-        TileFloor tileFloor = TileControl.Instance.FLOORACTIONPAIR[floorInteractionType]?.Interaction(tool);
+    public void OnInteract(EquipmentType equipment)
+    { 
+        TileFloor tileFloor = TileControl.Instance.FLOORACTIONPAIR[floorInteractionType]?.Interaction(equipment);
         if (tileFloor != null)
             this.floorInteractionType = tileFloor.floorType;
-        TileObject tileObject = TileControl.Instance.OBJECTACTIONPAIR[objectInteractionType]?.Interaction(tool);
+        TileObject tileObject = TileControl.Instance.OBJECTACTIONPAIR[objectInteractionType]?.Interaction(equipment);
         if (tileObject != null)
             this.objectInteractionType = tileObject.objectType;
     }
