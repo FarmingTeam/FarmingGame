@@ -1,11 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
+[Serializable]
+public class MapData
+{
+    public int[] MapSize;
+    public FloorData[] TileFloor;
+    public ObjectData[] TileObject;
+}
+
+[Serializable]
+public class FloorData
+{
+    public int[] Pos;
+    public int FloorType;
+}
+[Serializable]
+public class ObjectData
+{
+    public int[] Pos;
+    public int[] Size;
+    public string Name;
+}
 public class Map : MonoBehaviour
 {
+    //저장데이터
+    public const string MAPTILEPATH = "Json/MapData/";
+    public const string TILEDATA = "TileData";
+    public MapData mapData;
+
+
     [Header("타일맵 0번 레이어")]
     [SerializeField] Tilemap baseGroundGrass;
     [SerializeField] Tilemap baseGroundWater;
@@ -17,15 +46,17 @@ public class Map : MonoBehaviour
     [SerializeField] Tilemap TileObject;
 
     [Header("타일 정보")]
-    [SerializeField] public Tile[,] tiles = new Tile[10,10];
+    [SerializeField] public Tile[,] tiles;
 
-    private void Awake()
+    //Debug Start
+    //Refactor : Remove Later , move to Scene Loader
+    private void Start()
     {
-        MapControl.Instance.map = this;
+        LoadMap(SceneChangeManager.FARMSCENE);
     }
 
     //Debug Update 
-    //Remove Later
+    //Refactor : Remove Later
     //EX) tiles[가로위치, 세로로위치]
     private void Update()
     {
@@ -50,5 +81,32 @@ public class Map : MonoBehaviour
     public void SetTileObject(Vector2Int index)
     {
         TileObject.SetTile((Vector3Int)index, TileControl.Instance.GetTileObjectByType(tiles[index.x, index.y].objectInteractionType).tileBase);
+    }
+
+    public void LoadMap(string sceneName)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append(MAPTILEPATH).Append(sceneName).Append(TILEDATA);
+        var file = Resources.Load(stringBuilder.ToString()) as TextAsset;
+        if (file == null)
+        {
+            throw new System.Exception(stringBuilder.Append("Is not Valid").ToString());
+        }
+        mapData = JsonUtility.FromJson<MapData>(file.text);
+
+        tiles = new Tile[mapData.MapSize[0], mapData.MapSize[1]];
+        for (int i = 0; i < mapData.MapSize[0]; i++)
+            for (int j = 0; j < mapData.MapSize[1]; j++)
+                tiles[i, j] = new Tile();
+
+        //Floor 깔기
+        for (int i = 0; i < mapData.TileFloor.Length; i++)
+        {
+            FloorData t = mapData.TileFloor[i];
+            tiles[t.Pos[0], t.Pos[1]].floorInteractionType = (FloorInteractionType)t.FloorType;
+            MapControl.Instance.map.SetTileFloor(new Vector2Int(t.Pos[0], t.Pos[1]));
+        }
+        //Object 깔기
+
     }
 }

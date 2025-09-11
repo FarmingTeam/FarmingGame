@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Water
   m_EditorClassIdentifier: 
   floorType: 3
-  tileBase: {fileID: 0}
-  tileColor: {r: 0, g: 0, b: 0, a: 0}
+  tileBase: {fileID: 11400000, guid: 81d33f90fa48a564ba4d2eeedafaf4b4, type: 2}
+  tileColor: {r: 1, g: 1, b: 1, a: 1}

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MapControl : Singleton<MapControl>
 {
-    public Player player;
-    public Map map;
+    [SerializeField] Player playerPrefab;
+    [SerializeField] Map mapPrefab;
+    [HideInInspector] public Player player;
+    [HideInInspector] public Map map;
 
     protected override void Awake()
     {
@@ -14,7 +16,7 @@ public class MapControl : Singleton<MapControl>
     }
     protected void Start()
     {
-        Debug.Log(player);
-        Debug.Log(map);
+        map = Instantiate(mapPrefab);
+        player = Instantiate(playerPrefab);
     }
 }

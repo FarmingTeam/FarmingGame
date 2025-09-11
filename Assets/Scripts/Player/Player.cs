@@ -9,9 +9,4 @@ public class Player : MonoBehaviour
     [SerializeField] public TileReader tileReader;
     [SerializeField] public ToolPivot tool;
     [SerializeField] public PlayerInventory inventory;
-
-    public void Awake()
-    {
-        MapControl.Instance.player = this;
-    }
 }
