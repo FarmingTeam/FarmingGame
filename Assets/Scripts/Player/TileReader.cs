@@ -19,12 +19,12 @@ public class TileReader : MonoBehaviour
     private void Awake()
     {
         currentFacing = defaultFacing;
-        grid = MapControl.Instance.map.GetComponent<Grid>();
     }
 
     private void Start()
     {
         InvokeRepeating(nameof(LogPosition), 0.5f, 0.5f);
+        grid = MapControl.Instance.map.GetComponent<Grid>();
     }
 
     private void Update()

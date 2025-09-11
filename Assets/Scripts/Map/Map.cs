@@ -17,20 +17,11 @@ public class Map : MonoBehaviour
     [SerializeField] Tilemap TileObject;
 
     [Header("타일 정보")]
-    [SerializeField] Tile[,] tiles = new Tile[10,10];
+    [SerializeField] public Tile[,] tiles = new Tile[10,10];
 
     private void Awake()
     {
         MapControl.Instance.map = this;
-    }
-    private void Start()
-    {
-        for (int i = 0; i < tiles.GetLength(0); i++)
-            for (int j = 0; j < tiles.GetLength(1); j++)
-            {
-                tiles[i, j] = new Tile();
-                SetInteractionTile(new Vector2Int(i, j));
-            }
     }
 
     //Debug Update 
@@ -40,8 +31,9 @@ public class Map : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            tiles[3, 5].OnInteract(0);
-            SetInteractionTile(new Vector2Int(3,5));
+            tiles[3, 5].OnInteract(EquipmentType.Hoe);
+            SetTileFloor(new Vector2Int(3,5));
+            SetTileObject(new Vector2Int(3, 5));
         }
     }
 
@@ -50,10 +42,13 @@ public class Map : MonoBehaviour
 
     }
 
-
-    public void SetInteractionTile(Vector2Int index)
+    public void SetTileFloor(Vector2Int index)
     {
         TileFloor.SetTile((Vector3Int)index, TileControl.Instance.GetTileFloorByType(tiles[index.x, index.y].floorInteractionType).tileBase);
+    }
+
+    public void SetTileObject(Vector2Int index)
+    {
         TileObject.SetTile((Vector3Int)index, TileControl.Instance.GetTileObjectByType(tiles[index.x, index.y].objectInteractionType).tileBase);
     }
 }

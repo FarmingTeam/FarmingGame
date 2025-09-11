@@ -12,4 +12,9 @@ public class MapControl : Singleton<MapControl>
         dontDestroyOnLoad = false;
         base.Awake();
     }
+    protected void Start()
+    {
+        Debug.Log(player);
+        Debug.Log(map);
+    }
 }

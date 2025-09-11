@@ -8,6 +8,7 @@ using UnityEngine;
 [Serializable]
 public class MapData
 {
+    public int[] MapSize;
     public FloorData[] TileFloor;
     public ObjectData[] TileObject;
 }
@@ -50,10 +51,22 @@ public class MapLoadManager : Singleton<MapLoadManager>
         }
         mapData = JsonUtility.FromJson<MapData>(file.text);
 
-        //후처리
-        //MapControl에서 Map을 가져와서 타일바닥 업데이트 시키기
+        Tile[,] mapControlMapTile = MapControl.Instance.map.tiles;
+        mapControlMapTile = new Tile[mapData.MapSize[0], mapData.MapSize[1]];
+        for (int i = 0; i < mapData.MapSize[0]; i++)
+            for (int j = 0; j < mapData.MapSize[1]; j++)
+                mapControlMapTile[i, j] = new Tile();
 
+        //후처리
+        //MapControl에서 Floor 깔기
+        for (int i = 0; i < mapData.TileFloor.Length; i++)
+        {
+            FloorData t = mapData.TileFloor[i];
+            mapControlMapTile[t.Pos[0], t.Pos[1]].floorInteractionType = (FloorInteractionType)t.FloorType;
+            MapControl.Instance.map.SetTileFloor(new Vector2Int(t.Pos[0], t.Pos[i]));
+        }
         //MapControl에서 Object 넣기
+
 
     }
 }
