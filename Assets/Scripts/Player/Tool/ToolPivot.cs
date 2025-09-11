@@ -9,6 +9,11 @@ public class ToolPivot : MonoBehaviour
 
     private bool hoeActive;
     private bool wateringCanActive;
+    private bool AxeActive;
+    private bool PickaxeActive;
+    private bool SeedBasketActive;
+
+    private string CurrentEquip;
 
     private void Start()
     {
