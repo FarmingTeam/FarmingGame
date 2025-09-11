@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
 {
-
     [Header("타일맵 0번 레이어")]
     [SerializeField] Tilemap baseGroundGrass;
     [SerializeField] Tilemap baseGroundWater;
@@ -20,7 +19,10 @@ public class Map : MonoBehaviour
     [Header("타일 정보")]
     [SerializeField] Tile[,] tiles = new Tile[10,10];
 
-
+    private void Awake()
+    {
+        MapControl.Instance.map = this;
+    }
     private void Start()
     {
         for (int i = 0; i < tiles.GetLength(0); i++)
@@ -41,6 +43,11 @@ public class Map : MonoBehaviour
             tiles[3, 5].OnInteract(0);
             SetInteractionTile(new Vector2Int(3,5));
         }
+    }
+
+    public void OnPlayerInteract(Vector2Int lookPos, Equipment tool)
+    {
+
     }
 
 

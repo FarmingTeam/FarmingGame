@@ -19,7 +19,11 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         //전처리
         //TileSave
-
+        if (MapControl.Instance != null)
+        {
+            MapControl.Instance.player = null;
+            MapControl.Instance.map = null;
+        }
         //StringBuilder로 Refactor 필요
         SceneManager.LoadScene(scenename + "Scene");
 
