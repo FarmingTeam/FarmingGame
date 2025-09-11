@@ -38,8 +38,8 @@ public class Map : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            tiles[5, 0].OnInteract(0);
-            SetInteractionTile(new Vector2Int(5,0));
+            tiles[3, 5].OnInteract(0);
+            SetInteractionTile(new Vector2Int(3,5));
         }
     }
 
@@ -49,7 +49,4 @@ public class Map : MonoBehaviour
         TileFloor.SetTile((Vector3Int)index, TileControl.Instance.GetTileFloorByType(tiles[index.x, index.y].floorInteractionType).tileBase);
         TileObject.SetTile((Vector3Int)index, TileControl.Instance.GetTileObjectByType(tiles[index.x, index.y].objectInteractionType).tileBase);
     }
-
-
-
 }

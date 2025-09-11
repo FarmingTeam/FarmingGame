@@ -1,0 +1,38 @@
+{
+  "TileFloor": [
+    {
+      "Pos": [ 0, 0 ],
+      "FloorType": 1
+    },
+    {
+      "Pos": [ 1, 0 ],
+      "FloorType": 1
+    },
+    {
+      "Pos": [ 1, 0 ],
+      "FloorType": 1
+    },
+    {
+      "Pos": [ 2, 2 ],
+      "FloorType": 2
+    }
+  ],
+
+  "TileObject": [
+    {
+      "StartPos": [ 7, 5 ],
+      "Size": [ 2, 2 ],
+      "Name": "House"
+    },
+    {
+      "StartPos": [ 8,  7],
+      "Size": [ 1, 1 ],
+      "Name": "Rock"
+    },
+    {
+      "StartPos": [ 3, 2 ],
+      "Size": [ 1, 1 ],
+      "Name": "Tree"
+    }
+  ]
+}
