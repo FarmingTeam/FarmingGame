@@ -39,8 +39,31 @@ public class UIToolBar : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
+            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[0].slotEquipment;
             
         }
+        else if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[1].slotEquipment;
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[2].slotEquipment;
+        }
+        else if( Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[3].slotEquipment;
+        }
+        else if (!Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[4].slotEquipment;
+        }
+        else if( !Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[5].slotEquipment;
+        }
+        
 
 
     }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class UIInventory : MonoBehaviour
 {
-    [SerializeField] PlayerInventory playerInventory;
+    PlayerInventory playerInventory;
 
     public List<UISlot> uISlots = new List<UISlot>();
 
@@ -19,6 +19,7 @@ public class UIInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerInventory = MapControl.Instance.player.inventory; //맵컨트롤 참조
         DescriptionPanel= Instantiate(DescriptionPanelPrefab, transform,false);
         DescriptionPanel.SetActive(false);
         for(int i = 0; i<playerInventory.InventoryMaxNum; i++)
