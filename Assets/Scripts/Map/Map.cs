@@ -58,6 +58,8 @@ public class Map : MonoBehaviour
 
     public void OnPlayerInteract(Vector2Int lookPos, EquipmentType tool)
     {
+        if(lookPos.x < 0 || lookPos.y < 0) return;
+        if (lookPos.x >= tiles.GetLength(0) || lookPos.y >= tiles.GetLength(1)) return;
         tiles[lookPos.x, lookPos.y].OnInteract(tool);
         SetTileFloor(lookPos);
         TileObjectAction(tiles[lookPos.x, lookPos.y], tool);
