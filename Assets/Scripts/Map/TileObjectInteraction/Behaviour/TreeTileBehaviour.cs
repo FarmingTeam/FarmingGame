@@ -9,7 +9,7 @@ public class TreeTileBehaviour : TileObjectInteraction
         //만약 도끼를 들고있다면으로 수정
         if (tool == EquipmentType.Axe)
         {
-            //return TileControl.Instance.GetTileObjectByType(ObjectInteractionType.None);
+            tile.objectInteractionType = ObjectInteractionType.None;
         }
         return;
     }

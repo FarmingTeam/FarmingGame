@@ -61,14 +61,15 @@ public class Map : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            tiles[3, 5].OnInteract(EquipmentType.Hoe);
-            SetTileFloor(new Vector2Int(3,5));
+           
+            
         }
     }
 
     public void OnPlayerInteract(Vector2Int lookPos, Equipment tool)
     {
-
+        tiles[lookPos.x, lookPos.y].OnInteract(tool.equipmentType);
+        SetTileFloor(lookPos);
     }
 
     public void SetTileFloor(Vector2Int index)
