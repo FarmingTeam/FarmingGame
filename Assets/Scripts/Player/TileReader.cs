@@ -15,9 +15,25 @@ public class TileReader : MonoBehaviour
     public Facing defaultFacing = Facing.Down;
     private Facing currentFacing;
 
+    // 타일 충돌 읽기 초안
+    [SerializeField]
+    private string[] obstacleTileNames =
+        { "TileObject", "BaseGround_Water", "BaseGround_Wall" };
+
+    private HashSet<string> obstacleNameSet;
+
     private void Awake()
     {
         currentFacing = defaultFacing;
+        obstacleNameSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        if (obstacleTileNames != null)
+        {
+            foreach (var n in obstacleTileNames)
+            {
+                if (!string.IsNullOrWhiteSpace(n))
+                    obstacleNameSet.Add(n.Trim());
+            }
+        }
     }
 
     private void Start()
@@ -48,6 +64,16 @@ public class TileReader : MonoBehaviour
         return tilemap.GetTile(FrontCell());
     }
 
+    /*
+    public bool IsObstacleCell(Vector3Int cell)
+    {
+        var t = tilemap.GetTile(cell);
+        if (!t) return false; // 타일이 없으면 통과 가능
+        // 타일 에셋 이름으로 판정
+        return obstacleNameSet.Contains(t.name);
+    }
+    */
+
     private static bool ContainsToken(string s, string token)
         => s?.IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0;
 
@@ -67,7 +93,7 @@ public class TileReader : MonoBehaviour
     private void LogPosition()
     {
         var front = FrontCell();
-        Debug.Log($"{CurrentCell} / {front}");
+        Debug.Log($"{CurrentCell} / {front} / {/*IsObstacleCell(front)*/ null}");
     }
 
 }
