@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,20 @@ public class PlayerInventory : MonoBehaviour
 {
     public List<Item> playerInventoryList = new List<Item>();
     
-    [SerializeField] UIInventory uiInventory;
-    public int InventoryMaxNum { get; } = 10;
+
+    //여기 씨앗 리스트에는 인벤토리중 씨앗만(인벤토리는 씨앗포함 모두)
+    public List<Item> seedList = new List<Item>();
+
+    public UIInventory uiInventory;
+
+    public UISeedBasket uiSeedBasket;
+    public int InventoryMaxNum { get; } = 20;
+
+
+    //이 갯수 체인지가 될경우에는 슬롯들의 상황을 업데이트 해줍니다
+    private Action onQuantityChange;
+
+
 
 
     public Equipment selectedEquipment;
@@ -29,8 +42,10 @@ public class PlayerInventory : MonoBehaviour
                 {
                     if(inventoryItem.itemData.maxQuantity>inventoryItem.currentQuantity)
                     {
-                        inventoryItem.currentQuantity++;
-                        uiInventory.RefreshAllSlots();
+                        inventoryItem.currentQuantity++;                    
+                        onQuantityChange?.Invoke();
+                        //인벤토리가 열려있지 않으면 사실 수량 변화자체는 굳이 UI에 반영할 이유는 없어서
+                        //이 이벤트를 구독하는 인벤토리ui들은 전부 Onenable떄 구독을 활성화하고, Disable떄 구독을 해지합니다
                         return;
                     }
                 }
@@ -45,23 +60,28 @@ public class PlayerInventory : MonoBehaviour
         Item item= CreateRuntimeItemData(itemdata);
         playerInventoryList.Add(item);
         uiInventory.SetItemsUI(item);
-        //빈 슬롯에 아이템 추가
-    }
-
-
-
-
-    public void OpenSeedBasket()
-    {
-        //플레이어 인벤토리에 있는 씨앗들 설정
-        List<Item> seeds= new List<Item>();
-        foreach(var item in playerInventoryList)
+        
+        if(item.itemData.itemType == ItemType.Seed)
         {
-            if(item.itemData.itemType==ItemType.Seed)
-            {
-                seeds.Add(item);
-            }
-            //그다음 씨앗들을 띄우고 그중에서 선택하게 한다
+            //만약 씨앗이면 씨앗 리스트에 추가(?)
+            uiSeedBasket.SetSeedSlotUI(item);
         }
+        
+
+
+        
     }
+
+    public void SubscribeOnQuantityChange(Action action)
+    {
+        onQuantityChange += action;
+    }
+
+    public void UnsubscribeOnQuantityChange(Action action)
+    {
+        onQuantityChange -= action;
+    }
+
+
+    
 }

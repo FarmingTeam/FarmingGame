@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7246347275286037515
 Transform:
   m_ObjectHideFlags: 0
@@ -129,8 +129,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59651048b3234543bfe3412a59fa4f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2687958841761843714}
+  moveSpeed: 2
+  rigidbody: {fileID: 0}
   ToolSprite: {fileID: 1293386774619619514}
   CurrentEquip: {fileID: 0}
+  QuickSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &2831479454580651126
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,13 +224,13 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2831479454580651126}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 3465576775391852864}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnInteractionAction
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -228,6 +238,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 6be526bc-3114-45a9-bb1f-8c6443fe11cf
     m_ActionName: Player/Interaction[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3465576775391852864}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnQuickSlot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 54244c47-8e32-4d22-945b-9a8cc8ba44e0
+    m_ActionName: Player/Quickslot[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5,/Keyboard/6]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

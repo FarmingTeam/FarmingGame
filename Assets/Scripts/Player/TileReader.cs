@@ -10,26 +10,41 @@ public class TileReader : MonoBehaviour
     public GridLayout grid; // 그리드 가져오기
     public Tilemap tilemap; // 좌표 읽어올 타일맵
 
-    public Animator animator;
     public enum  Facing { Up, Down, Left, Right }
 
     public Facing defaultFacing = Facing.Down;
     private Facing currentFacing;
 
+    // 타일 충돌 읽기 초안
+    [SerializeField]
+    private string[] obstacleTileNames =
+        { "TileObject", "BaseGround_Water", "BaseGround_Wall" };
+
+    private HashSet<string> obstacleNameSet;
+
     private void Awake()
     {
         currentFacing = defaultFacing;
+        obstacleNameSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        if (obstacleTileNames != null)
+        {
+            foreach (var n in obstacleTileNames)
+            {
+                if (!string.IsNullOrWhiteSpace(n))
+                    obstacleNameSet.Add(n.Trim());
+            }
+        }
     }
 
     private void Start()
     {
-        InvokeRepeating(nameof(LogPosition), 0.5f, 0.5f);
         grid = MapControl.Instance.map.GetComponent<Grid>();
+        InvokeRepeating(nameof(LogPosition), 0.5f, 0.5f);
     }
 
-    private void Update()
+    public void SetFacing(Facing facing)
     {
-        currentFacing = FacingFromAnimation();
+        currentFacing = facing;
     }
 
     public Vector3Int CurrentCell => grid.WorldToCell(pivot.position);
@@ -49,42 +64,15 @@ public class TileReader : MonoBehaviour
         return tilemap.GetTile(FrontCell());
     }
 
-    private Facing FacingFromAnimation()
+    /*
+    public bool IsObstacleCell(Vector3Int cell)
     {
-        if (!animator) return currentFacing;
-
-        var infos = animator.IsInTransition(0)
-            ? animator.GetNextAnimatorClipInfo(0)
-            : animator.GetCurrentAnimatorClipInfo(0);
-
-        if (infos == null || infos.Length == 0) return currentFacing;
-
-        AnimationClip chosen = null;
-        float best = -1f;
-        for (int i = 0; i < infos.Length; i++)
-        {
-            if (infos[i].weight > best)
-            {
-                best = infos[i].weight;
-                chosen = infos[i].clip;
-            }
-        }
-        if (!chosen) return currentFacing;
-
-        return NameToFacing(chosen.name, currentFacing);
+        var t = tilemap.GetTile(cell);
+        if (!t) return false; // 타일이 없으면 통과 가능
+        // 타일 에셋 이름으로 판정
+        return obstacleNameSet.Contains(t.name);
     }
-
-    private static Facing NameToFacing(string clipName, Facing defaultFacing)
-    {
-        // 클립명에 포함된 토큰으로 방향 결정
-        if (ContainsToken(clipName, "Back")) return Facing.Up;
-        if (ContainsToken(clipName, "Front")) return Facing.Down;
-        if (ContainsToken(clipName, "Left")) return Facing.Left;
-        if (ContainsToken(clipName, "Right")) return Facing.Right;
-
-        // 토큰을 못 찾으면 이전 방향 유지
-        return defaultFacing;
-    }
+    */
 
     private static bool ContainsToken(string s, string token)
         => s?.IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0;
@@ -105,7 +93,7 @@ public class TileReader : MonoBehaviour
     private void LogPosition()
     {
         var front = FrontCell();
-        Debug.Log($"{CurrentCell} / {front}");
+        Debug.Log($"{CurrentCell} / {front} / {/*IsObstacleCell(front)*/ null}");
     }
 
 }

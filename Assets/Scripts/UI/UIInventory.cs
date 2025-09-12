@@ -19,7 +19,9 @@ public class UIInventory : UIBase
     // Start is called before the first frame update
     void Start()
     {
+
         playerInventory = MapControl.Instance.player.inventory; //맵컨트롤 참조
+        playerInventory.uiInventory = this;
         DescriptionPanel= Instantiate(DescriptionPanelPrefab, transform,false);
         DescriptionPanel.SetActive(false);
         for(int i = 0; i<playerInventory.InventoryMaxNum; i++)
@@ -29,6 +31,23 @@ public class UIInventory : UIBase
 
         uISlots = GetComponentsInChildren<UISlot>().ToList();
     }
+
+    protected override void OnOpen()
+    {
+        if(playerInventory == null)
+        {
+            playerInventory = MapControl.Instance.player.inventory; 
+        }
+        playerInventory.SubscribeOnQuantityChange(RefreshAllSlots);
+        RefreshAllSlots();
+    }
+
+    protected override void OnClose()
+    {
+        playerInventory.UnsubscribeOnQuantityChange(RefreshAllSlots);
+    }
+
+
     public void SetItemsUI(Item runtimeItemData)
     {
         var slot=FindEmptySlot();
