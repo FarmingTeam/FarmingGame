@@ -15,14 +15,29 @@ public class PlayerController : MonoBehaviour
 
     public new Rigidbody2D rigidbody;
 
+    [SerializeField] private TileReader tileReader;
+    [SerializeField] private Player player;
+
     Vector2 moveInput;
 
+    private void Awake()
+    {
+        // 인스펙터에 비어 있으면 Player 컴포넌트에서 가져오기
+        if (!player) player = GetComponentInParent<Player>();
+
+        if (!tileReader)
+        {
+            var player = GetComponentInParent<Player>();
+            tileReader = player ? player.tileReader : null;
+        }
+    }
 
     private void Update()
     {
 
         AnimChange();
-        
+        UpdateFacingFromInput();
+
     }
 
     private void FixedUpdate()
@@ -83,8 +98,10 @@ public class PlayerController : MonoBehaviour
         return 0;
     }
 
-    protected virtual void HandleQuickslot(int slot) { }
-    // ToolPivot에서 오버라이드해서 실제 교체 로직 수행
+    protected virtual void HandleQuickslot(int slot)
+    {
+        player.HandleQuickslot(slot);
+    }
 
     private void OnMoving()
     {
@@ -102,6 +119,22 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsMoveBack", moveInput.y > 0);
         animator.SetBool("IsMoveLeft", moveInput.x < 0);
         animator.SetBool("IsMoveRight", moveInput.x > 0);
+    }
+
+    private void UpdateFacingFromInput()
+    {
+        if (!tileReader) return;
+
+        // 입력이 없으면 마지막 방향 유지
+        if (moveInput.sqrMagnitude == 0) return;
+
+        TileReader.Facing facing;
+        if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
+            facing = moveInput.x > 0 ? TileReader.Facing.Right : TileReader.Facing.Left;
+        else
+            facing = moveInput.y > 0 ? TileReader.Facing.Up : TileReader.Facing.Down;
+
+        tileReader.SetFacing(facing);
     }
 
 }

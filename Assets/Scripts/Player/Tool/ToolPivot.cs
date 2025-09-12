@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolPivot : PlayerController
+public class ToolPivot : MonoBehaviour
 {
     [Header("Tool")]
     public GameObject ToolSprite;
@@ -10,16 +10,15 @@ public class ToolPivot : PlayerController
 
     public Equipment[] QuickSlots = new Equipment[6];
 
-    protected override void HandleQuickslot(int slot)
+    public void SelectQuickslot(int slot)
     {
-        base.HandleQuickslot(slot);
-
         int idx = slot - 1;
         Equipment next = null;
-        if (idx >= 0 && idx < QuickSlots.Length)
-            next = QuickSlots[idx];
-
         if (slot == 1) next = null;
+        else if (idx >= 0 && idx < QuickSlots.Length)
+        {
+            next = QuickSlots[idx];
+        }
 
         ApplyEquip(next);
     }
