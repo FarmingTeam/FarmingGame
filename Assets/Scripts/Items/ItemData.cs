@@ -73,6 +73,12 @@ public class Item
         this.currentQuantity = 1;
         
     }
+
+    public Item(ItemData itemData, int currentQuantity)
+    {
+        this.itemData = itemData;
+        this.currentQuantity = currentQuantity;
+    }
 }
 
 [Serializable]
