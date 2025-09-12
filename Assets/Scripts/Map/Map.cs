@@ -24,8 +24,7 @@ public class FloorData
 public class ObjectData
 {
     public int[] Pos;
-    public int[] Size;
-    public string Name;
+    public int ObjectType;
 }
 public class Map : MonoBehaviour
 {
@@ -52,7 +51,7 @@ public class Map : MonoBehaviour
     //Refactor : Remove Later , move to Scene Loader
     private void Start()
     {
-        LoadMap(SceneChangeManager.FARMSCENE);
+        LoadMap("TestMap");
     }
 
     //Debug Update 
@@ -64,7 +63,6 @@ public class Map : MonoBehaviour
         {
             tiles[3, 5].OnInteract(EquipmentType.Hoe);
             SetTileFloor(new Vector2Int(3,5));
-            SetTileObject(new Vector2Int(3, 5));
         }
     }
 
@@ -78,9 +76,9 @@ public class Map : MonoBehaviour
         TileFloor.SetTile((Vector3Int)index, TileControl.Instance.GetTileFloorByType(tiles[index.x, index.y].floorInteractionType).tileBase);
     }
 
-    public void SetTileObject(Vector2Int index)
+    public void SetTileObject(Vector2Int index, TileBase tile)
     {
-        TileObject.SetTile((Vector3Int)index, TileControl.Instance.GetTileObjectByType(tiles[index.x, index.y].objectInteractionType).tileBase);
+        TileObject.SetTile((Vector3Int)index, tile);
     }
 
     public void LoadMap(string sceneName)
@@ -107,6 +105,11 @@ public class Map : MonoBehaviour
             MapControl.Instance.map.SetTileFloor(new Vector2Int(t.Pos[0], t.Pos[1]));
         }
         //Object 깔기
-
+        for (int i = 0; i < mapData.TileObject.Length; i++)
+        {
+            ObjectData t = mapData.TileObject[i];
+            ChunkData data = TileControl.Instance.GetChunkDataByID(t.ObjectType);
+            ChunkControl.Instance.SetTileObjectInMap(new Vector2Int(t.Pos[0], t.Pos[1]), data);
+        }
     }
 }

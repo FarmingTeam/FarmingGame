@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class RockTileBehaviour : TileObjectInteraction
 {
-    public override TileObject Interaction(EquipmentType tool)
+    public override void Interaction(EquipmentType tool, Tile tile)
     {
         //만약 곡괭이를 들고있다면으로 수정
         if (tool == EquipmentType.Pickaxe)
         {
-            return TileControl.Instance.GetTileObjectByType(ObjectInteractionType.None);
+            //return TileControl.Instance.GetTileObjectByType(ObjectInteractionType.None);
         }
-        return null;
+        return;
     }
 }
