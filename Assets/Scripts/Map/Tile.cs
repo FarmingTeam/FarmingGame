@@ -13,7 +13,7 @@ public class Tile
     bool canFloorEnter = true;
     bool canObjectEnter = true;
 
-    public void setFloor(FloorInteractionType type)
+    public void SetFloor(FloorInteractionType type)
     {
         floorInteractionType = type;
         if (floorInteractionType == FloorInteractionType.Water)
@@ -22,7 +22,7 @@ public class Tile
             canFloorEnter = true;
     }
 
-    public void setObject(ObjectInteractionType type)
+    public void SetObject(ObjectInteractionType type)
     {
         objectInteractionType = type;
         switch (objectInteractionType)
