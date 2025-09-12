@@ -10,6 +10,8 @@ public class UIToolBar : UIBase
     [SerializeField] GameObject uiQuickSlotPrefab;
     List<UIQuickSlot> quickSlotList=new List<UIQuickSlot>();
     List<Equipment> equipmentList=new List<Equipment>();
+
+    UIQuickSlot selectedSlot;
     private void Start()
     {
         equipmentList.Add(ResourceManager.Instance.GetEquipment(1));
@@ -42,12 +44,12 @@ public class UIToolBar : UIBase
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            MapControl.Instance.player.tool.CurrentEquip = quickSlotList[0].slotEquipment;
-            Debug.Log(MapControl.Instance.player.tool.CurrentEquip.equipmentName);
+
+            SelectSlot(quickSlotList[0]);
         }
         else if(Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[1].slotEquipment;
+            SelectSlot(quickSlotList[1]);
             
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -70,6 +72,15 @@ public class UIToolBar : UIBase
 
 
     }
+    public void RefreshSelectedSlotEquipment()
+    {
+        if(selectedSlot!=null)
+        {
+            MapControl.Instance.player.tool.CurrentEquip = selectedSlot.slotEquipment;
+        }
+        
+    }
+
 
 
     public void SelectSlot(UIQuickSlot uIQuickSlot)
@@ -81,6 +92,7 @@ public class UIToolBar : UIBase
             {
                 slot.outline.enabled=true;
                 MapControl.Instance.player.tool.CurrentEquip=slot.slotEquipment;
+                selectedSlot = slot;
             }
         }
         

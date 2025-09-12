@@ -7,8 +7,8 @@ public class PlayerInventory : MonoBehaviour
 {
     public List<Item> playerInventoryList = new List<Item>();
     
-    [SerializeField] UIInventory uiInventory;
-    public int InventoryMaxNum { get; } = 10;
+    public UIInventory uiInventory;
+    public int InventoryMaxNum { get; } = 20;
 
 
     public Equipment selectedEquipment;

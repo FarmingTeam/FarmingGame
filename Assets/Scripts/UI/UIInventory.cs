@@ -19,7 +19,9 @@ public class UIInventory : UIBase
     // Start is called before the first frame update
     void Start()
     {
+
         playerInventory = MapControl.Instance.player.inventory; //맵컨트롤 참조
+        playerInventory.uiInventory = this;
         DescriptionPanel= Instantiate(DescriptionPanelPrefab, transform,false);
         DescriptionPanel.SetActive(false);
         for(int i = 0; i<playerInventory.InventoryMaxNum; i++)

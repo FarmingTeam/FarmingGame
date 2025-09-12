@@ -38,7 +38,7 @@ public class ItemData:ScriptableObject
     public bool isStackable;
     
 
-    public ItemData(int itemID, string itemName, string itemDescription, string itemPath, string itemType)
+    public ItemData(int itemID, string itemName, string itemDescription, string itemPath, string itemType,int maxNum)
     {
         this.itemID = itemID;
         this.itemName = itemName;
@@ -52,7 +52,11 @@ public class ItemData:ScriptableObject
         {
             this.itemType = ItemType.Potion;
         }
-        this.maxQuantity = 5;
+        else if(itemType=="Seed")
+        {
+            this.itemType = ItemType.Seed;
+        }
+        this.maxQuantity = maxNum;
         isStackable=maxQuantity>1? true: false;
     }
 }

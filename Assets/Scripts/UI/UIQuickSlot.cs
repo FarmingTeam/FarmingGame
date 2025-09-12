@@ -31,7 +31,7 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler,IPointerClickHandler
             eventData.pointerDrag.transform.SetParent(this.transform);
             eventData.pointerDrag.transform.localPosition = Vector3.zero;
             slotEquipment = eventData.pointerDrag.GetComponent<DragDrop>().equipment;
-
+            toolbar.RefreshSelectedSlotEquipment();
             
         }
         
