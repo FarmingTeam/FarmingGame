@@ -5,44 +5,77 @@ using UnityEngine;
 
 public class UISeedBasket : UIBase
 {
+
     PlayerInventory inventory;
-    public List<Item> playerInventoryList;
+    public List<Item> seedList;
     List<UISeedSlot> slots=new List<UISeedSlot>();
 
+    [SerializeField] GameObject seedSlotPrefab;
+
+    int seedInventorySlotNum = 16;
  
 
-    //씨앗 바구니를 열떄 정보들을 동기화함
+
     protected override void OnOpen()
     {
+
+        //아래 슬롯들 소환
         if(slots.Count == 0)
         {
+            for(int i = 0;i<seedInventorySlotNum;i++)
+            {
+                Instantiate(seedSlotPrefab,transform,false);
+            }
             slots = GetComponentsInChildren<UISeedSlot>(true).ToList();
         }
 
         inventory = MapControl.Instance.player.inventory;
-        this.playerInventoryList = inventory.playerInventoryList;
-        OpenSeedBasket();
+        seedList= inventory.seedList;
+        inventory.SubscribeOnQuantityChange(RefreshAllSeedSLots);
+
+        RefreshAllSeedSLots();
+        
     }
     //플레이어 인벤토리쪽을 이어두고
 
-
-    public void OpenSeedBasket()
+    protected override void OnClose()
     {
-        Debug.Log("바구니 열기");
-        //플레이어 인벤토리에 있는 씨앗들 설정
-        List<Item> seeds = new List<Item>();
-        foreach (var item in playerInventoryList)
-        {
-            if (item.itemData.itemType == ItemType.Seed)
-            {
-                seeds.Add(item);
-            }
-            //그다음 씨앗들을 띄우고 그중에서 선택하게 한다
-        }
+        inventory.UnsubscribeOnQuantityChange(RefreshAllSeedSLots);
+    }
+    private void Start()
+    {
+        inventory.uiSeedBasket = this;
+    }
 
-        for(int i = 0; i < seeds.Count; i++)
+
+    public void SetSeedSlotUI(Item seed)
+    {
+        var slot = FindEmptySeedSlot();
+        slot.SetSeedSlot(seed);
+
+    }
+
+    UISeedSlot FindEmptySeedSlot()
+    {
+        foreach (var slot in slots)
         {
-            slots[i].SetSeedSlot(seeds[i]);
+            if(slot.SlotSeedItem == null)
+            {
+                return slot;
+            }
+        }
+        Debug.Log("칸이 없습니다");
+        return null;
+    }
+
+
+
+    public void RefreshAllSeedSLots()
+    {
+        
+        foreach (var slot in slots)
+        {
+            slot.RefreshSeedSlot();
         }
     }
 }

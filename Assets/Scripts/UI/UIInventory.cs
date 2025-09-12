@@ -31,6 +31,23 @@ public class UIInventory : UIBase
 
         uISlots = GetComponentsInChildren<UISlot>().ToList();
     }
+
+    protected override void OnOpen()
+    {
+        if(playerInventory == null)
+        {
+            playerInventory = MapControl.Instance.player.inventory; 
+        }
+        playerInventory.SubscribeOnQuantityChange(RefreshAllSlots);
+        RefreshAllSlots();
+    }
+
+    protected override void OnClose()
+    {
+        playerInventory.UnsubscribeOnQuantityChange(RefreshAllSlots);
+    }
+
+
     public void SetItemsUI(Item runtimeItemData)
     {
         var slot=FindEmptySlot();

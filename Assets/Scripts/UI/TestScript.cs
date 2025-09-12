@@ -15,8 +15,9 @@ public class TestScript : MonoBehaviour
     {
         UIManager.Instance.OpenUI<UIToolBar>();
         UIManager.Instance.OpenUI<UIInventory>();
-        
-   
+        UIManager.Instance.OpenUI<UISeedBasket>();
+
+
 
     }
 
