@@ -7,6 +7,7 @@ using UnityEngine;
 [Serializable]
 public class Tile
 {
+    public Vector2Int pos;
     [SerializeField] public FloorInteractionType floorInteractionType = FloorInteractionType.None;
     [SerializeField] public ObjectInteractionType objectInteractionType = ObjectInteractionType.None;
     public bool canEnter = true;
