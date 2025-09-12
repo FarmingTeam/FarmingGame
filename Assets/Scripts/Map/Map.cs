@@ -24,8 +24,7 @@ public class FloorData
 public class ObjectData
 {
     public int[] Pos;
-    public int[] Size;
-    public string Name;
+    public int ObjectType;
 }
 public class Map : MonoBehaviour
 {
@@ -33,7 +32,8 @@ public class Map : MonoBehaviour
     public const string MAPTILEPATH = "Json/MapData/";
     public const string TILEDATA = "TileData";
     public MapData mapData;
-
+    
+    
 
     [Header("타일맵 0번 레이어")]
     [SerializeField] Tilemap baseGroundGrass;
@@ -44,6 +44,7 @@ public class Map : MonoBehaviour
     [SerializeField] Tilemap TileFloor;
     [Header("타일맵 2번 레이어")]
     [SerializeField] Tilemap TileObject;
+    public Dictionary<Vector2Int, List<Vector2Int>> objectGraph = new Dictionary<Vector2Int, List<Vector2Int>>();
 
     [Header("타일 정보")]
     [SerializeField] public Tile[,] tiles;
@@ -52,7 +53,7 @@ public class Map : MonoBehaviour
     //Refactor : Remove Later , move to Scene Loader
     private void Start()
     {
-        LoadMap(SceneChangeManager.FARMSCENE);
+        LoadMap("TestMap");
     }
 
     //Debug Update 
@@ -62,15 +63,15 @@ public class Map : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            tiles[3, 5].OnInteract(EquipmentType.Hoe);
-            SetTileFloor(new Vector2Int(3,5));
-            SetTileObject(new Vector2Int(3, 5));
+            OnPlayerInteract(new Vector2Int(7, 5), EquipmentType.Axe);
         }
     }
 
-    public void OnPlayerInteract(Vector2Int lookPos, Equipment tool)
+    public void OnPlayerInteract(Vector2Int lookPos, EquipmentType tool)
     {
-
+        tiles[lookPos.x, lookPos.y].OnInteract(tool);
+        SetTileFloor(lookPos);
+        TileObjectAction(tiles[lookPos.x, lookPos.y], tool);
     }
 
     public void SetTileFloor(Vector2Int index)
@@ -78,9 +79,29 @@ public class Map : MonoBehaviour
         TileFloor.SetTile((Vector3Int)index, TileControl.Instance.GetTileFloorByType(tiles[index.x, index.y].floorInteractionType).tileBase);
     }
 
-    public void SetTileObject(Vector2Int index)
+    public void SetTileObject(Vector2Int index, TileBase tile)
     {
-        TileObject.SetTile((Vector3Int)index, TileControl.Instance.GetTileObjectByType(tiles[index.x, index.y].objectInteractionType).tileBase);
+        TileObject.SetTile((Vector3Int)index, tile);
+    }
+
+    public void TileObjectAction(Tile tile, EquipmentType equipment)
+    {
+        TileBase tileBase = null;
+        Vector2Int currentPos = tile.pos;
+        bool? isChanged = TileControl.Instance.OBJECTACTIONPAIR[tiles[currentPos.x, currentPos.y].objectInteractionType]
+            ?.Interaction(equipment, tile, out tileBase);
+        if (isChanged == true)
+            SetTileObject(currentPos, tileBase);
+        for (int i = 0; i < objectGraph[currentPos].Count; i++)
+        {
+            Vector2Int connectedpos = objectGraph[currentPos][i];
+            Tile connectedTile = tiles[connectedpos.x, connectedpos.y];
+            isChanged = TileControl.Instance.OBJECTACTIONPAIR[connectedTile.objectInteractionType]
+                ?.Interaction(equipment, connectedTile, out tileBase);
+            if (isChanged == true)
+                SetTileObject(connectedpos, tileBase);
+        }
+
     }
 
     public void LoadMap(string sceneName)
@@ -97,7 +118,10 @@ public class Map : MonoBehaviour
         tiles = new Tile[mapData.MapSize[0], mapData.MapSize[1]];
         for (int i = 0; i < mapData.MapSize[0]; i++)
             for (int j = 0; j < mapData.MapSize[1]; j++)
+            {
                 tiles[i, j] = new Tile();
+                tiles[i, j].pos = new Vector2Int(i, j);
+            }
 
         //Floor 깔기
         for (int i = 0; i < mapData.TileFloor.Length; i++)
@@ -107,6 +131,11 @@ public class Map : MonoBehaviour
             MapControl.Instance.map.SetTileFloor(new Vector2Int(t.Pos[0], t.Pos[1]));
         }
         //Object 깔기
-
+        for (int i = 0; i < mapData.TileObject.Length; i++)
+        {
+            ObjectData t = mapData.TileObject[i];
+            ChunkData data = TileControl.Instance.GetChunkDataByID(t.ObjectType);
+            ChunkControl.Instance.SetTileObjectInMap(new Vector2Int(t.Pos[0], t.Pos[1]), data);
+        }
     }
 }
