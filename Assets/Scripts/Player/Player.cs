@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] public ToolPivot tool;
     [SerializeField] public PlayerInventory inventory;
 
+    
+
     public void HandleQuickslot(int slot)
     {
         tool.SelectQuickslot(slot);
