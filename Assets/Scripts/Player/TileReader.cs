@@ -39,7 +39,7 @@ public class TileReader : MonoBehaviour
     private void Start()
     {
         grid = MapControl.Instance.map.GetComponent<Grid>();
-        InvokeRepeating(nameof(LogPosition), 0.5f, 0.5f);
+        //InvokeRepeating(nameof(LogPosition), 0.5f, 0.5f);
     }
 
     public void SetFacing(Facing facing)

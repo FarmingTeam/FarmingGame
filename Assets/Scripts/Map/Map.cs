@@ -56,17 +56,6 @@ public class Map : MonoBehaviour
         LoadMap("TestMap");
     }
 
-    //Debug Update 
-    //Refactor : Remove Later
-    //EX) tiles[가로위치, 세로로위치]
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnPlayerInteract(new Vector2Int(7, 5), EquipmentType.Axe);
-        }
-    }
-
     public void OnPlayerInteract(Vector2Int lookPos, EquipmentType tool)
     {
         tiles[lookPos.x, lookPos.y].OnInteract(tool);
@@ -92,6 +81,9 @@ public class Map : MonoBehaviour
             ?.Interaction(equipment, tile, out tileBase);
         if (isChanged == true)
             SetTileObject(currentPos, tileBase);
+        if (!objectGraph.ContainsKey(currentPos))
+            return;
+
         for (int i = 0; i < objectGraph[currentPos].Count; i++)
         {
             Vector2Int connectedpos = objectGraph[currentPos][i];

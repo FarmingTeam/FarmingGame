@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestScript : MonoBehaviour
+public class ItemTest : MonoBehaviour
 {
-
     [SerializeField] Button Button;
     [SerializeField] Button button2;
     [SerializeField] Button button3;
@@ -16,9 +15,6 @@ public class TestScript : MonoBehaviour
         UIManager.Instance.OpenUI<UIToolBar>();
         UIManager.Instance.OpenUI<UIInventory>();
         UIManager.Instance.OpenUI<UISeedBasket>();
-
-
-
     }
 
     public void Test()
