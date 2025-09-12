@@ -8,9 +8,34 @@ using UnityEngine;
 public class Tile
 {
     public Vector2Int pos;
-    [SerializeField] public FloorInteractionType floorInteractionType = FloorInteractionType.None;
-    [SerializeField] public ObjectInteractionType objectInteractionType = ObjectInteractionType.None;
-    public bool canEnter = true;
+    public FloorInteractionType floorInteractionType { get; private set; }
+    public ObjectInteractionType objectInteractionType { get; private set; }
+    bool canFloorEnter = true;
+    bool canObjectEnter = true;
+
+    public void setFloor(FloorInteractionType type)
+    {
+        floorInteractionType = type;
+        if (floorInteractionType == FloorInteractionType.Water)
+            canFloorEnter = false;
+        else
+            canFloorEnter = true;
+    }
+
+    public void setObject(ObjectInteractionType type)
+    {
+        objectInteractionType = type;
+        switch (objectInteractionType)
+        {
+            case ObjectInteractionType.None:
+                //Add case
+                canObjectEnter = true;
+                break;
+            default:
+                canObjectEnter = false;
+                break;
+        }
+    }
 
     public Tile()
     {
@@ -22,10 +47,13 @@ public class Tile
         this.floorInteractionType = floorInteractionType;
         this.objectInteractionType = objectInteraction;
     }
-
     public void OnInteract(EquipmentType equipment)
     { 
         TileControl.Instance.FLOORACTIONPAIR[floorInteractionType]?.Interaction(equipment, this);
+    }
 
+    public bool CanEnter()
+    {
+        return canFloorEnter && canObjectEnter;
     }
 }

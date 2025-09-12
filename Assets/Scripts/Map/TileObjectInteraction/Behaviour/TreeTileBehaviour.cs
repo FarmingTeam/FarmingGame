@@ -10,7 +10,7 @@ public class TreeTileBehaviour : TileObjectInteraction
         //만약 도끼를 들고있다면으로 수정
         if (tool == EquipmentType.Axe)
         {
-            tile.objectInteractionType = ObjectInteractionType.None;
+            tile.setObject(ObjectInteractionType.None);
             tileBase = null;
             return true;
         }
