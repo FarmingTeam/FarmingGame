@@ -19,7 +19,7 @@ public class ResourceManager : Singleton<ResourceManager>
 
     void SetItem()
     {
-        TextAsset itemCSVText = Resources.Load<TextAsset>("ItemData/ItemDataCSV/ItemTestCSV");
+        TextAsset itemCSVText = Resources.Load<TextAsset>("ItemData/ItemDataCSV/ItemTestExcel");
         string[] rows = itemCSVText.text.Split('\n');
         for (int i = 1; i < rows.Length; i++)
         {
@@ -33,7 +33,8 @@ public class ResourceManager : Singleton<ResourceManager>
                 columns[j] = columns[j].Trim();
             }
             int ID = int.Parse(columns[0]);
-            ItemData itemData = new ItemData(ID, columns[1], columns[2], columns[3], columns[4]);
+            int maxNum=int.Parse(columns[5]);
+            ItemData itemData = new ItemData(ID, columns[1], columns[2], columns[3], columns[4],maxNum);
             itemDataDic.Add(ID, itemData);
 
 
@@ -59,7 +60,7 @@ public class ResourceManager : Singleton<ResourceManager>
 
     void SetEquipment()
     {
-        TextAsset itemCSVText = Resources.Load<TextAsset>("ItemData/ItemDataCSV/EquipmentExcel");
+        TextAsset itemCSVText = Resources.Load<TextAsset>("EquipmentData/EquipmentDataCSV/EquipmentExcel");
 
         string[] rows = itemCSVText.text.Split('\n');
         for (int i = 1; i < rows.Length; i++)
@@ -84,7 +85,7 @@ public class ResourceManager : Singleton<ResourceManager>
     {
         if (equipmentDataDIc.TryGetValue(equipmentID, out Equipment equipment))
         {
-            equipment.equipmentIcon= Resources.Load < Sprite > ("ItemData/CarrotSeed"); //테스트용 추후 지울예정
+            equipment.equipmentIcon= Resources.Load < Sprite > ($"EquipmentData/{equipment.equipmentPath}"); //테스트용 추후 지울예정
             //equipment.equipmentIcon = Resources.Load<Sprite>($"ItemData/{equipment.equipmentPath}");
             return equipment;
         }
