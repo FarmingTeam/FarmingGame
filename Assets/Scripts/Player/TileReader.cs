@@ -14,25 +14,11 @@ public class TileReader : MonoBehaviour
     public Facing defaultFacing = Facing.Down;
     private Facing currentFacing;
 
-    // 타일 충돌 읽기 초안
-    [SerializeField]
-    private string[] obstacleTileNames =
-        { "TileObject", "BaseGround_Water", "BaseGround_Wall" };
-
     private HashSet<string> obstacleNameSet;
 
     private void Awake()
     {
         currentFacing = defaultFacing;
-        obstacleNameSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        if (obstacleTileNames != null)
-        {
-            foreach (var n in obstacleTileNames)
-            {
-                if (!string.IsNullOrWhiteSpace(n))
-                    obstacleNameSet.Add(n.Trim());
-            }
-        }
     }
 
     public void SetFacing(Facing facing)
