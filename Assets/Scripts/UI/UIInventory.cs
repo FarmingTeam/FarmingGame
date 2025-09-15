@@ -21,7 +21,7 @@ public class UIInventory : UIBase
     {
 
         playerInventory = MapControl.Instance.player.inventory; //맵컨트롤 참조
-        playerInventory.uiInventory = this;
+
         DescriptionPanel= Instantiate(DescriptionPanelPrefab, transform,false);
         DescriptionPanel.SetActive(false);
         for(int i = 0; i<playerInventory.InventoryMaxNum; i++)
@@ -36,35 +36,47 @@ public class UIInventory : UIBase
     {
         if(playerInventory == null)
         {
-            playerInventory = MapControl.Instance.player.inventory; 
+           playerInventory = MapControl.Instance.player.inventory; 
         }
-        playerInventory.SubscribeOnQuantityChange(RefreshAllSlots);
-        RefreshAllSlots();
+        playerInventory.SubscribeOnItemChange(StartSettingItem);
+
+        
+        
     }
 
     protected override void OnClose()
     {
-        playerInventory.UnsubscribeOnQuantityChange(RefreshAllSlots);
+        playerInventory.UnsubscribeOnItemChange(StartSettingItem);
+    }
+
+    void StartSettingItem()
+    {
+        for (int i = 0; i < uISlots.Count; i++)
+        {
+
+            SetItemsUI(playerInventory.slotDataList[i].slotItem, i);
+        }
     }
 
 
-    public void SetItemsUI(Item runtimeItemData)
+
+    public void SetItemsUI(Item runtimeItemData,int slotIndex)
     {
-        var slot=FindEmptySlot();
+        var slot=uISlots[slotIndex];
         slot.SetSlot(runtimeItemData);
             
     }
-    UISlot FindEmptySlot()
-    {
-        foreach (var slot in uISlots)
-        {
-            if (slot.SlotItemData == null)
-            {
-                return slot;
-            }
-        }
-        return null;
-    }
+    //UISlot FindEmptySlot()
+    //{
+    //    foreach (var slot in uISlots)
+    //    {
+    //        if (slot.SlotItemData == null)
+    //        {
+    //            return slot;
+    //        }
+    //    }
+    //    return null;
+    //}
 
     public void RefreshAllSlots()
     {

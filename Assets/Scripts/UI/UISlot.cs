@@ -14,7 +14,7 @@ public class UISlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     [SerializeField] TextMeshProUGUI quantityText;
 
     GameObject slotDescriptionPanel;
-    public Item SlotItemData{ get; private set; }
+    [field:SerializeField] public Item SlotItemData{ get; private set; }
 
     private void OnEnable()
     {
@@ -24,6 +24,12 @@ public class UISlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     {
         
         SlotItemData = runtimeItemData;
+        if(SlotItemData==null)
+        {
+            image.sprite = null;
+            quantityText.SetText("0");
+            return;
+        }
         image.sprite=runtimeItemData.itemData.itemIcon;
         quantityText.SetText(runtimeItemData.currentQuantity.ToString());
         

@@ -12,9 +12,10 @@ public class UIManager : Singleton<UIManager>
     private bool _isCleaning;
     private Dictionary<string, UIBase> _uiDictionary = new Dictionary<string, UIBase>();
 
-    [SerializeField] Canvas _canvas;
+    Canvas _canvas;
     private void OnEnable()
     {
+        _canvas = FindObjectOfType<Canvas>();
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
@@ -24,7 +25,7 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-
+    
 
     // ================================
     // UI 관리
