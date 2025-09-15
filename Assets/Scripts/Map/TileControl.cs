@@ -9,7 +9,7 @@ using UnityEngine.Tilemaps;
 public class TileControl : Singleton<TileControl>
 {
     [SerializeField] public TileFloor[] tileFloors;
-    [SerializeField] public TileObject[] tileObjects;
+    [SerializeField] public ChunkData[] chunkDatas;
 
     readonly public Dictionary<FloorInteractionType, TileFloorInteraction> FLOORACTIONPAIR = new Dictionary<FloorInteractionType, TileFloorInteraction>
     {
@@ -26,16 +26,16 @@ public class TileControl : Singleton<TileControl>
         { ObjectInteractionType.Rock, new RockTileBehaviour()}
     };
 
-
     public TileFloor GetTileFloorByType(FloorInteractionType type)
     {
         TileFloor result = tileFloors.First(state => state.floorType == type);
         return result;
     }
 
-    public TileObject GetTileObjectByType(ObjectInteractionType type)
+    public ChunkData GetChunkDataByID(int id)
     {
-        TileObject result = tileObjects.First(state => state.objectType == type);
+        ChunkData result = chunkDatas.First(data => data.objectType == (ObjectType)id);
         return result;
     }
+
 }

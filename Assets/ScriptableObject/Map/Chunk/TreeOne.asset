@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d262317abfd51ac4ca6da472f4cd02e9, type: 3}
-  m_Name: Rock
+  m_Script: {fileID: 11500000, guid: c863da345ad3e754ab3986c7c86dd72b, type: 3}
+  m_Name: TreeOne
   m_EditorClassIdentifier: 
-  objectType: 2
-  tileBase: {fileID: 11400000, guid: 8a49acee1aa8be04c86761ec6763ba6f, type: 2}
-  isCollidable: 1
-  tileColor: {r: 1, g: 1, b: 1, a: 1}
+  objectType: 11
+  interactionType: 1
+  tileBases:
+  - Tiles:
+    - {fileID: 11400000, guid: 56584503c393cc645a6819448bafe500, type: 2}

@@ -7,8 +7,35 @@ using UnityEngine;
 [Serializable]
 public class Tile
 {
-    [SerializeField] public FloorInteractionType floorInteractionType = FloorInteractionType.None;
-    [SerializeField] public ObjectInteractionType objectInteractionType = ObjectInteractionType.None;
+    public Vector2Int pos;
+    public FloorInteractionType floorInteractionType { get; private set; }
+    public ObjectInteractionType objectInteractionType { get; private set; }
+    bool canFloorEnter = true;
+    bool canObjectEnter = true;
+
+    public void SetFloor(FloorInteractionType type)
+    {
+        floorInteractionType = type;
+        if (floorInteractionType == FloorInteractionType.Water)
+            canFloorEnter = false;
+        else
+            canFloorEnter = true;
+    }
+
+    public void SetObject(ObjectInteractionType type)
+    {
+        objectInteractionType = type;
+        switch (objectInteractionType)
+        {
+            case ObjectInteractionType.None:
+                //Add case
+                canObjectEnter = true;
+                break;
+            default:
+                canObjectEnter = false;
+                break;
+        }
+    }
 
     public Tile()
     {
@@ -20,14 +47,13 @@ public class Tile
         this.floorInteractionType = floorInteractionType;
         this.objectInteractionType = objectInteraction;
     }
-
     public void OnInteract(EquipmentType equipment)
     { 
-        TileFloor tileFloor = TileControl.Instance.FLOORACTIONPAIR[floorInteractionType]?.Interaction(equipment);
-        if (tileFloor != null)
-            this.floorInteractionType = tileFloor.floorType;
-        TileObject tileObject = TileControl.Instance.OBJECTACTIONPAIR[objectInteractionType]?.Interaction(equipment);
-        if (tileObject != null)
-            this.objectInteractionType = tileObject.objectType;
+        TileControl.Instance.FLOORACTIONPAIR[floorInteractionType]?.Interaction(equipment, this);
+    }
+
+    public bool CanEnter()
+    {
+        return canFloorEnter && canObjectEnter;
     }
 }
