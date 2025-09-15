@@ -14,7 +14,7 @@ public class UISlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     [SerializeField] TextMeshProUGUI quantityText;
 
     GameObject slotDescriptionPanel;
-    public Item SlotItemData{ get; private set; }
+    public Item SlotItemData { get; private set; } = null;
 
     private void OnEnable()
     {
@@ -24,6 +24,12 @@ public class UISlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     {
         
         SlotItemData = runtimeItemData;
+        if(SlotItemData==null)
+        {
+            image.sprite = null;
+            quantityText.SetText("0");
+            return;
+        }
         image.sprite=runtimeItemData.itemData.itemIcon;
         quantityText.SetText(runtimeItemData.currentQuantity.ToString());
         
@@ -49,6 +55,7 @@ public class UISlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         Debug.Log("마우스 올림");
         if(SlotItemData!=null)
         {
+            Debug.Log(SlotItemData);
             slotDescriptionPanel=uiInventory.DescriptionPanel;
             slotDescriptionPanel.SetActive(true);
             slotDescriptionPanel.transform.SetParent(transform,false);

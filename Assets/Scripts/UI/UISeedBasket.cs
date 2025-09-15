@@ -31,7 +31,7 @@ public class UISeedBasket : UIBase
 
         inventory = MapControl.Instance.player.inventory;
         seedList= inventory.seedList;
-        inventory.SubscribeOnQuantityChange(RefreshAllSeedSLots);
+        inventory.SubscribeOnItemChange(RefreshAllSeedSLots);
 
         RefreshAllSeedSLots();
         
@@ -40,11 +40,7 @@ public class UISeedBasket : UIBase
 
     protected override void OnClose()
     {
-        inventory.UnsubscribeOnQuantityChange(RefreshAllSeedSLots);
-    }
-    private void Start()
-    {
-        inventory.uiSeedBasket = this;
+        inventory.UnsubscribeOnItemChange(RefreshAllSeedSLots);
     }
 
 

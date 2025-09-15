@@ -8,6 +8,7 @@ public class ResourceManager : Singleton<ResourceManager>
     
     Dictionary<int, ItemData> itemDataDic=new Dictionary<int,ItemData>();
     Dictionary<int, Equipment> equipmentDataDIc = new Dictionary<int, Equipment>();
+    Dictionary<int,SeedData> seedDataDic = new Dictionary<int,SeedData>();
     protected override void Awake()
     {
         base.Awake();
@@ -34,7 +35,20 @@ public class ResourceManager : Singleton<ResourceManager>
             }
             int ID = int.Parse(columns[0]);
             int maxNum=int.Parse(columns[5]);
-            ItemData itemData = new ItemData(ID, columns[1], columns[2], columns[3], columns[4],maxNum);
+
+            //미리 씨앗데이터나 기타 데이터들은 로드후에
+            //여기에 딕셔너리에 이 아이템의 ID로 trygetvalue를 해보고
+            //그게 가능하면 SeedData로 넣고 아니면 아이템데이터로 생성자 만드는 식으로
+            ItemData itemData;
+            if(seedDataDic.TryGetValue(ID, out var seedData))
+            {
+                itemData = new SeedData(ID, columns[1], columns[2], columns[3], columns[4], maxNum,seedData.growTime); //여기에 더 추가
+            }
+            else
+            {
+                itemData = new ItemData(ID, columns[1], columns[2], columns[3], columns[4], maxNum);
+            }
+                
             itemDataDic.Add(ID, itemData);
 
 
@@ -96,6 +110,30 @@ public class ResourceManager : Singleton<ResourceManager>
         }
     }
 
+
+    public void SetSeed()
+    {
+        TextAsset itemCSVText = Resources.Load<TextAsset>("EquipmentData/EquipmentDataCSV/EquipmentExcel");
+
+        string[] rows = itemCSVText.text.Split('\n');
+        for (int i = 1; i < rows.Length; i++)
+        {
+            if (string.IsNullOrEmpty(rows[i]))
+            {
+                return;
+            }
+            string[] columns = rows[i].Split(',');
+            for (int j = 0; j < columns.Length; j++)
+            {
+                columns[j] = columns[j].Trim();
+            }
+            int ID = int.Parse(columns[0]);
+            Equipment equipment = new Equipment(ID, columns[1], columns[2], columns[3], columns[4]);
+            equipmentDataDIc.Add(ID, equipment);
+
+
+        }
+    }
 
 
 

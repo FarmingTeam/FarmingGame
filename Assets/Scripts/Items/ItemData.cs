@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using UnityEngine.Tilemaps;
 
 
 
@@ -60,6 +61,39 @@ public class ItemData:ScriptableObject
         isStackable=maxQuantity>1? true: false;
     }
 }
+
+[Serializable]
+public class SeedData : ItemData
+{
+    public int growTime;
+
+    public TileBase seedTileBase;
+    public TileBase cropTileBase;
+    public SeedData(int itemID, string itemName, string itemDescription, string itemPath, string itemType, int maxNum,int growTime) : base(itemID, itemName, itemDescription, itemPath, itemType, maxNum)
+    {
+        this.itemID = itemID;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemPath = itemPath;
+        if (itemType == "Others")
+        {
+            this.itemType = ItemType.Others;
+        }
+        else if (itemType == "Potions")
+        {
+            this.itemType = ItemType.Potion;
+        }
+        else if (itemType == "Seed")
+        {
+            this.itemType = ItemType.Seed;
+        }
+        this.maxQuantity = maxNum;
+        isStackable = maxQuantity > 1 ? true : false;
+        this.growTime = growTime;
+
+    }
+}
+
 
 [Serializable]
 public class Item

@@ -17,11 +17,27 @@ public class ItemTest : MonoBehaviour
         UIManager.Instance.OpenUI<UISeedBasket>();
     }
 
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            MapControl.Instance.player.inventory.AdditemsByID(1, 1);
+            MapControl.Instance.player.inventory.AdditemsByID(1, 10);
+            MapControl.Instance.player.inventory.AdditemsByID(3, 1);
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            MapControl.Instance.player.inventory.SwitchItemPlaces(5, 0);
+        }
+        if( Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            MapControl.Instance.player.inventory.SubtractItemQuantity(1, 12);
+        }
+    }
     public void Test()
     {
-        MapControl.Instance.player.inventory.AdditemsByID(1);
-        MapControl.Instance.player.inventory.AdditemsByID(2);
-        MapControl.Instance.player.inventory.AdditemsByID(3);
+        
     }
 
     public void Test2()
