@@ -35,10 +35,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /*if (OnCheck())
-            OnMove();
-        else
-            rigidbody.velocity = Vector2.zero; // 이동 차단*/
+        OnMove();
     }
 
     private void Update()
@@ -59,7 +56,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            MapControl.Instance.map.OnPlayerInteract((Vector2Int)player.tileReader.FrontCell(), player.tool.CurrentEquip.equipmentType); ;
+            MapControl.Instance.map.OnPlayerInteract((Vector2Int)player.tileReader.FrontCell(), player.tool.CurrentEquip.equipmentType);
             return;
         }
     }

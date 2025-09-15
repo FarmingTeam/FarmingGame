@@ -16,7 +16,13 @@ public class MapControl : Singleton<MapControl>
     }
     protected void Start()
     {
+        OnLoad();
+    }
+
+    public void OnLoad()
+    {
         map = Instantiate(mapPrefab);
         player = Instantiate(playerPrefab);
+        player.tileReader.grid = map.GetComponent<Grid>();
     }
 }

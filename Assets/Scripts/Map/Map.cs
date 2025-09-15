@@ -46,8 +46,6 @@ public class Map : MonoBehaviour
     public const string MAPTILEPATH = "Json/MapData/";
     public const string TILEDATA = "TileData";
     public MapData mapData;
-    
-    
 
     [Header("타일맵 0번 레이어")]
     [SerializeField] Tilemap baseGroundGrass;
