@@ -36,16 +36,28 @@ public class UIInventory : UIBase
     {
         if(playerInventory == null)
         {
-            playerInventory = MapControl.Instance.player.inventory; 
+           playerInventory = MapControl.Instance.player.inventory; 
         }
-        playerInventory.SubscribeOnItemChange(RefreshAllSlots);
-        RefreshAllSlots();
+        playerInventory.SubscribeOnItemChange(StartSettingItem);
+
+        
+        
     }
 
     protected override void OnClose()
     {
-        playerInventory.UnsubscribeOnItemChange(RefreshAllSlots);
+        playerInventory.UnsubscribeOnItemChange(StartSettingItem);
     }
+
+    void StartSettingItem()
+    {
+        for (int i = 0; i < uISlots.Count; i++)
+        {
+
+            SetItemsUI(playerInventory.slotDataList[i].slotItem, i);
+        }
+    }
+
 
 
     public void SetItemsUI(Item runtimeItemData,int slotIndex)

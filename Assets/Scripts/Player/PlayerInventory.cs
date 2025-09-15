@@ -9,7 +9,7 @@ using UnityEngine.UI;
 [Serializable]
 public class SlotData
 {
-    public Item slotItem;
+    public Item slotItem = null;
 }
 
 
@@ -23,7 +23,7 @@ public class PlayerInventory : MonoBehaviour
     //여기 씨앗 리스트에는 인벤토리중 씨앗만(인벤토리는 씨앗포함 모두)
     public List<Item> seedList = new List<Item>();
 
-    public int InventoryMaxNum { get; } = 20;
+    public int InventoryMaxNum { get; } = 30;
 
 
     //이 갯수 체인지가 될경우에는 슬롯들의 상황을 업데이트 해줍니다
@@ -42,7 +42,13 @@ public class PlayerInventory : MonoBehaviour
     {
         return new Item(itemData,quantity);
     }
-
+    private void Start()
+    {
+        for(int i = 0; i < InventoryMaxNum; i++)
+        {
+            slotDataList.Add(new SlotData());
+        }
+    }
 
     //단일 아이템 더하기
     public void AdditemsByID(int itemID,int addQuantity)     
@@ -102,6 +108,7 @@ public class PlayerInventory : MonoBehaviour
                             quantity = 0;
                             //여기에 이제 완료 업데이트
                             onItemChange.Invoke();
+                            Debug.Log("아이템 변화1");
                             return;
                         }
                     }
@@ -167,6 +174,7 @@ public class PlayerInventory : MonoBehaviour
 
                 //여기에 완료 업데이트
                 onItemChange.Invoke();
+                Debug.Log("아이템 변화");
             }
             
         }
