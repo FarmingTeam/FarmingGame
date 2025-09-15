@@ -10,6 +10,7 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler,IPointerClickHandler
     UIToolBar toolbar;
     public DragDrop dragDropEquipment;
     public Outline outline;
+    public Image waterBar;
 
     
 

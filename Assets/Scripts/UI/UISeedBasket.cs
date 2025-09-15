@@ -7,12 +7,14 @@ public class UISeedBasket : UIBase
 {
 
     PlayerInventory inventory;
-    public List<Item> seedList;
+
     List<UISeedSlot> slots=new List<UISeedSlot>();
+    Dictionary<ItemData, int> seedInventoryDic;
+
 
     [SerializeField] GameObject seedSlotPrefab;
 
-    int seedInventorySlotNum = 16;
+    int SeedInventorySlotNum { get; } = 16;
  
 
 
@@ -22,7 +24,7 @@ public class UISeedBasket : UIBase
         //아래 슬롯들 소환
         if(slots.Count == 0)
         {
-            for(int i = 0;i<seedInventorySlotNum;i++)
+            for(int i = 0;i<SeedInventorySlotNum;i++)
             {
                 Instantiate(seedSlotPrefab,transform,false);
             }
@@ -30,24 +32,61 @@ public class UISeedBasket : UIBase
         }
 
         inventory = MapControl.Instance.player.inventory;
-        seedList= inventory.seedList;
-        inventory.SubscribeOnItemChange(RefreshAllSeedSLots);
 
-        RefreshAllSeedSLots();
+        //인벤토리에서 씨앗인거만 가져옴
+        
+        inventory.SubscribeOnItemChange(SetSeedSlotUI);
+
+
         
     }
     //플레이어 인벤토리쪽을 이어두고
 
     protected override void OnClose()
     {
-        inventory.UnsubscribeOnItemChange(RefreshAllSeedSLots);
+        inventory.UnsubscribeOnItemChange(SetSeedSlotUI);
     }
 
 
-    public void SetSeedSlotUI(Item seed)
+    public void SetSeedSlotUI()
     {
-        var slot = FindEmptySeedSlot();
-        slot.SetSeedSlot(seed);
+
+        seedInventoryDic = new Dictionary<ItemData, int>();
+        foreach (var slot in inventory.slotDataList)
+        {
+
+            if(slot.slotItem==null)
+            {
+                continue;
+            }
+            if (slot.slotItem.itemData.itemType == ItemType.Seed)
+            {
+
+
+                //만약 씨앗이면 딕셔너리에 그 아이템 아이디가 있으면 quantity value만 더해서 다시넣어주기
+                if (seedInventoryDic.TryGetValue(slot.slotItem.itemData, out int quantity))
+                {
+                    seedInventoryDic[slot.slotItem.itemData] = quantity + slot.slotItem.currentQuantity;
+                }
+                else
+                {
+                    //만약 딕셔너리에 없었으면 새로 등록
+                    seedInventoryDic.Add(slot.slotItem.itemData, slot.slotItem.currentQuantity);
+                }
+
+
+
+            }
+        }
+
+
+        var list=seedInventoryDic.ToList();
+        for(int i=0;i<list.Count;i++)
+        {
+            slots[i].SetSeedSlot(list[i].Key, list[i].Value);
+        }
+
+        //만약 인벤토리 최대갯수를 초과하면
 
     }
 
@@ -65,13 +104,4 @@ public class UISeedBasket : UIBase
     }
 
 
-
-    public void RefreshAllSeedSLots()
-    {
-        
-        foreach (var slot in slots)
-        {
-            slot.RefreshSeedSlot();
-        }
-    }
 }

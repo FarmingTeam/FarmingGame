@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class UISeedSlot : MonoBehaviour
 {
-    public Item SlotSeedItem { get; private set; }
+    public ItemData SlotSeedItem { get; private set; }
     Image image;
     TextMeshProUGUI quantityText;
    
 
-    public void SetSeedSlot(Item item)
+    public void SetSeedSlot(ItemData itemData, int quantity)
     {
         if(image==null)
         {
@@ -21,12 +21,12 @@ public class UISeedSlot : MonoBehaviour
         {
             quantityText=GetComponentInChildren<TextMeshProUGUI>();
         }
-        Debug.Log(item);
-        SlotSeedItem = item;
+
+        SlotSeedItem = itemData;
         if(SlotSeedItem != null)
         {
-            image.sprite = item.itemData.itemIcon;
-            quantityText.SetText(item.currentQuantity.ToString());
+            image.sprite = SlotSeedItem.itemIcon;
+            quantityText.SetText(quantity.ToString());
         }
         else
         {
@@ -37,27 +37,5 @@ public class UISeedSlot : MonoBehaviour
     }
 
 
-    public void RefreshSeedSlot()
-    {
-        if (image == null)
-        {
-            image = GetComponent<Image>();
-        }
-        if (quantityText == null)
-        {
-            quantityText = GetComponentInChildren<TextMeshProUGUI>();
-        }
-
-
-        if (SlotSeedItem!=null&&SlotSeedItem.itemData!=null)
-        {
-            image.sprite= SlotSeedItem.itemData.itemIcon;
-            quantityText.SetText(SlotSeedItem.currentQuantity.ToString());
-        }
-        else
-        {
-            image.sprite = null;
-            quantityText.SetText(0.ToString());
-        }
-    }
+ 
 }

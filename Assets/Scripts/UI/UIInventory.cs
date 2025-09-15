@@ -66,25 +66,8 @@ public class UIInventory : UIBase
         slot.SetSlot(runtimeItemData);
             
     }
-    //UISlot FindEmptySlot()
-    //{
-    //    foreach (var slot in uISlots)
-    //    {
-    //        if (slot.SlotItemData == null)
-    //        {
-    //            return slot;
-    //        }
-    //    }
-    //    return null;
-    //}
-
-    public void RefreshAllSlots()
-    {
-        foreach(var slot in uISlots)
-        {
-            slot.RefreshSlot();
-        }
-    }
+   
+   
 
     
     
