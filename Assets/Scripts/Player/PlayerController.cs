@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
+            if (player.tool.CurrentEquip == null)
+                return;
             MapControl.Instance.map.OnPlayerInteract((Vector2Int)player.tileReader.FrontCell(), player.tool.CurrentEquip.equipmentType);
             return;
         }
