@@ -4,12 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using JetBrains.Annotations;
 
 //레이어 1번, 2번에 대한 정보 저장용
 public class TileControl : Singleton<TileControl>
 {
     [SerializeField] public TileFloor[] tileFloors;
     [SerializeField] public ChunkData[] chunkDatas;
+    [SerializeField] public SeedData[] seedDatas;
 
     readonly public Dictionary<FloorInteractionType, TileFloorInteraction> FLOORACTIONPAIR = new Dictionary<FloorInteractionType, TileFloorInteraction>
     {
@@ -35,6 +37,12 @@ public class TileControl : Singleton<TileControl>
     public ChunkData GetChunkDataByID(int id)
     {
         ChunkData result = chunkDatas.First(data => data.objectType == (ObjectType)id);
+        return result;
+    }
+
+    public SeedData GetSeedDataByID(int id)
+    {
+        SeedData result = seedDatas.First(data => data.itemID == id);
         return result;
     }
 

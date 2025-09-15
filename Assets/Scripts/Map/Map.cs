@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -12,6 +13,7 @@ public class MapData
     public int[] MapSize;
     public FloorData[] TileFloor;
     public ObjectData[] TileObject;
+    public SeedTileData[] TileSeed;
 }
 
 [Serializable]
@@ -26,6 +28,18 @@ public class ObjectData
     public int[] Pos;
     public int ObjectType;
 }
+
+[Serializable]
+public class SeedTileData
+{
+    public int[] Pos;
+    public int SeedType;
+    public bool IsPlanted;
+    public int PlantedDate;
+}
+
+
+
 public class Map : MonoBehaviour
 {
     //저장데이터
@@ -45,6 +59,8 @@ public class Map : MonoBehaviour
     [Header("타일맵 2번 레이어")]
     [SerializeField] Tilemap TileObject;
     public Dictionary<Vector2Int, List<Vector2Int>> objectGraph = new Dictionary<Vector2Int, List<Vector2Int>>();
+    [Header("타일맵 3번 레이어")]
+    [SerializeField] Tilemap TileSeed;
 
     [Header("타일 정보")]
     [SerializeField] public Tile[,] tiles;
@@ -75,6 +91,11 @@ public class Map : MonoBehaviour
         TileObject.SetTile((Vector3Int)index, tile);
     }
 
+    public void SetTileSeed(Vector2Int index, TileBase tile)
+    {
+        TileSeed.SetTile((Vector3Int)index, tile);
+    }
+
     public void TileObjectAction(Tile tile, EquipmentType equipment)
     {
         TileBase tileBase = null;
@@ -100,6 +121,7 @@ public class Map : MonoBehaviour
 
     public void LoadMap(string sceneName)
     {
+        //File 경로 불러오기
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.Append(MAPTILEPATH).Append(sceneName).Append(TILEDATA);
         var file = Resources.Load(stringBuilder.ToString()) as TextAsset;
@@ -108,7 +130,8 @@ public class Map : MonoBehaviour
             throw new System.Exception(stringBuilder.Append("Is not Valid").ToString());
         }
         mapData = JsonUtility.FromJson<MapData>(file.text);
-
+        
+        //타일 크기 지정
         tiles = new Tile[mapData.MapSize[0], mapData.MapSize[1]];
         for (int i = 0; i < mapData.MapSize[0]; i++)
             for (int j = 0; j < mapData.MapSize[1]; j++)
@@ -130,6 +153,16 @@ public class Map : MonoBehaviour
             ObjectData t = mapData.TileObject[i];
             ChunkData data = TileControl.Instance.GetChunkDataByID(t.ObjectType);
             ChunkControl.Instance.SetTileObjectInMap(new Vector2Int(t.Pos[0], t.Pos[1]), data);
+        }
+        //Seed 깔기
+        for (int i = 0; i < mapData.TileSeed.Length; i++)
+        {
+            SeedTileData t = mapData.TileSeed[i];
+            //Refactor : 나중에 단순화
+            tiles[t.Pos[0], t.Pos[1]].seed.InitSeed(TileControl.Instance.GetSeedDataByID(t.SeedType));
+            tiles[t.Pos[0], t.Pos[1]].seed.PlantedDate = t.PlantedDate;
+            SetTileSeed(new Vector2Int(t.Pos[0], t.Pos[1]), tiles[t.Pos[0], t.Pos[1]].seed.SeedState());
+            
         }
     }
 }
