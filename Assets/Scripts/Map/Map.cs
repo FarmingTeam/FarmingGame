@@ -100,6 +100,7 @@ public class Map : MonoBehaviour
 
     public void LoadMap(string sceneName)
     {
+        //File 경로 불러오기
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.Append(MAPTILEPATH).Append(sceneName).Append(TILEDATA);
         var file = Resources.Load(stringBuilder.ToString()) as TextAsset;
@@ -108,7 +109,8 @@ public class Map : MonoBehaviour
             throw new System.Exception(stringBuilder.Append("Is not Valid").ToString());
         }
         mapData = JsonUtility.FromJson<MapData>(file.text);
-
+        
+        //타일 크기 지정
         tiles = new Tile[mapData.MapSize[0], mapData.MapSize[1]];
         for (int i = 0; i < mapData.MapSize[0]; i++)
             for (int j = 0; j < mapData.MapSize[1]; j++)
@@ -131,5 +133,7 @@ public class Map : MonoBehaviour
             ChunkData data = TileControl.Instance.GetChunkDataByID(t.ObjectType);
             ChunkControl.Instance.SetTileObjectInMap(new Vector2Int(t.Pos[0], t.Pos[1]), data);
         }
+        //Seed 깔기
+
     }
 }

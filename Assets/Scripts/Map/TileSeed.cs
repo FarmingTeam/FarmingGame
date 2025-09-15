@@ -21,7 +21,7 @@ public class TileSeed : MonoBehaviour
             if (RemainingDate <= 0)
             {
                 RemainingDate = 0;
-                _isPlanted = false;
+                _isPlanted = true;
             }
         }
     }
