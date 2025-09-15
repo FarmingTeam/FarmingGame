@@ -10,7 +10,7 @@ public class Tile
     public Vector2Int pos;
     public FloorInteractionType floorInteractionType { get; private set; }
     public ObjectInteractionType objectInteractionType { get; private set; }
-    public SeedType SeedType { get; set; }
+    public TileSeed seed { get; set; } = new TileSeed ();
 
     bool canFloorEnter = true;
     bool canObjectEnter = true;
