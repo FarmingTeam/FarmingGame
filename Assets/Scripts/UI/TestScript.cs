@@ -23,9 +23,9 @@ public class TestScript : MonoBehaviour
 
     public void Test()
     {
-        MapControl.Instance.player.inventory.AdditemsByID(1);
-        MapControl.Instance.player.inventory.AdditemsByID(2);
-        MapControl.Instance.player.inventory.AdditemsByID(3);
+        MapControl.Instance.player.inventory.AdditemsByID(1,1);
+        MapControl.Instance.player.inventory.AdditemsByID(2,2);
+        MapControl.Instance.player.inventory.AdditemsByID(3, 3);
     }
 
     public void Test2()

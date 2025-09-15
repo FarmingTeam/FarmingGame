@@ -21,7 +21,7 @@ public class UIInventory : UIBase
     {
 
         playerInventory = MapControl.Instance.player.inventory; //맵컨트롤 참조
-        playerInventory.uiInventory = this;
+
         DescriptionPanel= Instantiate(DescriptionPanelPrefab, transform,false);
         DescriptionPanel.SetActive(false);
         for(int i = 0; i<playerInventory.InventoryMaxNum; i++)
@@ -38,33 +38,33 @@ public class UIInventory : UIBase
         {
             playerInventory = MapControl.Instance.player.inventory; 
         }
-        playerInventory.SubscribeOnQuantityChange(RefreshAllSlots);
+        playerInventory.SubscribeOnItemChange(RefreshAllSlots);
         RefreshAllSlots();
     }
 
     protected override void OnClose()
     {
-        playerInventory.UnsubscribeOnQuantityChange(RefreshAllSlots);
+        playerInventory.UnsubscribeOnItemChange(RefreshAllSlots);
     }
 
 
-    public void SetItemsUI(Item runtimeItemData)
+    public void SetItemsUI(Item runtimeItemData,int slotIndex)
     {
-        var slot=FindEmptySlot();
+        var slot=uISlots[slotIndex];
         slot.SetSlot(runtimeItemData);
             
     }
-    UISlot FindEmptySlot()
-    {
-        foreach (var slot in uISlots)
-        {
-            if (slot.SlotItemData == null)
-            {
-                return slot;
-            }
-        }
-        return null;
-    }
+    //UISlot FindEmptySlot()
+    //{
+    //    foreach (var slot in uISlots)
+    //    {
+    //        if (slot.SlotItemData == null)
+    //        {
+    //            return slot;
+    //        }
+    //    }
+    //    return null;
+    //}
 
     public void RefreshAllSlots()
     {
