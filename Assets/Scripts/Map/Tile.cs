@@ -10,6 +10,8 @@ public class Tile
     public Vector2Int pos;
     public FloorInteractionType floorInteractionType { get; private set; }
     public ObjectInteractionType objectInteractionType { get; private set; }
+    public SeedType SeedType { get; set; }
+
     bool canFloorEnter = true;
     bool canObjectEnter = true;
 
@@ -36,7 +38,6 @@ public class Tile
                 break;
         }
     }
-
     public Tile()
     {
         this.floorInteractionType = FloorInteractionType.None;

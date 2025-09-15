@@ -25,6 +25,13 @@ public enum ObjectType
 }
 
 [System.Serializable]
+public enum SeedType
+{
+    None = 0,
+    Carrot,
+}
+
+[System.Serializable]
 public struct OneDimensionTileBase
 {
     public TileBase[] Tiles;
