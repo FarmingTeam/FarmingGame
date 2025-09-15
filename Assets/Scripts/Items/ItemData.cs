@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using UnityEngine.Tilemaps;
 
 
 
@@ -65,8 +66,9 @@ public class ItemData:ScriptableObject
 public class SeedData : ItemData
 {
     public int growTime;
-    
-    public Sprite seedIcon;
+
+    public TileBase seedTileBase;
+    public TileBase cropTileBase;
     public SeedData(int itemID, string itemName, string itemDescription, string itemPath, string itemType, int maxNum,int growTime) : base(itemID, itemName, itemDescription, itemPath, itemType, maxNum)
     {
         this.itemID = itemID;
