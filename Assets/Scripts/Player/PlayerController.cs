@@ -32,20 +32,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        OnMove();
+
+    }
+
     private void Update()
     {
 
         AnimChange();
         UpdateFacingFromInput();
-
     }
 
-    private void FixedUpdate()
-    {
-        OnMoving();
-    }
-
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnMoveInput(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
             moveInput = context.ReadValue<Vector2>(); // 이동 구현
@@ -103,13 +103,25 @@ public class PlayerController : MonoBehaviour
         player.HandleQuickslot(slot);
     }
 
-    private void OnMoving()
+    private void OnMove()
     {
         if (rigidbody != null)
         {
             Vector2 v = moveInput;
             if (v.sqrMagnitude > 1f) v = v.normalized; // 대각선 이동 구현
             rigidbody.velocity = v * moveSpeed;
+            //이동 전 위치
+            //이동 후 위치
+            //만약 이동 후 위치가 collisioncheck에 실패했다면
+                //이동 전 위치로 조정
+        }
+    }
+
+    private void CollisionCheck()
+    {
+        if (!MapControl.Instance.map.tiles[tileReader.CurrentCell.x, tileReader.CurrentCell.y].CanEnter())
+        {
+            //충돌 로직 처리
         }
     }
 
