@@ -9,7 +9,7 @@ public class GrassTileBehaviour : TileFloorInteraction
         //만약 괭이를 들고있다면으로 수정
         if (tool == EquipmentType.Hoe)
         {
-            tile.SetFloor(FloorInteractionType.Dirt);
+            tile.floorInteractionType = FloorInteractionType.Dirt;
         }
     }
 }

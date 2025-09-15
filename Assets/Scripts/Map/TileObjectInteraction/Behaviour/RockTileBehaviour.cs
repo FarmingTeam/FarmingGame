@@ -10,7 +10,7 @@ public class RockTileBehaviour : TileObjectInteraction
         //만약 곡괭이를 들고있다면으로 수정
         if (tool == EquipmentType.Pickaxe)
         {
-            tile.SetObject(ObjectInteractionType.None);
+            tile.objectInteractionType = ObjectInteractionType.None;
             tileBase = null;
             return true;
         }

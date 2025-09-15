@@ -131,14 +131,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void CollisionCheck()
-    {
-        if (!MapControl.Instance.map.tiles[tileReader.CurrentCell.x, tileReader.CurrentCell.y].CanEnter())
-        {
-            //충돌 로직 처리
-        }
-    }
-
     private void AnimChange()
     {
         animator.SetBool("IsMoveFront", moveInput.y < 0);
