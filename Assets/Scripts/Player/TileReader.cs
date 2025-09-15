@@ -89,6 +89,31 @@ public class TileReader : MonoBehaviour
         }
     }
 
+    // 씬 로드 할때 집어넣기
+    public void ReadTilemap()
+    {
+        // pivot이 없을 경우 스스로 지정
+        if (!pivot) pivot = transform;
+
+        if (!grid)
+        {
+            var mapRoot = MapControl.Instance ? MapControl.Instance.map : null;
+            if (mapRoot)
+                grid = mapRoot.GetComponent<GridLayout>() ?? mapRoot.GetComponentInChildren<GridLayout>(true);
+
+        }
+
+        if (!tilemap)
+        {
+            tilemap.GetComponent<Tilemap>();
+            if (!grid)
+                grid = tilemap.GetComponentInParent<GridLayout>()
+                    ?? tilemap.GetComponent<GridLayout>()
+                    ?? tilemap.GetComponentInChildren<GridLayout>(true);
+        }
+        
+    }
+
 
     private void LogPosition()
     {

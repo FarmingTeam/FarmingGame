@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,13 +35,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        OnMove();
-
+        /*if (OnCheck())
+            OnMove();
+        else
+            rigidbody.velocity = Vector2.zero; // 이동 차단*/
     }
 
     private void Update()
     {
-
         AnimChange();
         UpdateFacingFromInput();
     }
@@ -103,6 +105,25 @@ public class PlayerController : MonoBehaviour
         player.HandleQuickslot(slot);
     }
 
+    /*
+    private bool OnCheck()
+    {
+        if (tileReader == null || moveInput == Vector2.zero)
+            return true;
+
+        // 현재 위치
+        Vector3Int curCell = tileReader.CurrentCell;
+
+        // 이동할 예정의 타일
+        Vector3Int willCell = curCell + new Vector3Int(
+            Mathf.RoundToInt(moveInput.x),
+            Mathf.RoundToInt(moveInput.y),
+            0);
+
+        var map = MapControl.Instance.map;
+    }
+    */
+
     private void OnMove()
     {
         if (rigidbody != null)
@@ -110,10 +131,6 @@ public class PlayerController : MonoBehaviour
             Vector2 v = moveInput;
             if (v.sqrMagnitude > 1f) v = v.normalized; // 대각선 이동 구현
             rigidbody.velocity = v * moveSpeed;
-            //이동 전 위치
-            //이동 후 위치
-            //만약 이동 후 위치가 collisioncheck에 실패했다면
-                //이동 전 위치로 조정
         }
     }
 
