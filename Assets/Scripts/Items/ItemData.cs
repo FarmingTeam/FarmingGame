@@ -64,8 +64,10 @@ public class ItemData:ScriptableObject
 [Serializable]
 public class SeedData : ItemData
 {
-    int growTime;
-    public SeedData(int itemID, string itemName, string itemDescription, string itemPath, string itemType, int maxNum) : base(itemID, itemName, itemDescription, itemPath, itemType, maxNum)
+    public int growTime;
+    
+    public Sprite seedIcon;
+    public SeedData(int itemID, string itemName, string itemDescription, string itemPath, string itemType, int maxNum,int growTime) : base(itemID, itemName, itemDescription, itemPath, itemType, maxNum)
     {
         this.itemID = itemID;
         this.itemName = itemName;
@@ -85,6 +87,7 @@ public class SeedData : ItemData
         }
         this.maxQuantity = maxNum;
         isStackable = maxQuantity > 1 ? true : false;
+        this.growTime = growTime;
 
     }
 }
