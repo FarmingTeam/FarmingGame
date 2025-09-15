@@ -12,6 +12,7 @@ public class MapData
     public int[] MapSize;
     public FloorData[] TileFloor;
     public ObjectData[] TileObject;
+    public SeedData[] TileSeed;
 }
 
 [Serializable]
@@ -26,6 +27,18 @@ public class ObjectData
     public int[] Pos;
     public int ObjectType;
 }
+
+[Serializable]
+public class SeedData
+{
+    public int[] Pos;
+    public int SeedType;
+    public bool IsPlanted;
+    public string PlantedDate;
+}
+
+
+
 public class Map : MonoBehaviour
 {
     //저장데이터
