@@ -17,6 +17,8 @@ public class UISeedBasket : UIBase
     int SeedInventorySlotNum { get; } = 16;
  
 
+    //여기 SelectedSlot.SlotSeedItem 으로 접근하면 현재 선택된 씨앗을 알 수 있음( 단 SelectedSlot이 null일수도 있음을 주의
+    public UISeedSlot SelectedSlot { get; private set; }
 
     protected override void OnOpen()
     {
@@ -61,7 +63,7 @@ public class UISeedBasket : UIBase
             }
             if (slot.slotItem.itemData.itemType == ItemType.Seed)
             {
-
+                
 
                 //만약 씨앗이면 딕셔너리에 그 아이템 아이디가 있으면 quantity value만 더해서 다시넣어주기
                 if (seedInventoryDic.TryGetValue(slot.slotItem.itemData, out int quantity))
@@ -79,12 +81,17 @@ public class UISeedBasket : UIBase
             }
         }
 
-
-        var list=seedInventoryDic.ToList();
+        var list=seedInventoryDic.OrderBy(kv => kv.Key.itemID).ToList();
+        
         for(int i=0;i<list.Count;i++)
         {
             slots[i].SetSeedSlot(list[i].Key, list[i].Value);
         }
+        for(int i=list.Count; i<slots.Count;i++)
+        {
+            slots[i].EmptyOutSlot();
+        }
+        
 
         //만약 인벤토리 최대갯수를 초과하면
 
@@ -103,5 +110,19 @@ public class UISeedBasket : UIBase
         return null;
     }
 
+    public void SelectSlot(UISeedSlot uISeedSlot)
+    {
+        SelectedSlot = uISeedSlot;
 
+        foreach (var slot in slots)
+        {
+            slot.outline.enabled = false;
+        }
+        if(SelectedSlot!=null)
+        {
+            SelectedSlot.outline.enabled = true;
+        }
+        
+        
+    }
 }
