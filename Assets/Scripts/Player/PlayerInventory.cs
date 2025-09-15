@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -108,7 +109,7 @@ public class PlayerInventory : MonoBehaviour
                             quantity = 0;
                             //여기에 이제 완료 업데이트
                             onItemChange.Invoke();
-                            Debug.Log("아이템 변화1");
+
                             return;
                         }
                     }
@@ -122,8 +123,6 @@ public class PlayerInventory : MonoBehaviour
             //더미는 언제까지 만들어? 남은 수량을 다 쓸때까지
             //여기까지는 그럼 이제 배정받지 못하고 남은 quantity가 있겠지
 
-
-
             //애초부터 빈슬롯이 있는지도 체크가 필요
         }
         else
@@ -131,16 +130,6 @@ public class PlayerInventory : MonoBehaviour
             //만약 쌓을수 없는 아이템이면 그냥 바로 남은 갯수 배치 메서드로 보내기
             PlaceRemainingQuantity(itemdata,quantity);
         }
-
-
-
-
-
-
-
-
-
-
 
 
     }
@@ -174,13 +163,150 @@ public class PlayerInventory : MonoBehaviour
 
                 //여기에 완료 업데이트
                 onItemChange.Invoke();
-                Debug.Log("아이템 변화");
+
             }
             
         }
         
     }
 
+
+
+    //인벤토리에서 바꾸는 로직이 필요
+    //첫번쨰 슬롯 인덱스는 스위칭 타겟(즉 가만히 있는 아이템), 두번째는 내가 드래그해서 들고 내려놓는 그 아이템의 인덱스
+    public void SwitchItemPlaces(int firstIndex, int secondIndex)
+    {
+
+        if (slotDataList[secondIndex].slotItem == null)
+        {
+            return; //애초부터 드래그하는쪽이 null이면 안됨
+        }
+        
+
+        //쌓이는 아이템을 알아보자
+        if ((slotDataList[firstIndex].slotItem?.itemData == slotDataList[secondIndex].slotItem?.itemData)&& slotDataList[firstIndex].slotItem?.itemData.isStackable==true)
+        {
+            //만약 두 아이템이 같고, 두 아이템이 stackable이라면 쌓이는 로직을 적용
+            if (slotDataList[firstIndex].slotItem == null)
+            {
+                //그냥 첫슬롯이 빈거면 생각할것도 없이 자리바꾸기
+                SlotData temp = slotDataList[firstIndex];
+                slotDataList[firstIndex] = slotDataList[secondIndex];
+                slotDataList[secondIndex] = temp;
+                
+            }            
+            else
+            {
+                Debug.Log("작동확인");
+                //둘다 빈 슬롯이 아니고, 둘다 아이템이 같고, 쌓이기 가능
+                //만약 첫슬롯의 갯수+ 두번쨰 슬롯의 갯수가 아이템 최대 수량보다 크다면 1번슬롯꺼를 최대수량으로 하고 2번슬롯에 나머지 배치
+                int firstQuantity = slotDataList[firstIndex].slotItem.currentQuantity;
+                int secondQuantity= slotDataList[secondIndex].slotItem.currentQuantity;
+                int maxQuantity = slotDataList[firstIndex].slotItem.itemData.maxQuantity;
+                if ((firstQuantity+secondQuantity)>maxQuantity)
+                {
+                    secondQuantity = (firstQuantity + secondQuantity) - maxQuantity;
+                    firstQuantity = slotDataList[firstIndex].slotItem.itemData.maxQuantity;
+
+                    slotDataList[firstIndex].slotItem.currentQuantity=firstQuantity;
+                    slotDataList[secondIndex].slotItem.currentQuantity=secondQuantity;
+
+                }
+                else
+                {
+                    Debug.Log("작동확인1");
+                    //만약 둘이 더한게 최대수량보다 작거나 같으면 그냥 하나로 합치고 2번째는 그냥 null로 바꾼다. 
+                    firstQuantity =firstQuantity+secondQuantity;
+                    slotDataList[firstIndex].slotItem.currentQuantity = firstQuantity;
+                    slotDataList[secondIndex].slotItem = null;
+                }
+            }
+            onItemChange.Invoke();
+                
+            
+        }
+        else
+        {
+            //만약 쌓이는게 아니면, 그냥 첫번쨰 아이템, 두번쨰 아이템을 각각 리스트에서 순서만 바꾸기
+            //기본로직
+            SlotData temp = slotDataList[firstIndex];
+            slotDataList[firstIndex] = slotDataList[secondIndex];
+            slotDataList[secondIndex] = temp;
+            onItemChange?.Invoke();
+            //이 뒤에 그냥 ui는 세팅만 
+        }
+
+
+    }
+
+    //만약 아이템을 바꾸려면 그럼 어떻게 해야되는가?
+
+    //그냥 드래그앤 드롭했다는 신호만 준다. 그리고 바꾼다. 
+
+
+    //이건 주로 상점같은 곳이나 이런곳에서 재료 다 모았는지 확인할때
+    public void SubtractItemQuantity( int itemID,int subtractAmount)
+    {
+       //일단 빼려는 그 아이템을 찾아준다
+        ItemData itemData=ResourceManager.Instance.GetItem(itemID);
+        int itemSum = 0;
+        List<SlotData> wantedItemSlotList=new List<SlotData> ();
+
+        foreach ( var slotData in slotDataList )
+        {
+            if( slotData.slotItem ==null)
+            {
+                continue;
+            }
+            if(slotData.slotItem.itemData==itemData)
+            {
+                itemSum += slotData.slotItem.currentQuantity;
+                wantedItemSlotList.Add(slotData);
+
+                if(itemSum>=subtractAmount)
+                {
+                    break;
+                }
+
+            }
+        }
+
+        if( itemSum >=subtractAmount )
+        {
+            int subtractSum = 0;
+            //만약 재료가 충분히 있다면아까 저장해둔 슬롯리스트를 돌면서 마지막꺼만 주의해서 차감하면됨.( 그 이전꺼는 걍 다 비워도됨)
+            for(int i = 0;i<wantedItemSlotList.Count-1; i++)
+            {
+                subtractSum+=wantedItemSlotList[i].slotItem.currentQuantity;
+                EmptyOutSlot(wantedItemSlotList[i]);
+            }
+
+            //마지막 슬롯은
+            wantedItemSlotList[wantedItemSlotList.Count - 1].slotItem.currentQuantity -= (subtractAmount - subtractSum); //부족한 갯수만큼 여기서 차감
+            if(wantedItemSlotList[wantedItemSlotList.Count - 1].slotItem.currentQuantity==0)//마지막 슬롯에서 차감했을때 남은게 0개면 슬롯 비우기
+            {
+                EmptyOutSlot(wantedItemSlotList[wantedItemSlotList.Count - 1]);
+            }
+
+        }
+        else
+        {
+            Debug.Log("갯수부족");
+        }
+        onItemChange.Invoke();
+
+        
+        //만약 사용하려는(혹은 버리려는) 갯수가 아이템 currentquantity보다 크다면
+    }
+
+
+    public void EmptyOutSlot(SlotData slotData)
+    {
+        slotData.slotItem = null;
+    }
+
+    //이건 아예 묶음 통으로 버리기
+    
 
 
     int FindFirstEmptyInventoryIndex()
