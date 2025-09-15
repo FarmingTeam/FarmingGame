@@ -271,7 +271,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 0
-  _canvas: {fileID: 1419180162}
 --- !u!4 &1312907548
 Transform:
   m_ObjectHideFlags: 0
@@ -320,7 +319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1419180160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,6 +440,7 @@ MonoBehaviour:
   chunkDatas:
   - {fileID: 11400000, guid: 85d7f4645b166ff468eb3884af78e658, type: 2}
   - {fileID: 11400000, guid: d5881f001d339e340ab429cbdef155cc, type: 2}
+  seedDatas: []
 --- !u!4 &1876862665
 Transform:
   m_ObjectHideFlags: 0

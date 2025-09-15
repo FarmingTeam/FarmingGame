@@ -17,4 +17,10 @@ public class Player : MonoBehaviour
         tool.SelectQuickslot(slot);
     }
 
+    public void InitPos(Vector3 pos)
+    {
+        tileReader.grid = MapControl.Instance.map.GetComponent<Grid>();
+        this.transform.position = pos;
+    }
+
 }
