@@ -7,14 +7,14 @@ using UnityEngine.UI;
 
 public class UISeedSlot : MonoBehaviour,IPointerClickHandler
 {
-    public ItemData SlotSeedItem { get; private set; }
+    [field:SerializeField] public SeedData SlotSeedItem { get; private set; }
     public Image image;
     TextMeshProUGUI quantityText;
     public Outline outline;
     UISeedBasket seedBasket;
    
 
-    public void SetSeedSlot(ItemData itemData, int quantity)
+    public void SetSeedSlot(SeedData seedData, int quantity)
     {
         if(image==null)
         {
@@ -25,7 +25,7 @@ public class UISeedSlot : MonoBehaviour,IPointerClickHandler
             quantityText=GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        SlotSeedItem = itemData;
+        SlotSeedItem = seedData;
         if(SlotSeedItem != null)
         {
             image.sprite = SlotSeedItem.itemIcon;

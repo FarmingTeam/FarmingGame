@@ -9,7 +9,7 @@ public class UISeedBasket : UIBase
     PlayerInventory inventory;
 
     List<UISeedSlot> slots=new List<UISeedSlot>();
-    Dictionary<ItemData, int> seedInventoryDic;
+    Dictionary<int, int> seedInventoryDic;
 
 
     [SerializeField] GameObject seedSlotPrefab;
@@ -53,7 +53,7 @@ public class UISeedBasket : UIBase
     public void SetSeedSlotUI()
     {
 
-        seedInventoryDic = new Dictionary<ItemData, int>();
+        seedInventoryDic = new Dictionary<int, int>();
         foreach (var slot in inventory.slotDataList)
         {
 
@@ -61,19 +61,19 @@ public class UISeedBasket : UIBase
             {
                 continue;
             }
-            if (slot.slotItem.itemData.itemType == ItemType.Seed)
+            if (slot.slotItem.itemData is SeedData)
             {
                 
 
                 //만약 씨앗이면 딕셔너리에 그 아이템 아이디가 있으면 quantity value만 더해서 다시넣어주기
-                if (seedInventoryDic.TryGetValue(slot.slotItem.itemData, out int quantity))
+                if (seedInventoryDic.TryGetValue(slot.slotItem.itemData.itemID, out int quantity))
                 {
-                    seedInventoryDic[slot.slotItem.itemData] = quantity + slot.slotItem.currentQuantity;
+                    seedInventoryDic[slot.slotItem.itemData.itemID] = quantity + slot.slotItem.currentQuantity;
                 }
                 else
                 {
                     //만약 딕셔너리에 없었으면 새로 등록
-                    seedInventoryDic.Add(slot.slotItem.itemData, slot.slotItem.currentQuantity);
+                    seedInventoryDic.Add(slot.slotItem.itemData.itemID, slot.slotItem.currentQuantity);
                 }
 
 
@@ -81,11 +81,11 @@ public class UISeedBasket : UIBase
             }
         }
 
-        var list=seedInventoryDic.OrderBy(kv => kv.Key.itemID).ToList();
+        var list=seedInventoryDic.OrderBy(kv => kv.Key).ToList();
         
         for(int i=0;i<list.Count;i++)
         {
-            slots[i].SetSeedSlot(list[i].Key, list[i].Value);
+            slots[i].SetSeedSlot((SeedData) ResourceManager.Instance.GetItem(list[i].Key), list[i].Value);
         }
         for(int i=list.Count; i<slots.Count;i++)
         {
@@ -122,7 +122,7 @@ public class UISeedBasket : UIBase
         {
             SelectedSlot.outline.enabled = true;
         }
-        
-        
+
+        Debug.Log(SelectedSlot.SlotSeedItem.itemName);
     }
 }
