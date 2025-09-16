@@ -52,7 +52,7 @@ public class UISlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("마우스 올림");
+
         if(SlotItemData!=null)
         {
             Debug.Log(SlotItemData);

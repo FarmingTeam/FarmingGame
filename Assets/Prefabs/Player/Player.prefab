@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 3465576775391852864}
   - component: {fileID: 7014166395869505413}
   - component: {fileID: 6069934278270212078}
+  - component: {fileID: 5477127033195182224}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -346,6 +347,7 @@ MonoBehaviour:
   tileReader: {fileID: 7014166395869505413}
   tool: {fileID: 7608540874273430342}
   inventory: {fileID: 6069934278270212078}
+  equipment: {fileID: 5477127033195182224}
 --- !u!114 &3465576775391852864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,8 +393,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotDataList: []
-  seedList: []
   selectedEquipment: {fileID: 0}
+--- !u!114 &5477127033195182224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2831479454580651126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c2d58c07a512146ba708ea941b3a1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipList: []
 --- !u!1 &4578717364760354394
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] public TileReader tileReader;
     [SerializeField] public ToolPivot tool;
     [SerializeField] public PlayerInventory inventory;
+    [SerializeField] public PlayerEquipment equipment;
 
 
     public void InitPos(Vector3 pos)

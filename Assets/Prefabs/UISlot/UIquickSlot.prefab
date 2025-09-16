@@ -409,4 +409,6 @@ MonoBehaviour:
   slotEquipment: {fileID: 0}
   dragDropEquipment: {fileID: 0}
   outline: {fileID: 8595409626906972682}
+  slotNumberText: {fileID: 833588273498219192}
   waterBar: {fileID: 8630653135713468488}
+  slotNumber: 0

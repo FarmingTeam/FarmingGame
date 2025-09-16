@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
+
 using UnityEngine;
+using System;
 
 
 
@@ -12,23 +13,19 @@ public class UIToolBar : UIBase
 {
     [SerializeField] GameObject uiQuickSlotPrefab;
     List<UIQuickSlot> quickSlotList=new List<UIQuickSlot>();
-    List<Equipment> equipmentList=new List<Equipment>();
+    [SerializeField] List<Equipment> equipList=new List<Equipment>();
 
-    UIQuickSlot selectedSlot;
+
     private void Start()
     {
-        equipmentList.Add(ResourceManager.Instance.GetEquipment(1));
-        equipmentList.Add(ResourceManager.Instance.GetEquipment(2));
-        equipmentList.Add(ResourceManager.Instance.GetEquipment(3));
-        equipmentList.Add(ResourceManager.Instance.GetEquipment(4));
-        equipmentList.Add(ResourceManager.Instance.GetEquipment(2));
-        equipmentList.Add(ResourceManager.Instance.GetEquipment(2));
-        //여기서 슬롯칸을 동적생성할예정(아직 안함)
+       
+        equipList=MapControl.Instance.player.equipment.equipList;
+        
+
         for (int i=0; i<6;  i++)
         {
             GameObject go= Instantiate(uiQuickSlotPrefab,this.transform,false);
-            
-            
+                       
         }
 
         quickSlotList = GetComponentsInChildren<UIQuickSlot>().ToList();
@@ -36,66 +33,37 @@ public class UIToolBar : UIBase
         //여기에서 슬롯에 아이템 넣어주기
         for(int i = 0; i < quickSlotList.Count; i++)
         {
+            quickSlotList[i].slotNumber = i + 1;
             quickSlotList[i].Init();
-            quickSlotList[i].slotEquipment = equipmentList[i];
+            quickSlotList[i].slotEquipment = equipList[i];
             quickSlotList[i].dragDropEquipment.SetDragDrop(quickSlotList[i]);
-
-        }
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-
-            SelectSlot(quickSlotList[0]);
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SelectSlot(quickSlotList[1]);
             
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[2].slotEquipment;
-        }
-        else if( Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[3].slotEquipment;
-        }
-        else if (!Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[4].slotEquipment;
-        }
-        else if( !Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            //MapControl.Instance.player.tool.CurrentEquip = quickSlotList[5].slotEquipment;
-        }
-        
 
-
+        }
     }
-    public void RefreshSelectedSlotEquipment()
+
+    private void OnEnable()
     {
-        if(selectedSlot!=null)
-        {
-            MapControl.Instance.player.tool.CurrentEquip = selectedSlot.slotEquipment;
-        }
-        
+        MapControl.Instance.player.tool.SubscribeToSelectionChange(SelectSlot);
+    }
+    private void OnDisable()
+    {
+        MapControl.Instance.player.tool.UnsubscribeToSelectionChange(SelectSlot);
     }
 
 
 
-    public void SelectSlot(UIQuickSlot uIQuickSlot)
+
+    public void SelectSlot()
     {
+
+        
         foreach(var slot in quickSlotList)
         {
             slot.outline.enabled = false;
-            if(slot==uIQuickSlot)
+            if(slot.slotEquipment==MapControl.Instance.player.tool.CurrentEquip)
             {
                 slot.outline.enabled=true;
-                MapControl.Instance.player.tool.CurrentEquip=slot.slotEquipment;
-                selectedSlot = slot;
             }
             
         }
