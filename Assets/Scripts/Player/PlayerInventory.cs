@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 
 
@@ -41,6 +42,10 @@ public class PlayerInventory : MonoBehaviour
 
     public int InventoryMaxNum { get; } = 40;
 
+
+
+    //Refactor:후에 저장 json경로는 딴곳으로 옮길수도있어요
+    private string JsonPath => Path.Combine(Application.persistentDataPath, "inventory.json");
 
     //이 갯수 체인지가 될경우에는 슬롯들의 상황을 업데이트 해줍니다
 
@@ -438,4 +443,81 @@ public class PlayerInventory : MonoBehaviour
     }
 
 
+    public void SaveInventoryStatus()
+    {
+
+        ItemListWrapper itemListWrapper=new ItemListWrapper();
+        foreach (var slot in slotDataList)
+        {
+            ItemForWrapping itemForWrapping = null;
+            if (slot.slotItem==null)
+            {
+                itemForWrapping = new ItemForWrapping(-1, 0); //만약 id가 -1이면 빈칸으로 불러오게
+            }
+            else
+            {
+                int id = slot.slotItem.itemData.itemID;
+                int quantity = slot.slotItem.currentQuantity;
+                itemForWrapping= new ItemForWrapping(id, quantity);
+            }
+            itemListWrapper.slotDataWrapperList.Add(itemForWrapping);
+
+        }
+
+
+        string json=JsonUtility.ToJson(itemListWrapper,true);
+        
+        File.WriteAllText(JsonPath, json);
+
+        Debug.Log("저장 완료: " + JsonPath);
+
+    }
+
+
+    public void LoadInventoryStatus()
+    {
+        if(File.Exists(JsonPath))
+        {
+
+
+            Debug.Log("파일 있음");
+            string json = File.ReadAllText(JsonPath);
+
+            ItemListWrapper itemListWrapper = JsonUtility.FromJson<ItemListWrapper>(json);
+            for(int i = 0; i<slotDataList.Count; i++)
+            {
+                ItemForWrapping itemWrappingData = itemListWrapper.slotDataWrapperList[i];
+                if(itemWrappingData.ID==-1)
+                {
+                    slotDataList[i].slotItem = null;
+                }
+                else
+                {
+                    slotDataList[i].slotItem = new Item(ResourceManager.Instance.GetItem(itemWrappingData.ID), itemWrappingData.quantity);
+                }
+                    
+            }
+            
+        }
+        onItemChange?.Invoke();
+    }
+
+}
+
+[Serializable]
+public class ItemListWrapper
+{
+    public List<ItemForWrapping> slotDataWrapperList = new List<ItemForWrapping>();
+}
+
+[Serializable]
+public class ItemForWrapping
+{
+    public int ID;
+    public int quantity;
+    public ItemForWrapping(int id, int quantity)
+    {
+        this.ID = id;
+        this.quantity = quantity;
+    }
 }

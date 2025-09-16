@@ -28,11 +28,11 @@ public class ItemTest : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Alpha8))
         {
-            MapControl.Instance.player.inventory.SwitchItemPlaces(5, 0);
+            MapControl.Instance.player.inventory.SaveInventoryStatus();
         }
         if( Input.GetKeyDown(KeyCode.Alpha9))
         {
-            MapControl.Instance.player.inventory.SubtractItemQuantity(1, 1);
+            MapControl.Instance.player.inventory.LoadInventoryStatus();
         }
     }
     public void Test()
