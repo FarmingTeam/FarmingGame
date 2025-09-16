@@ -9,7 +9,7 @@ public class UISeedBasket : UIBase
     PlayerInventory inventory;
 
     List<UISeedSlot> slots=new List<UISeedSlot>();
-    Dictionary<int, int> seedInventoryDic;
+    Dictionary<int, int> seedInventoryDic=new Dictionary<int, int>();
 
 
     [SerializeField] GameObject seedSlotPrefab;
@@ -53,7 +53,7 @@ public class UISeedBasket : UIBase
     public void SetSeedSlotUI()
     {
 
-        seedInventoryDic = new Dictionary<int, int>();
+        seedInventoryDic.Clear();
         foreach (var slot in inventory.slotDataList)
         {
 

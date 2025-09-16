@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,20 +12,34 @@ using UnityEngine.UI;
 public class SlotData
 {
     public Item slotItem = null;
+
+
+    public SlotData()
+    {
+
+    }
+    public SlotData(Item slotItem)
+    {
+        this.slotItem = slotItem;
+    }
 }
 
 
 public class PlayerInventory : MonoBehaviour
 {
    
-    
+
 
     public List<SlotData> slotDataList = new List<SlotData>();
 
     //여기 씨앗 리스트에는 인벤토리중 씨앗만(인벤토리는 씨앗포함 모두)
-   
 
-    public int InventoryMaxNum { get; } = 30;
+    //이 두개의 컬렉션은 정렬용으로 임시사용
+    Dictionary<ItemData, int> itemDic = new Dictionary<ItemData, int>();
+    List<SlotData> slotTempList = new List<SlotData>();
+
+
+    public int InventoryMaxNum { get; } = 40;
 
 
     //이 갯수 체인지가 될경우에는 슬롯들의 상황을 업데이트 해줍니다
@@ -303,6 +318,8 @@ public class PlayerInventory : MonoBehaviour
     }
 
 
+
+
     public void EmptyOutSlot(SlotData slotData)
     {
         slotData.slotItem = null;
@@ -332,8 +349,80 @@ public class PlayerInventory : MonoBehaviour
     }
 
 
+    
+    public void SortInventory()
+    {
+        itemDic.Clear();
+        slotTempList.Clear();
+        foreach(SlotData slotData in slotDataList)
+        {
+            if(slotData.slotItem==null)
+            {
+                continue;
+            }
+
+            //이미 값이 있으면 quantity에 추가
+            if(itemDic.TryGetValue(slotData.slotItem.itemData, out int quantity))
+            {
+                itemDic[slotData.slotItem.itemData] = quantity + slotData.slotItem.currentQuantity;
+            }
+            else
+            {
+                //딕셔너리에 미등록이면
+                itemDic.Add(slotData.slotItem.itemData, slotData.slotItem.currentQuantity);
+            }
+
+        }
+
+        //여기까지 하면 <아이템데이터, 현재갯수> 이렇게 저장이 된다 이걸 정렬후 인벤토리에 분배하면된다.
 
 
+        itemDic = itemDic.OrderBy(x => x.Key.itemID).ToDictionary(x => x.Key, x => x.Value);
+        
+        //아이디순으로 재정렬된 딕셔너리를 가지고 다시 배치해보자
+
+        //키( 아이템) 하나씩 확인해보기
+
+        foreach(var dictionaryItem in itemDic.Keys)
+        {
+            int sortQuantity=itemDic[dictionaryItem];  //몇개 배정해야하는지
+
+            while(sortQuantity > 0)
+            {
+                if(sortQuantity>=dictionaryItem.maxQuantity)  //배정할게 최대수량보다 많으면
+                {
+                    Item it=new Item(dictionaryItem,dictionaryItem.maxQuantity);
+                    SlotData slotData=new SlotData(it);
+                    slotTempList.Add(slotData);
+                    sortQuantity -= dictionaryItem.maxQuantity;
+                }
+                else
+                {
+
+                    //만약 배정할게 최대수량보다 적으면
+                    Item it = new Item(dictionaryItem, sortQuantity);
+                    SlotData slotData = new SlotData(it);
+                    slotTempList.Add(slotData);
+                    sortQuantity = 0;
+                }
+            }
+        }
+
+        //이 과정을 다 거치면 임시 리스트를 원래 리스트에 넣어주기만하면됨
+        //근데 이게 남은건 빈칸으로 채워줘야함
+        for(int i=0;  i<slotTempList.Count; i++)
+        {
+            slotDataList[i]=slotTempList[i];
+        }
+        for(int i=slotTempList.Count;i<slotDataList.Count ;i++)
+        {
+            EmptyOutSlot(slotDataList[i]);  
+        }
+        onItemChange?.Invoke();
+
+
+       
+    }
 
 
 
