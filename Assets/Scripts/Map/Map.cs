@@ -37,9 +37,6 @@ public class SeedTileData
     public bool IsPlanted;
     public int PlantedDate;
 }
-
-
-
 public class Map : MonoBehaviour
 {
     //저장데이터
