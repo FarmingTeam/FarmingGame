@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void HandleQuickslot(int slot)
     {
-        player.HandleQuickslot(slot);
+        player.tool.SelectQuickslot(slot);
     }
 
     /*
