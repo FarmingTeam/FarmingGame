@@ -2,14 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DroppedItem : MonoBehaviour
+public interface DroppedItem
 {
-    public ItemData data;
-    public int quantity = 1;
-
-    public void Init(ItemData data, int amount = 1)
-    {
-        this.data = data;
-        this.quantity = Mathf.Max(1, amount);
-    }
+    // 아이템을 인벤토리로 전달
+    bool Collect(ItemData data, int amount);
 }

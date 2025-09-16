@@ -12,6 +12,8 @@ public class TileSeed
     public int GrowTime = -1;
     public int PlantedDate = -1;
 
+    public ItemData itemData;
+
     //Refactor : 임시 데이터
     TileBase seedTileBase;
     TileBase cropTileBase;
@@ -54,8 +56,13 @@ public class TileSeed
 
         if (_isPlanted)
         {
-            //item 드롭 로직
+            // 드랍 오브젝트 생성(ItemData에서 작물 아이템의 데이터를 끌어와 타일 위에 띄우기)
+            GameObject drop = new GameObject($"{itemData.itemName} Drop");
 
+            // 드랍 아이템의 생김새는 아이콘과 같음.
+            var spr = drop.AddComponent<SpriteRenderer>();
+            spr.sprite = itemData.itemIcon;
+            spr.sortingOrder = 10;
 
             tile.seed = new TileSeed();
             tileBase = null;
