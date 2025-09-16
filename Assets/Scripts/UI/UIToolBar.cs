@@ -5,6 +5,9 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+
+
 public class UIToolBar : UIBase
 {
     [SerializeField] GameObject uiQuickSlotPrefab;
@@ -16,15 +19,15 @@ public class UIToolBar : UIBase
     {
         equipmentList.Add(ResourceManager.Instance.GetEquipment(1));
         equipmentList.Add(ResourceManager.Instance.GetEquipment(2));
-        equipmentList.Add(ResourceManager.Instance.GetEquipment(2));
-        equipmentList.Add(ResourceManager.Instance.GetEquipment(2));
+        equipmentList.Add(ResourceManager.Instance.GetEquipment(3));
+        equipmentList.Add(ResourceManager.Instance.GetEquipment(4));
         equipmentList.Add(ResourceManager.Instance.GetEquipment(2));
         equipmentList.Add(ResourceManager.Instance.GetEquipment(2));
         //여기서 슬롯칸을 동적생성할예정(아직 안함)
         for (int i=0; i<6;  i++)
         {
             GameObject go= Instantiate(uiQuickSlotPrefab,this.transform,false);
-            go.GetComponentInChildren<TextMeshProUGUI>().SetText((i+1).ToString());
+            
             
         }
 
@@ -94,6 +97,7 @@ public class UIToolBar : UIBase
                 MapControl.Instance.player.tool.CurrentEquip=slot.slotEquipment;
                 selectedSlot = slot;
             }
+            
         }
         
     }

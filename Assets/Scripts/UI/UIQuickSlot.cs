@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,7 +11,9 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler,IPointerClickHandler
     UIToolBar toolbar;
     public DragDrop dragDropEquipment;
     public Outline outline;
+    public TextMeshProUGUI textMeshProUGUI;
     public Image waterBar;
+    public int slotNumber;
 
     
 
@@ -18,7 +21,7 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler,IPointerClickHandler
     {
         dragDropEquipment = GetComponentInChildren<DragDrop>();
         dragDropEquipment.SetDragDrop(this);
-        outline = GetComponent<Outline>();
+        
         toolbar=GetComponentInParent<UIToolBar>();
     }
 
