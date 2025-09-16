@@ -12,22 +12,24 @@ public class ItemDropper : MonoBehaviour
 
     public void ItemDropping()
     {
-        if (itemData == null) return;
+        if (itemData == null || tileSeed == null) return;
 
-        // 타일에 작물이 있는지를 판정
-        // var seed = itemData as tileSeed.SeedType;
-        // if (seed == null) return;
-
-        // 성장이 되었는가를 판정
-        // if (tileBase != seed.cropTileBase) return;
-
+        //타일의 정보 얻기
         Vector2 dropPos = transform.position;
+        Vector2Int cell = default;
         var tilemap = GetComponentInParent<Tilemap>();
         if (tilemap != null)
         {
-            Vector2Int cell = (Vector2Int)tilemap.WorldToCell(transform.position);
+            cell = (Vector2Int)tilemap.WorldToCell(transform.position);
             dropPos = tilemap.GetCellCenterWorld((Vector3Int)cell);
         }
+        TileBase currentTile = tileBase;
+        if (currentTile == null && tilemap != null)
+            currentTile = tilemap.GetTile((Vector3Int)cell);
+
+        // 수확가능 시기인지 확인
+        // if (currentTile != tileSeed.cropTileBase) return;
+        // cropTileBase 퍼블릭으로 바꿔주신 후 주석 해제해주시면 됩니다.
 
         // 드랍 오브젝트 생성(ItemData에서 작물 아이템의 데이터를 끌어와 타일 위에 띄우기)
         GameObject drop = new GameObject($"{itemData.itemName} Drop");
@@ -39,8 +41,8 @@ public class ItemDropper : MonoBehaviour
         spr.sortingOrder = 10;
 
         // 드랍 데이터
-        // var data = drop.AddComponent<DroppedItem>();
-        // data.Init(itemData, 1);
+        var data = drop.AddComponent<DroppedItem>();
+        data.Init(itemData, 1);
     }
 
 }
