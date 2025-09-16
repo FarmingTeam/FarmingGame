@@ -76,6 +76,10 @@ public class Map : MonoBehaviour
         tiles[lookPos.x, lookPos.y].OnInteract(tool);
         SetTileFloor(lookPos);
         TileObjectAction(tiles[lookPos.x, lookPos.y], tool);
+        if (tiles[lookPos.x, lookPos.y].seed.Interaction(tool, tiles[lookPos.x, lookPos.y], out TileBase tileBase))
+        {
+            SetTileSeed(lookPos, tileBase);
+        }
     }
 
     public void SetTileFloor(Vector2Int index)
