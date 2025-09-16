@@ -23,6 +23,6 @@ public class MapControl : Singleton<MapControl>
     {
         map = Instantiate(mapPrefab);
         player = Instantiate(playerPrefab);
-        player.tileReader.grid = map.GetComponent<Grid>();
+        player.InitPos(new Vector3(1, 1, 0));
     }
 }

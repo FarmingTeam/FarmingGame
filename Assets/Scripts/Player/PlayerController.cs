@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
+            if (player.tool.CurrentEquip == null)
+                return;
             MapControl.Instance.map.OnPlayerInteract((Vector2Int)player.tileReader.FrontCell(), player.tool.CurrentEquip.equipmentType);
             return;
         }
@@ -128,14 +130,6 @@ public class PlayerController : MonoBehaviour
             Vector2 v = moveInput;
             if (v.sqrMagnitude > 1f) v = v.normalized; // 대각선 이동 구현
             rigidbody.velocity = v * moveSpeed;
-        }
-    }
-
-    private void CollisionCheck()
-    {
-        if (!MapControl.Instance.map.tiles[tileReader.CurrentCell.x, tileReader.CurrentCell.y].CanEnter())
-        {
-            //충돌 로직 처리
         }
     }
 

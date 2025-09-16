@@ -142,7 +142,7 @@ public class Map : MonoBehaviour
         for (int i = 0; i < mapData.TileFloor.Length; i++)
         {
             FloorData t = mapData.TileFloor[i];
-            tiles[t.Pos[0], t.Pos[1]].SetFloor((FloorInteractionType)t.FloorType);
+            tiles[t.Pos[0], t.Pos[1]].floorInteractionType = (FloorInteractionType)t.FloorType;
             MapControl.Instance.map.SetTileFloor(new Vector2Int(t.Pos[0], t.Pos[1]));
         }
         //Object 깔기

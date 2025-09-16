@@ -10,18 +10,22 @@ public enum ObjectInteractionType
     None = 0,
     Tree,
     Rock,
-    House
+    House,
+    Weed, 
+    Branch
+
 }
 
 [System.Serializable]
 public enum ObjectType
 {
     None = 0,
-    TreeOne = 11,
-    TreeTwo = 12,
-    RockOne = 21,
-    RockTwo = 22,
-    HouseOne = 31
+    Stone = 10,
+    Branch = 20,
+    Treetype1 = 30,
+    Treetype2 = 31,
+    Weed = 40
+
 }
 
 [System.Serializable]
