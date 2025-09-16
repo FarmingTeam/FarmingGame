@@ -20,6 +20,7 @@ public class TimeManager : Singleton<TimeManager>
     [field:SerializeField]public int resetTime { get; private set; } = 2;
     [SerializeField] TimeUI timeUI;
     public float TimeSclae = 1.0f;
+    Coroutine currentCorutine;
 
     public void Start()
     {
@@ -27,7 +28,6 @@ public class TimeManager : Singleton<TimeManager>
 
         //아니라면 초기날짜로 초기화
         Init();
-        StartCoroutine(TimeLogic());
     }
     //Refactor : 삭제
     public void Update()
@@ -41,8 +41,8 @@ public class TimeManager : Singleton<TimeManager>
         currentTime.date = 1;
         currentTime.hour = 6;
         currentTime.minute = 0;
-
-        timeUI.UpdateUI(currentTime);
+        StopAllCoroutines();
+        currentCorutine = StartCoroutine(TimeLogic());
     }
 
     public void Init(GameTime savedTime)
@@ -50,11 +50,11 @@ public class TimeManager : Singleton<TimeManager>
         currentTime.date = savedTime.date;
         currentTime.hour = savedTime.hour;
         currentTime.minute = savedTime.minute;
-
-        timeUI.UpdateUI(currentTime);
+        StopAllCoroutines();
+        currentCorutine = StartCoroutine(TimeLogic());
     }
 
-    public void UpdateTime()
+    public bool UpdateTime()
     {
         currentTime.minute += 10;
         if (currentTime.minute == 60)
@@ -70,10 +70,10 @@ public class TimeManager : Singleton<TimeManager>
             //강제 취침
             else if (currentTime.hour == resetTime)
             {
-                SetTomorrow();
+                return false;
             }
         }
-        timeUI.UpdateUI(currentTime);
+        return true;
         
     }
 
@@ -87,22 +87,28 @@ public class TimeManager : Singleton<TimeManager>
 
     public IEnumerator TimeLogic()
     {
-        while (true)
+        do
         {
-            yield return new WaitForSeconds(10/TimeSclae);
-            UpdateTime();
-        }
+            timeUI.UpdateUI(currentTime);
+            yield return new WaitForSeconds(10 / TimeSclae);
+        } while (UpdateTime());
+        timeUI.UpdateUI(currentTime);
+        SetTomorrow();
     }
 
     public void SetTomorrow()
     {
-        StopCoroutine(TimeLogic());
+        StopCoroutine(currentCorutine);
+
         if (currentTime.hour >= 6)
             currentTime.date++;
         currentTime.hour = 6;
         currentTime.minute = 0;
-        StartCoroutine(TimeLogic());
+        // 맵 리로딩 로직
+
+        currentCorutine = StartCoroutine(TimeLogic());
     }
+
 
     public int GetActualUpdateDate()
     {

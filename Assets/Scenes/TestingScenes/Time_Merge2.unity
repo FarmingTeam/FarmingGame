@@ -561,7 +561,8 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   <resetTime>k__BackingField: 2
   timeUI: {fileID: 611928779}
-  TimeSclae: 1
+  TimeSclae: 10
+  NextDayDelay: 5
 --- !u!4 &656745663
 Transform:
   m_ObjectHideFlags: 0
