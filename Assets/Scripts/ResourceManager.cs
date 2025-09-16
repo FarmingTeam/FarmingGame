@@ -2,18 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using UnityEngine.Tilemaps;
 
 public class ResourceManager : Singleton<ResourceManager>
 {
     
     Dictionary<int, ItemData> itemDataDic=new Dictionary<int,ItemData>();
     Dictionary<int, Equipment> equipmentDataDIc = new Dictionary<int, Equipment>();
-    Dictionary<int,SeedData> seedDataDic = new Dictionary<int,SeedData>();
+    Dictionary<int,SeedTempClass> seedTempDataDic = new Dictionary<int,SeedTempClass>(); //이거는 추가 데이터용
     protected override void Awake()
     {
         base.Awake();
+        SetSeed();
+
         SetItem();
         SetEquipment();
+
     } 
     
 
@@ -40,16 +45,19 @@ public class ResourceManager : Singleton<ResourceManager>
             //여기에 딕셔너리에 이 아이템의 ID로 trygetvalue를 해보고
             //그게 가능하면 SeedData로 넣고 아니면 아이템데이터로 생성자 만드는 식으로
             ItemData itemData;
-            if(seedDataDic.TryGetValue(ID, out var seedData))
+            if(seedTempDataDic.TryGetValue(ID, out var seedTempData))
             {
-                itemData = new SeedData(ID, columns[1], columns[2], columns[3], columns[4], maxNum,seedData.growTime); //여기에 더 추가
+                Debug.Log("확인용");
+                itemData = new SeedData(ID, columns[1], columns[2], columns[3], columns[4], maxNum,seedTempData.growTime,seedTempData.tilePath); //여기에 더 추가
+                itemDataDic[ID] = itemData;
             }
             else
             {
                 itemData = new ItemData(ID, columns[1], columns[2], columns[3], columns[4], maxNum);
+                itemDataDic.Add(ID, itemData);
             }
                 
-            itemDataDic.Add(ID, itemData);
+            
 
 
         }
@@ -61,6 +69,10 @@ public class ResourceManager : Singleton<ResourceManager>
         if(itemDataDic.TryGetValue(itemID, out ItemData itemData))
         {
             itemData.itemIcon = Resources.Load<Sprite>($"ItemData/{itemData.itemPath}");
+            if(itemData is SeedData seed)
+            {
+                seed.seedTileBase=Resources.Load<TileBase>($"SeedData/{seed.seedTilePath}");
+            }
             return itemData;
         }
         else
@@ -113,9 +125,9 @@ public class ResourceManager : Singleton<ResourceManager>
 
     public void SetSeed()
     {
-        TextAsset itemCSVText = Resources.Load<TextAsset>("EquipmentData/EquipmentDataCSV/EquipmentExcel");
+        TextAsset seedCSVText = Resources.Load<TextAsset>("SeedData/SeedDataCSV/SeedExcel");
 
-        string[] rows = itemCSVText.text.Split('\n');
+        string[] rows = seedCSVText.text.Split('\n');
         for (int i = 1; i < rows.Length; i++)
         {
             if (string.IsNullOrEmpty(rows[i]))
@@ -128,13 +140,34 @@ public class ResourceManager : Singleton<ResourceManager>
                 columns[j] = columns[j].Trim();
             }
             int ID = int.Parse(columns[0]);
-            Equipment equipment = new Equipment(ID, columns[1], columns[2], columns[3], columns[4]);
-            equipmentDataDIc.Add(ID, equipment);
+            int growTime=int.Parse(columns[1]);
+
+            SeedTempClass seedTempClass=new SeedTempClass(ID, growTime, columns[2]);
+            seedTempDataDic.Add(ID, seedTempClass);
+
+            
+            
+           
 
 
         }
     }
 
+//그냥 임시 데이터 정리용 클래스
+    private class SeedTempClass
+    {
+        public int ID;
+        public int growTime;
+        public string tilePath;
 
-
+        public SeedTempClass(int ID, int growTIme, string  tilePath)
+        {
+            this.ID = ID;
+            this.growTime = growTIme;
+            this.tilePath = tilePath;
+        }
+        
+    }
 }
+
+

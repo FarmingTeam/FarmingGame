@@ -7,15 +7,7 @@ using UnityEngine.Tilemaps;
 
 
 
-public enum EquipmentType
-{
-    None,
-    Hoe,
-    WateringCan,
-    Axe,
-    Pickaxe,
-    SeedBasket
-}
+
 
 
 public enum ItemType
@@ -62,37 +54,7 @@ public class ItemData:ScriptableObject
     }
 }
 
-[Serializable]
-public class SeedData : ItemData
-{
-    public int growTime;
 
-    public TileBase seedTileBase;
-    public TileBase cropTileBase;
-    public SeedData(int itemID, string itemName, string itemDescription, string itemPath, string itemType, int maxNum,int growTime) : base(itemID, itemName, itemDescription, itemPath, itemType, maxNum)
-    {
-        this.itemID = itemID;
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemPath = itemPath;
-        if (itemType == "Others")
-        {
-            this.itemType = ItemType.Others;
-        }
-        else if (itemType == "Potions")
-        {
-            this.itemType = ItemType.Potion;
-        }
-        else if (itemType == "Seed")
-        {
-            this.itemType = ItemType.Seed;
-        }
-        this.maxQuantity = maxNum;
-        isStackable = maxQuantity > 1 ? true : false;
-        this.growTime = growTime;
-
-    }
-}
 
 
 [Serializable]
@@ -115,43 +77,6 @@ public class Item
     }
 }
 
-[Serializable]
-public class Equipment:ScriptableObject
-{
-    public int equipmentID;
-    public string equipmentName;
-    public string equipmentDescription;
-    public EquipmentType equipmentType;
-    public string equipmentPath;
-    public Sprite equipmentIcon;
-    public Equipment(int equipmentID, string equipmentName, string equipmentDescription, string equipmentType, string equipmentPath)
-    {
-        this.equipmentID = equipmentID;
-        this.equipmentName = equipmentName;
-        this.equipmentDescription = equipmentDescription;     
-        this.equipmentPath = equipmentPath;
 
-        if(equipmentType=="Hoe")
-        {
-            this.equipmentType = EquipmentType.Hoe;
-        }
-        else if(equipmentType=="WateringCan")
-        {
-            this.equipmentType = EquipmentType.WateringCan;
-        }
-        else if(equipmentType=="Axe")
-        {
-            this.equipmentType = EquipmentType.Axe;
-        }
-        else if( equipmentType=="Pickaxe")
-        {
-            this.equipmentType= EquipmentType.Pickaxe;
-        }
-        else if(equipmentType=="SeedBasket")
-        {
-            this.equipmentType = EquipmentType.SeedBasket;
-        }
-    }
-}
 
 

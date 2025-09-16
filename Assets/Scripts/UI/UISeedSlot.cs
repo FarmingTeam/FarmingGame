@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UISeedSlot : MonoBehaviour
+public class UISeedSlot : MonoBehaviour,IPointerClickHandler
 {
-    public Item SlotSeedItem { get; private set; }
-    Image image;
+    [field:SerializeField] public SeedData SlotSeedItem { get; private set; }
+    public Image image;
     TextMeshProUGUI quantityText;
+    public Outline outline;
+    UISeedBasket seedBasket;
    
 
-    public void SetSeedSlot(Item item)
+    public void SetSeedSlot(SeedData seedData, int quantity)
     {
         if(image==null)
         {
@@ -21,23 +24,24 @@ public class UISeedSlot : MonoBehaviour
         {
             quantityText=GetComponentInChildren<TextMeshProUGUI>();
         }
-        Debug.Log(item);
-        SlotSeedItem = item;
+
+        SlotSeedItem = seedData;
         if(SlotSeedItem != null)
         {
-            image.sprite = item.itemData.itemIcon;
-            quantityText.SetText(item.currentQuantity.ToString());
+            image.sprite = SlotSeedItem.itemIcon;
+            quantityText.SetText(quantity.ToString());
         }
         else
         {
             image.sprite = null;
             quantityText.SetText(0.ToString());
         }
+        
        
     }
 
 
-    public void RefreshSeedSlot()
+    public void EmptyOutSlot()
     {
         if (image == null)
         {
@@ -48,16 +52,27 @@ public class UISeedSlot : MonoBehaviour
             quantityText = GetComponentInChildren<TextMeshProUGUI>();
         }
 
+        SlotSeedItem = null;
+        image.sprite = null;
+        quantityText.SetText(0.ToString());
+    }
 
-        if (SlotSeedItem!=null&&SlotSeedItem.itemData!=null)
+    private void OnEnable()
+    {
+        
+        outline.enabled = false;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if(seedBasket==null)
         {
-            image.sprite= SlotSeedItem.itemData.itemIcon;
-            quantityText.SetText(SlotSeedItem.currentQuantity.ToString());
+            seedBasket=GetComponentInParent<UISeedBasket>();
         }
-        else
+        if(SlotSeedItem!=null)
         {
-            image.sprite = null;
-            quantityText.SetText(0.ToString());
+            seedBasket.SelectSlot(this);
         }
+        
     }
 }

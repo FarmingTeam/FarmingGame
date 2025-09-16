@@ -22,7 +22,7 @@ public class PlayerInventory : MonoBehaviour
     public List<SlotData> slotDataList = new List<SlotData>();
 
     //여기 씨앗 리스트에는 인벤토리중 씨앗만(인벤토리는 씨앗포함 모두)
-    public List<Item> seedList = new List<Item>();
+   
 
     public int InventoryMaxNum { get; } = 30;
 
@@ -244,7 +244,10 @@ public class PlayerInventory : MonoBehaviour
     //그냥 드래그앤 드롭했다는 신호만 준다. 그리고 바꾼다. 
 
 
-    //이건 주로 상점같은 곳이나 이런곳에서 재료 다 모았는지 확인할때
+
+
+
+    //이건 주로 상점같은 곳이나 이런곳에서 재료 다 모았는지 확인할때(혹은 1개씩 뺄때도 써도되긴함)
     public void SubtractItemQuantity( int itemID,int subtractAmount)
     {
        //일단 빼려는 그 아이템을 찾아준다
