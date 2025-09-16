@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,9 +13,9 @@ using UnityEngine.Tilemaps;
 public class MapData
 {
     public int[] MapSize;
-    public FloorData[] TileFloor;
-    public ObjectData[] TileObject;
-    public SeedTileData[] TileSeed;
+    public List<FloorData> TileFloor;
+    public List<ObjectData> TileObject;
+    public List<SeedTileData> TileSeed;
 }
 
 [Serializable]
@@ -78,6 +80,18 @@ public class Map : MonoBehaviour
 
     public void SetTileFloor(Vector2Int index)
     {
+        FloorData currentData = mapData.TileFloor.FirstOrDefault(data => data.Pos[0] == index.x && data.Pos[1] == index.y);
+        if (currentData == null)
+        {
+            currentData = new FloorData();
+            currentData.Pos[0] = index.x;
+            currentData.Pos[1] = index.y;
+            currentData.FloorType = (int)tiles[index.x, index.y].floorInteractionType;
+        }
+        else
+        {
+            currentData.FloorType = (int)tiles[index.x, index.y].floorInteractionType;
+        }
         TileFloor.SetTile((Vector3Int)index, TileControl.Instance.GetTileFloorByType(tiles[index.x, index.y].floorInteractionType).tileBase);
     }
 
@@ -98,7 +112,10 @@ public class Map : MonoBehaviour
         bool? isChanged = TileControl.Instance.OBJECTACTIONPAIR[tiles[currentPos.x, currentPos.y].objectInteractionType]
             ?.Interaction(equipment, tile, out tileBase);
         if (isChanged == true)
+        {
+            // Refactor : Need to Add Object Save Data management
             SetTileObject(currentPos, tileBase);
+        }
         if (!objectGraph.ContainsKey(currentPos))
             return;
 
@@ -136,28 +153,41 @@ public class Map : MonoBehaviour
             }
 
         //Floor 깔기
-        for (int i = 0; i < mapData.TileFloor.Length; i++)
+        for (int i = 0; i < mapData.TileFloor.Count; i++)
         {
             FloorData t = mapData.TileFloor[i];
             tiles[t.Pos[0], t.Pos[1]].floorInteractionType = (FloorInteractionType)t.FloorType;
             MapControl.Instance.map.SetTileFloor(new Vector2Int(t.Pos[0], t.Pos[1]));
         }
         //Object 깔기
-        for (int i = 0; i < mapData.TileObject.Length; i++)
+        for (int i = 0; i < mapData.TileObject.Count; i++)
         {
             ObjectData t = mapData.TileObject[i];
             ChunkData data = TileControl.Instance.GetChunkDataByID(t.ObjectType);
             ChunkControl.Instance.SetTileObjectInMap(new Vector2Int(t.Pos[0], t.Pos[1]), data);
         }
         //Seed 깔기
-        for (int i = 0; i < mapData.TileSeed.Length; i++)
+        for (int i = 0; i < mapData.TileSeed.Count; i++)
         {
             SeedTileData t = mapData.TileSeed[i];
             //Refactor : 나중에 단순화
             tiles[t.Pos[0], t.Pos[1]].seed.InitSeed(TileControl.Instance.GetSeedDataByID(t.SeedType));
             tiles[t.Pos[0], t.Pos[1]].seed.PlantedDate = t.PlantedDate;
             SetTileSeed(new Vector2Int(t.Pos[0], t.Pos[1]), tiles[t.Pos[0], t.Pos[1]].seed.SeedState());
-            
         }
+    }
+
+    public void SaveMap(string sceneName)
+    {
+        //저장 로직
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append(MAPTILEPATH).Append(sceneName).Append(TILEDATA);
+        var file = Resources.Load(stringBuilder.ToString()) as TextAsset;
+        if (file != null)
+        {
+            throw new System.Exception(stringBuilder.Append("Is not Valid").ToString());
+        }
+        mapData = JsonUtility.FromJson<MapData>(file.text);
+
     }
 }
