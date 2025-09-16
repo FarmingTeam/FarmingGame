@@ -18,6 +18,7 @@ public class TimeManager : Singleton<TimeManager>
 {
     public GameTime currentTime;
     [field:SerializeField]public int resetTime { get; private set; } = 2;
+    [SerializeField] TimeUI timeUI;
     public float TimeSclae = 1.0f;
 
     public void Start()
@@ -28,12 +29,20 @@ public class TimeManager : Singleton<TimeManager>
         Init();
         StartCoroutine(TimeLogic());
     }
+    //Refactor : 삭제
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+            SetTomorrow();
+    }
 
     public void Init()
     {
         currentTime.date = 1;
         currentTime.hour = 6;
         currentTime.minute = 0;
+
+        timeUI.UpdateUI(currentTime);
     }
 
     public void Init(GameTime savedTime)
@@ -41,6 +50,8 @@ public class TimeManager : Singleton<TimeManager>
         currentTime.date = savedTime.date;
         currentTime.hour = savedTime.hour;
         currentTime.minute = savedTime.minute;
+
+        timeUI.UpdateUI(currentTime);
     }
 
     public void UpdateTime()
@@ -62,6 +73,8 @@ public class TimeManager : Singleton<TimeManager>
                 SetTomorrow();
             }
         }
+        timeUI.UpdateUI(currentTime);
+        
     }
 
     //Refacotr : 삭제
@@ -76,9 +89,6 @@ public class TimeManager : Singleton<TimeManager>
     {
         while (true)
         {
-            //Refactor : 삭제
-            TimeLog();
-        
             yield return new WaitForSeconds(10/TimeSclae);
             UpdateTime();
         }
