@@ -20,6 +20,7 @@ public class TimeManager : Singleton<TimeManager>
     [field:SerializeField]public int resetTime { get; private set; } = 2;
     [SerializeField] TimeUI timeUI;
     public float TimeSclae = 1.0f;
+    [SerializeField] float ReloadTimeDelay = 2.0f;
     Coroutine currentCorutine;
 
     public void Start()
@@ -99,16 +100,21 @@ public class TimeManager : Singleton<TimeManager>
     public void SetTomorrow()
     {
         StopCoroutine(currentCorutine);
-
         if (currentTime.hour >= 6)
             currentTime.date++;
         currentTime.hour = 6;
         currentTime.minute = 0;
         // 맵 리로딩 로직
-
-        currentCorutine = StartCoroutine(TimeLogic());
+        currentCorutine = StartCoroutine(EndDay());
     }
 
+    public IEnumerator EndDay()
+    {
+        Debug.Log("End Day");
+        yield return new WaitForSeconds(ReloadTimeDelay);
+        MapControl.Instance.ReLoader();
+        currentCorutine = StartCoroutine(TimeLogic());
+    }
 
     public int GetActualUpdateDate()
     {

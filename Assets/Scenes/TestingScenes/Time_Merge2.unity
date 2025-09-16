@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
   playerPrefab: {fileID: 6296383544403047216, guid: 2a296ff0709c11243b8b8b574048c424, type: 3}
-  mapPrefab: {fileID: 9107468704110946327, guid: f915dccdaefc10a4788729250d450bf8, type: 3}
+  mapPrefab: {fileID: 5896158947132461354, guid: 5a46d70eff7f17042a7f79d569aa72c6, type: 3}
   player: {fileID: 0}
   map: {fileID: 0}
 --- !u!4 &12192479
@@ -562,7 +562,6 @@ MonoBehaviour:
   <resetTime>k__BackingField: 2
   timeUI: {fileID: 611928779}
   TimeSclae: 10
-  NextDayDelay: 5
 --- !u!4 &656745663
 Transform:
   m_ObjectHideFlags: 0
