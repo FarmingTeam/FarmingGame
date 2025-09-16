@@ -32,7 +32,7 @@ public class ItemTest : MonoBehaviour
         }
         if( Input.GetKeyDown(KeyCode.Alpha9))
         {
-            MapControl.Instance.player.inventory.SubtractItemQuantity(1, 12);
+            MapControl.Instance.player.inventory.SubtractItemQuantity(1, 1);
         }
     }
     public void Test()

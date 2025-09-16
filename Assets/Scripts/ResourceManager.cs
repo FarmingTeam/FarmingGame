@@ -47,7 +47,7 @@ public class ResourceManager : Singleton<ResourceManager>
             ItemData itemData;
             if(seedTempDataDic.TryGetValue(ID, out var seedTempData))
             {
-                Debug.Log("확인용");
+
                 itemData = new SeedData(ID, columns[1], columns[2], columns[3], columns[4], maxNum,seedTempData.growTime,seedTempData.tilePath); //여기에 더 추가
                 itemDataDic[ID] = itemData;
             }

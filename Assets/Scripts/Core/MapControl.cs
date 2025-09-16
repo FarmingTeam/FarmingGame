@@ -13,10 +13,11 @@ public class MapControl : Singleton<MapControl>
     {
         dontDestroyOnLoad = false;
         base.Awake();
+        OnLoad();
     }
     protected void Start()
     {
-        OnLoad();
+        
     }
 
     public void OnLoad()
@@ -24,5 +25,7 @@ public class MapControl : Singleton<MapControl>
         map = Instantiate(mapPrefab);
         player = Instantiate(playerPrefab);
         player.InitPos(new Vector3(1, 1, 0));
+        
+
     }
 }
