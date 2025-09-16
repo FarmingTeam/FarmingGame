@@ -43,4 +43,25 @@ public class TileSeed
         seedTileBase = seed.seedTileBase;
         cropTileBase = seed.cropTileBase;
     }
+
+    public bool Interaction(EquipmentType tool, Tile tile, out TileBase tileBase)
+    {
+        if (SeedType == -1)
+        {
+            tileBase = null;
+            return false;
+        }
+
+        if (_isPlanted)
+        {
+            //item 드롭 로직
+
+
+            tile.seed = new TileSeed();
+            tileBase = null;
+            return true;
+        }
+        tileBase = null;
+        return false;
+    }
 }
