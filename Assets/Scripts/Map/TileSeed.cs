@@ -11,7 +11,6 @@ public class TileSeed
     public bool isWatered = false;
     public int GrowTime = -1;
     public int PlantedDate = -1;
-    public int currentDate; // 현재 게임 내 날짜인데 나중에 시간관리하는 곳에서 가져오도록 수정필요
 
     //Refactor : 임시 데이터
     TileBase seedTileBase;
@@ -22,7 +21,7 @@ public class TileSeed
     {
         if (!_isPlanted)
         {
-            if (PlantedDate + GrowTime - currentDate <= 0)
+            if (PlantedDate + GrowTime - TimeManager.Instance.GetActualUpdateDate() <= 0)
             {
                 _isPlanted = true;
             }

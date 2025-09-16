@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,7 +11,9 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler,IPointerClickHandler
     UIToolBar toolbar;
     public DragDrop dragDropEquipment;
     public Outline outline;
+    [SerializeField] TextMeshProUGUI slotNumberText;
     public Image waterBar;
+    public int slotNumber;
 
     
 
@@ -18,8 +21,8 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler,IPointerClickHandler
     {
         dragDropEquipment = GetComponentInChildren<DragDrop>();
         dragDropEquipment.SetDragDrop(this);
-        outline = GetComponent<Outline>();
-        toolbar=GetComponentInParent<UIToolBar>();
+        slotNumberText.SetText(slotNumber.ToString());
+        
     }
 
 
@@ -32,7 +35,7 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler,IPointerClickHandler
             eventData.pointerDrag.transform.SetParent(this.transform);
             eventData.pointerDrag.transform.localPosition = Vector3.zero;
             slotEquipment = eventData.pointerDrag.GetComponent<DragDrop>().equipment;
-            toolbar.RefreshSelectedSlotEquipment();
+
             
         }
         
@@ -44,6 +47,6 @@ public class UIQuickSlot : MonoBehaviour,IDropHandler,IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        toolbar.SelectSlot(this);
+        MapControl.Instance.player.tool.SelectQuickslot(slotNumber);
     }
 }

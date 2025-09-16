@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UISeedSlot : MonoBehaviour,IPointerClickHandler
 {
-    [field:SerializeField] public SeedData SlotSeedItem { get; private set; }
+    public SeedData SlotSeedItem { get; private set; }
     public Image image;
     TextMeshProUGUI quantityText;
     public Outline outline;
