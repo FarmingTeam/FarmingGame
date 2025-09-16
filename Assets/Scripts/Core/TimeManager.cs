@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public struct GameTime
 {
@@ -15,7 +17,8 @@ public struct GameTime
 public class TimeManager : Singleton<TimeManager>
 {
     public GameTime currentTime;
-    public int resetTime { get; private set; } = 2;
+    [field:SerializeField]public int resetTime { get; private set; } = 2;
+    public float TimeSclae = 1.0f;
 
     public void Start()
     {
@@ -23,6 +26,7 @@ public class TimeManager : Singleton<TimeManager>
 
         //아니라면 초기날짜로 초기화
         Init();
+        StartCoroutine(TimeLogic());
     }
 
     public void Init()
@@ -52,24 +56,35 @@ public class TimeManager : Singleton<TimeManager>
                 currentTime.date++;
                 //플레이어 디버프 부여
             }
+            //강제 취침
             else if (currentTime.hour == resetTime)
             {
-                StopCoroutine(TimeLogic());
-                //Force Day pass
+                SetTomorrow();
             }
         }
+    }
+
+    //Refacotr : 삭제
+    public void TimeLog()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append("현재 날짜 : ").Append(currentTime.date).Append(" ").Append(currentTime.hour).Append("시 ").Append(currentTime.minute).Append("분");
+        Debug.Log(stringBuilder.ToString());
     }
 
     public IEnumerator TimeLogic()
     {
         while (true)
         {
-            yield return new WaitForSeconds(10);
+            //Refactor : 삭제
+            TimeLog();
+        
+            yield return new WaitForSeconds(10/TimeSclae);
             UpdateTime();
         }
     }
 
-    public void MoveTomorrow()
+    public void SetTomorrow()
     {
         StopCoroutine(TimeLogic());
         if (currentTime.hour >= 6)
@@ -77,6 +92,13 @@ public class TimeManager : Singleton<TimeManager>
         currentTime.hour = 6;
         currentTime.minute = 0;
         StartCoroutine(TimeLogic());
+    }
+
+    public int GetActualUpdateDate()
+    {
+        if (currentTime.hour >= 6)
+            return currentTime.date;
+        return currentTime.date - 1;
     }
 
 }
