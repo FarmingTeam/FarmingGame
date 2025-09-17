@@ -35,20 +35,35 @@ public class UIToolBar : UIBase
         {
             quickSlotList[i].slotNumber = i + 1;
             quickSlotList[i].Init();
-            quickSlotList[i].slotEquipment = equipList[i];
-            quickSlotList[i].dragDropEquipment.SetDragDrop(quickSlotList[i]);
+            quickSlotList[i].SetQuickSlot(equipList[i]);
+            
             
 
         }
     }
+    void SetToolBar()
+    {
+        equipList = MapControl.Instance.player.equipment.equipList;
+        for (int i = 0; i < quickSlotList.Count; i++)
+        {
+            quickSlotList[i].SetQuickSlot(equipList[i]);
+
+        }
+    }
+
+
+
+
 
     private void OnEnable()
     {
         MapControl.Instance.player.tool.SubscribeToSelectionChange(SelectSlot);
+        MapControl.Instance.player.equipment.SubscribeEquipmentChange(SetToolBar);
     }
     private void OnDisable()
     {
         MapControl.Instance.player.tool.UnsubscribeToSelectionChange(SelectSlot);
+        MapControl.Instance.player.equipment.UnsubscribeEquipmentChange(SetToolBar);
     }
 
 
@@ -65,7 +80,7 @@ public class UIToolBar : UIBase
             {
                 if(slot.slotEquipment.equipmentType==EquipmentType.SeedBasket)
                 {
-                    UIManager.Instance.OpenPopup<UISeedBasket>();
+                    UIManager.Instance.OpenUI<UISeedBasket>();
                 }
                 else
                 {

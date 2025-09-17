@@ -48,13 +48,10 @@ public class UISwitch : MonoBehaviour
 
     private void ActiveInventory(InputAction.CallbackContext ctx)
     {
-        Toggle();
+        UIManager.Instance.ToggleUI<UIInventory>();
     }
 
-    public void Toggle()
-    {
-        
-    }
+   
 
     // Inventory 인풋을 받아서 인벤토리 창을 끄고 킵니다.
     // 인벤토리 창이 켜져있는 동안 플레이어의 동작은 멈춥니다.

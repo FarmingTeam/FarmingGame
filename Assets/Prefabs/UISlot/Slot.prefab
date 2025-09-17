@@ -301,3 +301,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 4512245845966852988}
   quantityText: {fileID: 3537938262490778066}
+  slotIndex: 0

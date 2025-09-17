@@ -48,7 +48,7 @@ public class ResourceManager : Singleton<ResourceManager>
             if(seedTempDataDic.TryGetValue(ID, out var seedTempData))
             {
 
-                itemData = new SeedData(ID, columns[1], columns[2], columns[3], columns[4], maxNum,seedTempData.growTime,seedTempData.tilePath); //여기에 더 추가
+                itemData = new SeedData(ID, columns[1], columns[2], columns[3], columns[4], maxNum,seedTempData.growTime,seedTempData.seedTilePath,seedTempData.cropTilePath ); //여기에 더 추가
                 itemDataDic[ID] = itemData;
             }
             else
@@ -72,6 +72,7 @@ public class ResourceManager : Singleton<ResourceManager>
             if(itemData is SeedData seed)
             {
                 seed.seedTileBase=Resources.Load<TileBase>($"SeedData/{seed.seedTilePath}");
+                seed.cropTileBase = Resources.Load<TileBase>($"SeedData/{seed.cropTilePath}");
             }
             return itemData;
         }
@@ -142,7 +143,7 @@ public class ResourceManager : Singleton<ResourceManager>
             int ID = int.Parse(columns[0]);
             int growTime=int.Parse(columns[1]);
 
-            SeedTempClass seedTempClass=new SeedTempClass(ID, growTime, columns[2]);
+            SeedTempClass seedTempClass=new SeedTempClass(ID, growTime, columns[2], columns[3]);
             seedTempDataDic.Add(ID, seedTempClass);
 
             
@@ -158,13 +159,15 @@ public class ResourceManager : Singleton<ResourceManager>
     {
         public int ID;
         public int growTime;
-        public string tilePath;
+        public string seedTilePath;
+        public string cropTilePath;
 
-        public SeedTempClass(int ID, int growTIme, string  tilePath)
+        public SeedTempClass(int ID, int growTIme, string  seedtilePath,string cropTIlePath)
         {
             this.ID = ID;
             this.growTime = growTIme;
-            this.tilePath = tilePath;
+            this.seedTilePath = seedtilePath;
+            this.cropTilePath = cropTIlePath;
         }
         
     }

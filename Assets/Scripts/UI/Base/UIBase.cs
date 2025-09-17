@@ -38,4 +38,9 @@ public abstract class UIBase : MonoBehaviour
     {
         //소리
     }
+
+    public bool IsActiveInHierarchy()
+    {
+        return gameObject.activeInHierarchy;
+    }
 }

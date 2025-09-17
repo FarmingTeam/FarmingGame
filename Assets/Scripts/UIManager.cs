@@ -16,6 +16,9 @@ public class UIManager : Singleton<UIManager>
     //이걸통해 팝업ui관리
     public Stack<UIPopup> uiStack=new Stack<UIPopup>();
 
+
+    private Stack<UIPopup> _tempStack=new Stack<UIPopup>();
+
     Canvas _canvas;
     private void OnEnable()
     {
@@ -38,16 +41,8 @@ public class UIManager : Singleton<UIManager>
     {
         var ui = GetUI<T>();
         ui?.OpenUI();
+       
     }
-
-    public void OpenPopup<T>() where T : UIPopup
-    {
-        var ui = GetUI<T>();
-        ui?.OpenUI();
-        uiStack.Push(ui);
-    }
-
-
 
     //그냥 일반 닫기
     public void CloseUI<T>() where T : UIBase
@@ -60,27 +55,40 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-    //맨 위부터 닫기
+    //토글 기능 필요시
+    public void ToggleUI<T> () where T : UIBase
+    {
+        var ui = GetUI<T>();
+        if (ui.IsActiveInHierarchy())
+        {
+            ui.CloseUI();
+        }
+        else
+        {
+            ui.OpenUI();
+        }
+    }
+
+
+
+
+    //맨 위부터 닫기(esc키와 바인딩)
     public void CloseTopPopUpUI()
     {
-        if(uiStack.Count > 0)
+        while(uiStack.Count > 0)
         {
             var ui = uiStack.Pop();
-            ui.gameObject.SetActive(false);
+            if(ui.IsActiveInHierarchy()==true)
+            {
+                ui.gameObject.SetActive(false);
+                return;
+            }
+            
         }
         
     }
 
 
-    //팝업 지정 닫기
-    public void ClosePopupUI(UIPopup target)
-    {
-        if (uiStack.Contains(target))
-        {
-            uiStack = new Stack<UIPopup>(uiStack.Where(p => p != target).Reverse());
-            target.CloseUI();
-        }
-    }
 
 
     public T GetUI<T>() where T : UIBase

@@ -39,6 +39,7 @@ public class UIInventory : UIPopup
 
     protected override void OnOpen()
     {
+        base.OnOpen();
         if(playerInventory == null)
         {
            playerInventory = MapControl.Instance.player.inventory; 

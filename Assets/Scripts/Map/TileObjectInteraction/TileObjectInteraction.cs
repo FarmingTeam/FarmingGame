@@ -5,5 +5,5 @@ using UnityEngine.Tilemaps;
 
 public abstract class TileObjectInteraction
 {
-    public abstract bool Interaction(EquipmentType tool, Tile tile, out TileBase tileBase);
+    public abstract bool Interaction(Equipment tool, Tile tile, out ChunkData chunkData);
 }
