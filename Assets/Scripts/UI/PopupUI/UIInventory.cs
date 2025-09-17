@@ -48,6 +48,7 @@ public class UIInventory : UIPopup
 
         sortButton.onClick.AddListener(playerInventory.SortInventory);
         
+        StartSettingItem();
         
     }
 

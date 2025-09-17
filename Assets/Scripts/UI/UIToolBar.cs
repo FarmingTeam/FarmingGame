@@ -59,6 +59,7 @@ public class UIToolBar : UIBase
     {
         MapControl.Instance.player.tool.SubscribeToSelectionChange(SelectSlot);
         MapControl.Instance.player.equipment.SubscribeEquipmentChange(SetToolBar);
+        SetToolBar();
     }
     private void OnDisable()
     {
