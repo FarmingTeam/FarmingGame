@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UISeedBasket : UIBase
+public class UISeedBasket : UIPopup
 {
 
     PlayerInventory inventory;
@@ -14,7 +15,7 @@ public class UISeedBasket : UIBase
 
 
     [SerializeField] GameObject seedSlotPrefab;
-
+    [SerializeField] Button closeButton;
     int SeedInventorySlotNum { get; } = 16;
  
 
@@ -39,8 +40,8 @@ public class UISeedBasket : UIBase
         //인벤토리에서 씨앗인거만 가져옴
         
         inventory.SubscribeOnItemChange(SetSeedSlotUI);
-
-
+        SetSeedSlotUI();
+        closeButton.onClick.AddListener(CloseBasket);
         
     }
     //플레이어 인벤토리쪽을 이어두고
@@ -48,6 +49,7 @@ public class UISeedBasket : UIBase
     protected override void OnClose()
     {
         inventory.UnsubscribeOnItemChange(SetSeedSlotUI);
+        closeButton.onClick.RemoveListener(CloseBasket);
     }
 
 
@@ -123,10 +125,18 @@ public class UISeedBasket : UIBase
         {
             SelectedSlot.outline.enabled = true;
         }
+        MapControl.Instance.player.equipment.ChangeEquipmentExtra(EquipmentType.SeedBasket,SelectedSlot.SlotSeedItem.itemID);
+        
+
 
         Debug.Log(SelectedSlot.SlotSeedItem.itemName);
     }
 
+
+    void CloseBasket()
+    {
+        UIManager.Instance.ClosePopupUI(this);
+    }
 
 
     

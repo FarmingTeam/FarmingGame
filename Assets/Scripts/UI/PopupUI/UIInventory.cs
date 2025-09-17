@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIInventory : UIBase
+public class UIInventory : UIPopup
 {
     PlayerInventory playerInventory;
 
@@ -73,9 +73,9 @@ public class UIInventory : UIBase
         slot.SetSlot(slotData);
             
     }
-   
-   
 
     
-    
+
+
+
 }

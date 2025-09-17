@@ -39,6 +39,9 @@ public class PlayerInventory : MonoBehaviour
     Dictionary<ItemData, int> itemDic = new Dictionary<ItemData, int>();
     List<SlotData> slotTempList = new List<SlotData>();
 
+    //갯수 제외용 임시 사용
+    List<SlotData> wantedItemSlotList = new List<SlotData>();
+
 
     public int InventoryMaxNum { get; } = 40;
 
@@ -273,7 +276,7 @@ public class PlayerInventory : MonoBehaviour
        //일단 빼려는 그 아이템을 찾아준다
         ItemData itemData=ResourceManager.Instance.GetItem(itemID);
         int itemSum = 0;
-        List<SlotData> wantedItemSlotList=new List<SlotData> ();
+        wantedItemSlotList.Clear();
 
         foreach ( var slotData in slotDataList )
         {
@@ -294,8 +297,9 @@ public class PlayerInventory : MonoBehaviour
             }
         }
 
-        if( itemSum >=subtractAmount )
+        if( itemSum >=subtractAmount ) //차감 요구되는 양보다 내가 가진게 많을때
         {
+
             int subtractSum = 0;
             //만약 재료가 충분히 있다면아까 저장해둔 슬롯리스트를 돌면서 마지막꺼만 주의해서 차감하면됨.( 그 이전꺼는 걍 다 비워도됨)
             for(int i = 0;i<wantedItemSlotList.Count-1; i++)
@@ -309,6 +313,14 @@ public class PlayerInventory : MonoBehaviour
             if(wantedItemSlotList[wantedItemSlotList.Count - 1].slotItem.currentQuantity==0)//마지막 슬롯에서 차감했을때 남은게 0개면 슬롯 비우기
             {
                 EmptyOutSlot(wantedItemSlotList[wantedItemSlotList.Count - 1]);
+                //만약 여기서 바구니에 선택된 씨앗이 0개가 된다면 바구니를 연다
+
+                //if(MapControl.Instance.player.equipment.CheckEquipmentExtra(EquipmentType.SeedBasket)==itemData.itemID) 
+                //{
+                //    UIManager.Instance.OpenUI<UISeedBasket>();
+                //}
+
+
             }
 
         }

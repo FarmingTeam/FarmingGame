@@ -13,8 +13,8 @@ public class ItemTest : MonoBehaviour
     void Start()
     {
         UIManager.Instance.OpenUI<UIToolBar>();
-        UIManager.Instance.OpenUI<UIInventory>();
-        UIManager.Instance.OpenUI<UISeedBasket>();
+        UIManager.Instance.OpenPopup<UIInventory>();
+        //UIManager.Instance.OpenUI<UISeedBasket>();
     }
 
 
@@ -34,15 +34,16 @@ public class ItemTest : MonoBehaviour
         {
             MapControl.Instance.player.inventory.LoadInventoryStatus();
         }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            UIManager.Instance.CloseTopPopUpUI();
+        }
     }
-    public void Test()
-    {
-        
-    }
+    
 
     public void Test2()
     {
-        UIManager.Instance.OpenUI<UISeedBasket>();
+
     }
 
     public void Test3()

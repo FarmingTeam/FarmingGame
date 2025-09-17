@@ -73,6 +73,10 @@ public class UISeedSlot : MonoBehaviour,IPointerClickHandler
         {
             seedBasket.SelectSlot(this);
         }
+        else
+        {
+            UIManager.Instance.ClosePopupUI(seedBasket);
+        }
         
     }
 }
