@@ -80,10 +80,10 @@ public class MapSaveManager : Singleton<MapSaveManager>
         //타일 File 경로 불러오기
         StringBuilder stringBuilder = new StringBuilder();
         //디렉토리 경로
-        stringBuilder.Append(Application.persistentDataPath).Append("\\"). Append(MAPTILEPATH);
+        stringBuilder.Append(Application.persistentDataPath).Append("/"). Append(MAPTILEPATH);
         Directory.CreateDirectory(stringBuilder.ToString());
         //파일 이름
-        stringBuilder.Append("\\").Append(sceneName).Append(TILEDATA).Append(".json");
+        stringBuilder.Append("/").Append(sceneName).Append(TILEDATA).Append(".json");
 
         //파일이 존재하지 않는다면, 기존 Resource내부의 InitialMap데이터를 가져온다.
         if (!File.Exists(stringBuilder.ToString()))
@@ -105,8 +105,9 @@ public class MapSaveManager : Singleton<MapSaveManager>
     public void SaveMap(string sceneName)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.Append(MAPTILEPATH).Append("\\").Append(sceneName).Append(TILEDATA).Append(".json");
+        stringBuilder.Append(Application.persistentDataPath).Append("/").Append(MAPTILEPATH).Append("/").Append(sceneName).Append(TILEDATA).Append(".json");
         string mapDataString = JsonUtility.ToJson(mapData, true);
+        Debug.Log(stringBuilder.ToString());
         File.WriteAllText(stringBuilder.ToString(), mapDataString);
     }
 
@@ -121,7 +122,7 @@ public class MapSaveManager : Singleton<MapSaveManager>
             FloorData newdata = new FloorData();
             newdata.FloorType = (int)type;
             newdata.Pos = new int[] { pos.x, pos.y };
-            mapData.TileFloor.Append(newdata);
+            mapData.TileFloor.Add(newdata);
         }
         //좌표에 데이터가 있을경우 수정
         else
@@ -133,6 +134,32 @@ public class MapSaveManager : Singleton<MapSaveManager>
                 return;
             }
             result.FloorType = (int)type;
+        }
+    }
+
+    public void UpdateChunk(Vector2Int pos, ChunkData data)
+    {
+        ObjectData result = mapData.TileObject.FirstOrDefault(data => data.Pos[0] == pos.x && data.Pos[1] == pos.y);
+        //좌표에 데이터가 없을 경우 추가
+        if (result == null)
+        {
+            if (data.objectType == ObjectType.None)
+                return;
+            ObjectData newdata = new ObjectData();
+            newdata.ObjectType = (int)data.objectType;
+            newdata.Pos = new int[] { pos.x, pos.y };
+            mapData.TileObject.Append(newdata);
+        }
+        //좌표에 데이터가 있을경우 수정
+        else
+        {
+            //오브젝트의 종류가 None이되면 좌표 데이터 삭제
+            if (data.objectType == ObjectType.None)
+            {
+                mapData.TileObject.Remove(result);
+                return;
+            }
+            result.ObjectType = (int)data.objectType;
         }
     }
 }

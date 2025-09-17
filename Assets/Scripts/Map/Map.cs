@@ -32,6 +32,7 @@ public class Map : MonoBehaviour
 
     public void OnPlayerInteract(Vector2Int lookPos, EquipmentType tool)
     {
+        Debug.Log("플레이어 아이템" + tool);
         //범위 밖 예외처리
         if(lookPos.x < 0 || lookPos.y < 0) return;
         if (lookPos.x >= tiles.GetLength(0) || lookPos.y >= tiles.GetLength(1)) return;
@@ -111,29 +112,35 @@ public class Map : MonoBehaviour
     //2*2 설치의 경우를 추가로 고려할것 -> 플레이어의 위치 파악 필요
     public void TileObjectAction(Tile tile, EquipmentType equipment)
     {
-        TileBase tileBase = null;
-        Vector2Int currentPos = tile.pos;
-        bool? isChanged = TileControl.Instance.OBJECTACTIONPAIR[tiles[currentPos.x, currentPos.y].chunkData.interactionType]
-            ?.Interaction(equipment, tile, out tileBase);
-        if (isChanged == true)
+        //연결된 시작지점 탐색
+        Vector2Int startPos = tile.pos;
+        if (objectGraph.ContainsKey(tile.pos))
         {
-            // Refactor : Need to Add Object Save Data management
-            SetTileObject(currentPos, tileBase);
+            for (int i = 0; i < objectGraph[tile.pos].Count; i++)
+            {
+                Vector2Int connectedpos = objectGraph[tile.pos][i];
+
+                if (connectedpos.x < startPos.x)
+                    startPos.x = connectedpos.x;
+                if (connectedpos.y < startPos.y)
+                    startPos.y = connectedpos.y;
+            }
         }
-        if (!objectGraph.ContainsKey(currentPos))
-        {
+
+        Tile InteractionTile = tiles[startPos.x, startPos.y];
+        ChunkData changedChunk = null;
+        //시작지점 타일 오브젝트 업데이트
+        bool? isChanged = TileControl.Instance.OBJECTACTIONPAIR[InteractionTile.chunkData.interactionType]
+            ?.Interaction(equipment, tile, out changedChunk);
+        //만약 변경사항이 없다면 종료
+        if (isChanged != true)
             return;
-        }
 
-        for (int i = 0; i < objectGraph[currentPos].Count; i++)
-        {
-            Vector2Int connectedpos = objectGraph[currentPos][i];
-            Tile connectedTile = tiles[connectedpos.x, connectedpos.y];
-            isChanged = TileControl.Instance.OBJECTACTIONPAIR[connectedTile.chunkData.interactionType]
-                ?.Interaction(equipment, connectedTile, out tileBase);
-            if (isChanged == true)
-                SetTileObject(connectedpos, tileBase);
-        }
+        //변경사항 반영
+        List<Vector2Int> updatedpos = ChunkControl.Instance.SetTileObjectInMap(startPos, changedChunk);
 
+        //시작지점 기점으로 저장정보 업데이트
+        for(int i = 0;i < updatedpos.Count;i++)
+            MapSaveManager.Instance.UpdateChunk(updatedpos[i], changedChunk);
     }
 }

@@ -21,5 +21,6 @@ public class MapControl : Singleton<MapControl>
 
     public void OnLoad()
     {
+
     }
 }

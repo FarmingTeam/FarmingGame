@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 0
   interactionType: 0
-  tileBases: []
+  tileBases:
+  - Tiles:
+    - {fileID: 0}
