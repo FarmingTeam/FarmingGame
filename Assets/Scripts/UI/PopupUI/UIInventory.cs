@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UIInventory : UIBase
+public class UIInventory : UIPopup
 {
     PlayerInventory playerInventory;
 
     public List<UISlot> uISlots = new List<UISlot>();
 
     public GameObject uiSlotPrefab;
-
+    [SerializeField] Button sortButton;
     [SerializeField] GameObject DescriptionPanelPrefab;
     public GameObject DescriptionPanel;
     
@@ -26,20 +27,26 @@ public class UIInventory : UIBase
         DescriptionPanel.SetActive(false);
         for(int i = 0; i<playerInventory.InventoryMaxNum; i++)
         {
-            Instantiate(uiSlotPrefab,this.transform,false);
+            var go= Instantiate(uiSlotPrefab,this.transform,false);
+            var slot = go.GetComponent<UISlot>();
+            uISlots.Add(slot);
+            uISlots[i].slotIndex = i;
         }
 
-        uISlots = GetComponentsInChildren<UISlot>().ToList();
+        
+        
     }
 
     protected override void OnOpen()
     {
+        base.OnOpen();
         if(playerInventory == null)
         {
            playerInventory = MapControl.Instance.player.inventory; 
         }
         playerInventory.SubscribeOnItemChange(StartSettingItem);
 
+        sortButton.onClick.AddListener(playerInventory.SortInventory);
         
         
     }
@@ -47,28 +54,29 @@ public class UIInventory : UIBase
     protected override void OnClose()
     {
         playerInventory.UnsubscribeOnItemChange(StartSettingItem);
+        sortButton.onClick.RemoveListener(playerInventory.SortInventory);
     }
 
-    void StartSettingItem()
+    public void StartSettingItem()
     {
         for (int i = 0; i < uISlots.Count; i++)
         {
 
-            SetItemsUI(playerInventory.slotDataList[i].slotItem, i);
+            SetItemsUI(playerInventory.slotDataList[i], i);
         }
     }
 
 
 
-    public void SetItemsUI(Item runtimeItemData,int slotIndex)
+    public void SetItemsUI(SlotData slotData,int slotIndex)
     {
         var slot=uISlots[slotIndex];
-        slot.SetSlot(runtimeItemData);
+        slot.SetSlot(slotData);
             
     }
-   
-   
 
     
-    
+
+
+
 }

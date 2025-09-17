@@ -63,7 +63,15 @@ public class UIToolBar : UIBase
             slot.outline.enabled = false;
             if(slot.slotEquipment==MapControl.Instance.player.tool.CurrentEquip)
             {
-                slot.outline.enabled=true;
+                if(slot.slotEquipment.equipmentType==EquipmentType.SeedBasket)
+                {
+                    UIManager.Instance.OpenUI<UISeedBasket>();
+                }
+                else
+                {
+                    UIManager.Instance.CloseUI<UISeedBasket>();
+                }
+                slot.outline.enabled = true;
             }
             
         }

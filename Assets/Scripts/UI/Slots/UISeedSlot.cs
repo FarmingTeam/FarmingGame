@@ -73,6 +73,11 @@ public class UISeedSlot : MonoBehaviour,IPointerClickHandler
         {
             seedBasket.SelectSlot(this);
         }
+        else
+        {
+            //빈곳 클릭시 그냥 닫기
+            UIManager.Instance.CloseUI<UISeedBasket>();
+        }
         
     }
 }

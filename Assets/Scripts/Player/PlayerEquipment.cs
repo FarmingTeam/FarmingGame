@@ -23,5 +23,42 @@ public class PlayerEquipment : MonoBehaviour
 
     }
 
+
+ 
+    public void ChangeEquipmentExtra(EquipmentType equipmentType,int equipmentExtra)
+    {
+        foreach(Equipment equip in equipList)
+        {
+            if(equip.equipmentType == equipmentType)
+            {
+                if(equipmentType==EquipmentType.SeedBasket)
+                {
+                    //현재 SeedID를 알려줌
+                    equip.equipmentExtra = equipmentExtra;
+                }
+                else if(equipmentType == EquipmentType.WateringCan)
+                {
+                    //현재 물 게이지를 알려줌
+                    equip.equipmentExtra += equipmentExtra;
+                    equip.equipmentExtra=Mathf.Clamp(equip.equipmentExtra,0,equip.equipmentMaxRate);
+                }
+                
+            }
+        }
+    }
+
+    public int CheckEquipmentExtra(EquipmentType equipmentType)
+    {
+        foreach (Equipment equip in equipList)
+        {
+            if(equip.equipmentType==equipmentType)
+            {
+                return equip.equipmentExtra;
+            }
+            
+        }
+        return -1;
+    }
+
     
 }
