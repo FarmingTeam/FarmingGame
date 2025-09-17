@@ -13,8 +13,8 @@ public class ItemTest : MonoBehaviour
     void Start()
     {
         UIManager.Instance.OpenUI<UIToolBar>();
-        UIManager.Instance.OpenUI<UIInventory>();
-        UIManager.Instance.OpenUI<UISeedBasket>();
+        UIManager.Instance.OpenPopup<UIInventory>();
+        //UIManager.Instance.OpenUI<UISeedBasket>();
     }
 
 
@@ -23,26 +23,27 @@ public class ItemTest : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha7))
         {
             MapControl.Instance.player.inventory.AdditemsByID(1, 1);
-            MapControl.Instance.player.inventory.AdditemsByID(2, 10);
+            MapControl.Instance.player.inventory.AdditemsByID(2, 6);
             MapControl.Instance.player.inventory.AdditemsByID(3, 1);
         }
         if(Input.GetKeyDown(KeyCode.Alpha8))
         {
-            MapControl.Instance.player.inventory.SwitchItemPlaces(5, 0);
+            MapControl.Instance.player.inventory.SaveInventoryStatus();
         }
         if( Input.GetKeyDown(KeyCode.Alpha9))
         {
-            MapControl.Instance.player.inventory.SubtractItemQuantity(1, 1);
+            MapControl.Instance.player.inventory.LoadInventoryStatus();
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            UIManager.Instance.CloseTopPopUpUI();
         }
     }
-    public void Test()
-    {
-        
-    }
+    
 
     public void Test2()
     {
-        UIManager.Instance.OpenUI<UISeedBasket>();
+
     }
 
     public void Test3()
