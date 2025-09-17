@@ -65,7 +65,7 @@ public class UIToolBar : UIBase
             {
                 if(slot.slotEquipment.equipmentType==EquipmentType.SeedBasket)
                 {
-                    UIManager.Instance.OpenPopup<UISeedBasket>();
+                    UIManager.Instance.OpenUI<UISeedBasket>();
                 }
                 else
                 {

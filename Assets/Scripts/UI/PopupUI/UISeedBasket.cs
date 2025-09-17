@@ -24,6 +24,7 @@ public class UISeedBasket : UIPopup
 
     protected override void OnOpen()
     {
+        base.OnOpen();
 
         //아래 슬롯들 소환
         if(slots.Count == 0)
@@ -135,7 +136,7 @@ public class UISeedBasket : UIPopup
 
     void CloseBasket()
     {
-        UIManager.Instance.ClosePopupUI(this);
+        UIManager.Instance.CloseUI<UISeedBasket>();
     }
 
 

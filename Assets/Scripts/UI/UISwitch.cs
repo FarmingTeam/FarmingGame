@@ -52,7 +52,7 @@ public class UISwitch : MonoBehaviour
 
     private void ActiveInventory(InputAction.CallbackContext ctx)
     {
-        Toggle();
+        UIManager.Instance.ToggleUI<UIInventory>();
     }
 
     public void Toggle()
