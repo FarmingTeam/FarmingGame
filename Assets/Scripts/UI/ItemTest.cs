@@ -41,7 +41,7 @@ public class ItemTest : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
-            UIManager.Instance.CloseTopPopUpUI();
+            UIManager.Instance.OpenUI<UIToolBar>();
         }
     }
     

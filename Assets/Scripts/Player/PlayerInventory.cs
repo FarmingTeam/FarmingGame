@@ -131,7 +131,7 @@ public class PlayerInventory : MonoBehaviour
                             //다 넣었으니 이제 배정해야할 quantity가 없어
                             quantity = 0;
                             //여기에 이제 완료 업데이트
-                            onItemChange.Invoke();
+                            onItemChange?.Invoke();
 
                             return;
                         }
@@ -185,7 +185,7 @@ public class PlayerInventory : MonoBehaviour
                 slotDataList[slotIndex].slotItem = newItem;
 
                 //여기에 완료 업데이트
-                onItemChange.Invoke();
+                onItemChange?.Invoke();
 
             }
             
