@@ -13,7 +13,6 @@ public class MapControl : Singleton<MapControl>
     {
         dontDestroyOnLoad = false;
         base.Awake();
-        OnLoad();
     }
     protected void Start()
     {
@@ -22,16 +21,5 @@ public class MapControl : Singleton<MapControl>
 
     public void OnLoad()
     {
-        map = Instantiate(mapPrefab);
-        player = Instantiate(playerPrefab);
-        player.InitPos(new Vector3(1, 1, 0));
-    }
-
-    //Refactor : 수정 필요
-    public void ReLoader()
-    {
-        Destroy(map.gameObject);
-        map = Instantiate (mapPrefab);
-        player.InitPos(new Vector3(1, 1, 0));
     }
 }

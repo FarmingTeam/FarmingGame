@@ -31,7 +31,7 @@ public class ChunkControl : Singleton<ChunkControl>
                 List<Vector2Int> connectPos = curentData.ToList<Vector2Int>();
                 connectPos.Remove(new Vector2Int(curx, cury));
 
-                MapControl.Instance.map.tiles[curx,cury].objectInteractionType = chunkData.interactionType;
+                MapControl.Instance.map.tiles[curx,cury].chunkData = chunkData;
                 MapControl.Instance.map.objectGraph.Add(new Vector2Int(curx, cury), connectPos);
                 MapControl.Instance.map.SetTileObject(new Vector2Int(curx, cury), chunkData.tileBases[i].Tiles[j]);
             }

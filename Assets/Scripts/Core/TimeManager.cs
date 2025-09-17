@@ -112,7 +112,6 @@ public class TimeManager : Singleton<TimeManager>
     {
         Debug.Log("End Day");
         yield return new WaitForSeconds(ReloadTimeDelay);
-        MapControl.Instance.ReLoader();
         currentCorutine = StartCoroutine(TimeLogic());
     }
 

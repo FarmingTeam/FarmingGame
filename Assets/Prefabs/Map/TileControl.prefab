@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1047018459860864150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 200292972723429227}
+  - component: {fileID: 8220587448545081938}
+  m_Layer: 0
+  m_Name: TileControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &200292972723429227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047018459860864150}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8220587448545081938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047018459860864150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb6f0e12710f8d46bfbd40941c31367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  tileFloors:
+  - {fileID: 11400000, guid: 97a7617242221ba4bbe5ab907c54427c, type: 2}
+  - {fileID: 11400000, guid: 7864a612040ce71408b97b0fbe370002, type: 2}
+  - {fileID: 11400000, guid: ba957b20b7d9813409436be026b3d1a3, type: 2}
+  - {fileID: 11400000, guid: a7266f44dd9a15247b8c1e4d83393e81, type: 2}
+  chunkDatas:
+  - {fileID: 11400000, guid: 74ec59f1070dbd34381af082c3f9a7ff, type: 2}
+  - {fileID: 11400000, guid: 241ca04af3214d848a09b7a5a6448551, type: 2}
+  - {fileID: 11400000, guid: 922b6788f9797aa418a8390dab6d778b, type: 2}
+  - {fileID: 11400000, guid: 31e97df2372a3584fa3e2f931213572b, type: 2}
+  - {fileID: 11400000, guid: 51e7226afe8448a4b9e700ac052830d4, type: 2}
+  - {fileID: 11400000, guid: 5c97025ad5714134984a7b87869a990c, type: 2}
+  seedDatas: []

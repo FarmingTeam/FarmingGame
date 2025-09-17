@@ -23,11 +23,11 @@
   "TileObject": [
     {
       "Pos": [ 7, 5 ],
-      "ObjectType": 11
+      "ObjectType": 30
     },
     {
       "Pos": [ 8, 7 ],
-      "ObjectType": 12
+      "ObjectType": 31
     }
   ],
 
