@@ -254,6 +254,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 54244c47-8e32-4d22-945b-9a8cc8ba44e0
     m_ActionName: Player/Quickslot[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5,/Keyboard/6]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 88c596d8-25a3-4e4b-a356-46270e08eb01
+    m_ActionName: Player/Inventory[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3174b916-8839-44b9-beae-00c8de5ad57b
+    m_ActionName: Player/ESC[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
