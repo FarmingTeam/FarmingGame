@@ -17,6 +17,8 @@ public class UISwitch : MonoBehaviour
     public PlayerController PlayerController;
 
     private bool isOpen;
+    private InputActionMap _uiMap;
+    private InputActionMap _playerMap;
 
     private void Awake()
     {
@@ -30,7 +32,16 @@ public class UISwitch : MonoBehaviour
         {
             playerInput = GetComponentInParent<PlayerInput>();
         }
+
+        if (playerInput && playerInput.actions)
+        {
+            _uiMap = playerInput.actions.FindActionMap(uiActionMap, false);
+            _playerMap = playerInput.actions.FindActionMap(playerActionMap, false);
+
+            if (_uiMap != null && !_uiMap.enabled) _uiMap.Enable();
+        }
     }
+
 
     private void OnEnable()
     {
@@ -53,30 +64,34 @@ public class UISwitch : MonoBehaviour
     private void ActiveInventory(InputAction.CallbackContext ctx)
     {
         UIManager.Instance.ToggleUI<UIInventory>();
-    }
+        isOpen = !isOpen;
 
-    public void Toggle()
-    {
-        UIManager.Instance.OpenPopup<UIInventory>();
-
-        if (playerInput)
+        // 플레이어 액션맵만 끄고켜기
+        if (_playerMap != null)
         {
-            if (HasActionMap(uiActionMap))
-                playerInput.SwitchCurrentActionMap(uiActionMap);
-            else if (HasActionMap(playerActionMap))
-                playerInput.SwitchCurrentActionMap(playerActionMap);
+            if (isOpen)
+            {
+                _playerMap.Disable();
+            }
+            else _playerMap.Enable();
         }
-    }
 
-    private bool HasActionMap(string mapName)
-    {
-        if (string.IsNullOrEmpty(mapName) || playerInput == null || playerInput.actions == null)
-            return false;
+        // UI 액션맵은 항상 켜두기(혹시 꺼져있으면 복구)
+        if (_uiMap != null && !_uiMap.enabled) _uiMap.Enable();
 
-        foreach (var map in playerInput.actions.actionMaps)
-            if (map.name == mapName) return true;
-
-        return false;
+        // 플레이어 스크립트 동작 및 정지
+        if (PlayerController)
+        {
+            if (isOpen)
+            {
+                if (PlayerController.rigidbody) PlayerController.rigidbody.velocity = Vector2.zero;
+                PlayerController.enabled = false;
+            }
+            else
+            {
+                PlayerController.enabled = true;
+            }
+        }
     }
 
     // Inventory 인풋을 받아서 인벤토리 창을 끄고 킵니다.
