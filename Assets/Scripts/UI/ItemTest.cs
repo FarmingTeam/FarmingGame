@@ -10,12 +10,12 @@ public class ItemTest : MonoBehaviour
     [SerializeField] Button button3;
 
     // Start is called before the first frame update
-    void Start()
+    /*void Start()
     {
         UIManager.Instance.OpenUI<UIToolBar>();
         UIManager.Instance.OpenUI<UIInventory>();
         //UIManager.Instance.OpenUI<UISeedBasket>();
-    }
+    }*/
 
 
     private void Update()
