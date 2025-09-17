@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc373d23055e2d340bb9d7794db29dc4, type: 3}
   m_Name: N001
   m_EditorClassIdentifier: 
-  NpcID: N001
+  NpcID: D001
   NpcName: "\uC6D4\uD130"
   NpcAge: 67
   NpcGender: 0

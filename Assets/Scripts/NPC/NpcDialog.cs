@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using System;
 
 [Serializable]
 public class DialogueRow
@@ -15,18 +16,29 @@ public class DialogueRow
 
 public class NpcDialog : MonoBehaviour
 {
+    public static NpcDialog Instance { get; private set; }
+
     // 키: NPC ID, 값: 해당 NPC 대사 리스트
     private Dictionary<string, List<DialogueRow>> npcDialogues = new Dictionary<string, List<DialogueRow>>();
 
     // CSV에서 불러온 모든 대사 리스트
     public List<DialogueRow> allDialogues;
-
-    void Start()
+    void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         LoadCsvFromResources("DialogData/Test");
         // 딕셔너리 초기화 및 분류 함수 호출
         InitializeNpcDialogues();
     }
+
+   
 
     public void LoadCsvFromResources(string fileName)
     {
@@ -70,7 +82,7 @@ public class NpcDialog : MonoBehaviour
         foreach (DialogueRow dialogue in allDialogues)
         {
             // 각 대사의 ConnectNPC 필드를 키로 사용
-            string npcID = dialogue.ConnectNPC;
+            string npcID = dialogue.ConnectNPC.Trim();
 
             // 딕셔너리에 해당 NPC 키가 없으면 새 리스트 생성 후 추가
             if (!npcDialogues.ContainsKey(npcID))
@@ -80,6 +92,7 @@ public class NpcDialog : MonoBehaviour
 
             // NPC 키에 대사 추가
             npcDialogues[npcID].Add(dialogue);
+            Debug.Log($"초기화 완료! 딕셔너리 키 개수: {npcDialogues.Count}");
         }
     }
     string[] ParseCsvLine(string line)
@@ -114,11 +127,26 @@ public class NpcDialog : MonoBehaviour
     // 특정 NPC ID의 대사 리스트를 반환
     public List<DialogueRow> GetDialoguesByNpc(string npcID)
     {
-        if (npcDialogues.TryGetValue(npcID, out List<DialogueRow> dialogues))
-        {
+        if (npcDialogues.TryGetValue(npcID, out var dialogues))
             return dialogues;
-        }
-        return new List<DialogueRow>(); // 없으면 빈 리스트 반환
+        return new List<DialogueRow>();
     }
 
+    // 확장: npcID별, 플레이어 대사 함께 리턴
+    public List<DialogueRow> GetDialoguesByNpcAndPlayer(string npcID)
+    {
+        return allDialogues
+            .Where(d => d.ConnectNPC == npcID || d.ConnectNPC == "P" || d.ConnectNPC == "Player")
+            .OrderBy(d => d.DialogIdx)
+            .ToList();
+    }
+
+    // 퀘스트 필터링 함수 (필요 시 사용)
+    public List<DialogueRow> GetDialoguesByQuest(string questID)
+    {
+        return allDialogues
+            .Where(d => d.ConnectQuest != null && d.ConnectQuest.Trim() == questID.Trim())
+            .OrderBy(d => d.DialogIdx)
+            .ToList();
+    }
 }
