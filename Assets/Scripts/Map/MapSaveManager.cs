@@ -42,7 +42,8 @@ public class SeedTileData
 public class MapSaveManager : Singleton<MapSaveManager>
 {
     //저장데이터
-    public const string MAPTILEPATH = "MapData/";
+    public const string RESOURCEINITIALPATH = "Json/InitialMapData/";
+    public const string MAPTILEPATH = "MapData";
     public const string TILEDATA = "TileData";
     public MapData mapData;
 
@@ -83,9 +84,13 @@ public class MapSaveManager : Singleton<MapSaveManager>
         Directory.CreateDirectory(stringBuilder.ToString());
         //파일 이름
         stringBuilder.Append("\\").Append(sceneName).Append(TILEDATA).Append(".json");
+
+        //파일이 존재하지 않는다면, 기존 Resource내부의 InitialMap데이터를 가져온다.
         if (!File.Exists(stringBuilder.ToString()))
         {
-            File.Create(stringBuilder.ToString());
+            StringBuilder InitialFileString = new StringBuilder();
+            var initialMap = Resources.Load(InitialFileString.Append(RESOURCEINITIALPATH).Append(sceneName).Append(TILEDATA).ToString()) as TextAsset;
+            File.WriteAllText(stringBuilder.ToString(), initialMap.text);
         }
         var fileData = File.ReadAllText(stringBuilder.ToString());
 
@@ -100,7 +105,7 @@ public class MapSaveManager : Singleton<MapSaveManager>
     public void SaveMap(string sceneName)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.Append(MAPTILEPATH).Append(sceneName).Append(TILEDATA).Append(".json");
+        stringBuilder.Append(MAPTILEPATH).Append("\\").Append(sceneName).Append(TILEDATA).Append(".json");
         string mapDataString = JsonUtility.ToJson(mapData, true);
         File.WriteAllText(stringBuilder.ToString(), mapDataString);
     }
