@@ -74,6 +74,10 @@ public class Map : MonoBehaviour
         tiles[lookPos.x, lookPos.y].OnInteract(tool);
         SetTileFloor(lookPos);
         TileObjectAction(tiles[lookPos.x, lookPos.y], tool);
+        if (tiles[lookPos.x, lookPos.y].seed.Interaction(tool, tiles[lookPos.x, lookPos.y], out TileBase tileBase))
+        {
+            SetTileSeed(lookPos, tileBase);
+        }
     }
 
     public void SetTileFloor(Vector2Int index)
@@ -157,7 +161,6 @@ public class Map : MonoBehaviour
             tiles[t.Pos[0], t.Pos[1]].seed.InitSeed(TileControl.Instance.GetSeedDataByID(t.SeedType));
             tiles[t.Pos[0], t.Pos[1]].seed.PlantedDate = t.PlantedDate;
             SetTileSeed(new Vector2Int(t.Pos[0], t.Pos[1]), tiles[t.Pos[0], t.Pos[1]].seed.SeedState());
-            
         }
     }
 }

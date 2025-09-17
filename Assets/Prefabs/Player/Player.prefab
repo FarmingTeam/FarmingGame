@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 7014166395869505413}
   - component: {fileID: 6069934278270212078}
   - component: {fileID: 5477127033195182224}
+  - component: {fileID: 2203808446617159633}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -253,6 +254,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 54244c47-8e32-4d22-945b-9a8cc8ba44e0
     m_ActionName: Player/Quickslot[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5,/Keyboard/6]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 88c596d8-25a3-4e4b-a356-46270e08eb01
+    m_ActionName: Player/Inventory[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3174b916-8839-44b9-beae-00c8de5ad57b
+    m_ActionName: Player/ESC[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -407,6 +416,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipList: []
+--- !u!114 &2203808446617159633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2831479454580651126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b244c9509f3aac243814b593fa615e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 6069934278270212078}
 --- !u!1 &4578717364760354394
 GameObject:
   m_ObjectHideFlags: 0
