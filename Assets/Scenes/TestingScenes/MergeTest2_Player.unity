@@ -446,8 +446,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3aad4a5eb077049a80f5ba54140e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryAction: {fileID: -489474372956622536, guid: d09204631a350b14cb018d306da035cf, type: 3}
+  inventoryAction: {fileID: 1495427420710844033, guid: d09204631a350b14cb018d306da035cf, type: 3}
   playerInput: {fileID: 8832655675344808188, guid: 2a296ff0709c11243b8b8b574048c424, type: 3}
+  uiActionMap: UI
+  playerActionMap: Player
   PlayerController: {fileID: 3465576775391852864, guid: 2a296ff0709c11243b8b8b574048c424, type: 3}
 --- !u!1 &1876862663
 GameObject:

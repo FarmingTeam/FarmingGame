@@ -12,6 +12,7 @@ public class UISwitch : MonoBehaviour
 
     // 액션맵 생성
     public string uiActionMap = "UI";
+    public string playerActionMap = "Player";
 
     public PlayerController PlayerController;
 
@@ -40,6 +41,15 @@ public class UISwitch : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        // 인벤토리 활성화
+        if (inventoryAction != null)
+        {
+            inventoryAction.action.performed -= ActiveInventory;
+        }
+    }
+
     private void ActiveInventory(InputAction.CallbackContext ctx)
     {
         Toggle();
@@ -51,8 +61,22 @@ public class UISwitch : MonoBehaviour
 
         if (playerInput)
         {
+            if (HasActionMap(uiActionMap))
                 playerInput.SwitchCurrentActionMap(uiActionMap);
+            else if (HasActionMap(playerActionMap))
+                playerInput.SwitchCurrentActionMap(playerActionMap);
         }
+    }
+
+    private bool HasActionMap(string mapName)
+    {
+        if (string.IsNullOrEmpty(mapName) || playerInput == null || playerInput.actions == null)
+            return false;
+
+        foreach (var map in playerInput.actions.actionMaps)
+            if (map.name == mapName) return true;
+
+        return false;
     }
 
     // Inventory 인풋을 받아서 인벤토리 창을 끄고 킵니다.
