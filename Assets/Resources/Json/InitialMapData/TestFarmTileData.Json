@@ -1,5 +1,5 @@
 {
-  "MapSize": [ 10, 10 ],
+  "MapSize": [ 40, 40 ],
 
   "TileFloor": [
     {
@@ -23,11 +23,11 @@
   "TileObject": [
     {
       "Pos": [ 7, 5 ],
-      "ObjectType": 30
+      "ChunkType": 30
     },
     {
       "Pos": [ 8, 7 ],
-      "ObjectType": 31
+      "ChunkType": 31
     }
   ],
 

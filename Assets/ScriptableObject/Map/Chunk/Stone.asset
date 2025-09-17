@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c863da345ad3e754ab3986c7c86dd72b, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  objectType: 10
+  chunkType: 10
   interactionType: 2
   tileBases:
   - Tiles:
