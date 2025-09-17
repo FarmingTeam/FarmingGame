@@ -8,7 +8,6 @@ public class TileDataBase : Singleton<TileDataBase>
 {
     [SerializeField] public TileFloor[] tileFloors;
     [SerializeField] public ChunkData[] chunkDatas;
-    [SerializeField] public SeedData[] seedDatas;
 
     readonly public Dictionary<FloorInteractionType, TileFloorInteraction> FLOORACTIONPAIR = new Dictionary<FloorInteractionType, TileFloorInteraction>
     {
@@ -39,7 +38,7 @@ public class TileDataBase : Singleton<TileDataBase>
 
     public SeedData GetSeedDataByID(int id)
     {
-        SeedData result = seedDatas.First(data => data.itemID == id);
+        SeedData result = ResourceManager.Instance.GetItem(id) as SeedData;
         return result;
     }
 

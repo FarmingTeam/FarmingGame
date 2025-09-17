@@ -67,11 +67,18 @@ public class MapSaveManager : Singleton<MapSaveManager>
     {
         //맵 프리팹 불러오기
         //Refactor : MapControl과의 기능 비교 및 확인
-        Map mapPrefab = mapDataBase.First(data => data.sceneName == sceneName);
-        MapControl.Instance.map = Instantiate(mapPrefab);
+
+        if (MapControl.Instance.map == null)
+        {
+            Map mapPrefab = mapDataBase.First(data => data.sceneName == sceneName);
+            MapControl.Instance.map = Instantiate(mapPrefab);
+        }
 
         //Refactor : Debug용 테스트 스크립트, 삭제 필요
-        MapControl.Instance.player = Instantiate(playerPrefab);
+        if (MapControl.Instance.player == null)
+        {
+            MapControl.Instance.player = Instantiate(playerPrefab);
+        }
         MapControl.Instance.player.InitPos(new Vector3(1, 1, 0));
         //Refactor End
 
@@ -158,6 +165,38 @@ public class MapSaveManager : Singleton<MapSaveManager>
                 return;
             }
             result.ChunkType = (int)data.chunkType;
+        }
+    }
+
+    public void UpdateSeed(Vector2Int pos, TileSeed seed)
+    {
+        MapSeedData result = mapData.TileSeed.FirstOrDefault(data => data.Pos[0] == pos.x && data.Pos[1] == pos.y);
+        //좌표에 데이터가 없을 경우 추가
+        if (result == null)
+        {
+            if (seed.seedType == -1)
+                return;
+            MapSeedData newdata = new MapSeedData();
+            newdata.SeedType = seed.seedType;
+            newdata.Pos = new int[] { pos.x, pos.y };
+            newdata.PlantedDate = seed.plantedDate;
+            seed.UpdateRemainingDate();
+            newdata.IsPlanted = seed.isPlanted;
+            mapData.TileSeed.Add(newdata);
+        }
+        //좌표에 데이터가 있을경우 수정
+        else
+        {
+            //씨앗의 종류가 None이되면 좌표 데이터 삭제
+            if (seed.seedType == -1)
+            {
+                mapData.TileSeed.Remove(result);
+                return;
+            }
+            result.SeedType = (int)seed.seedType;
+            result.PlantedDate = seed.plantedDate;
+            seed.UpdateRemainingDate();
+            result.IsPlanted = seed.isPlanted;
         }
     }
 }
