@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using UnityEngine;
 
@@ -12,26 +10,26 @@ using UnityEngine;
 public class MapData
 {
     public int[] MapSize;
-    public List<FloorData> TileFloor;
-    public List<ObjectData> TileObject;
-    public List<SeedTileData> TileSeed;
+    public List<MapFloorData> TileFloor;
+    public List<MapChunkData> TileObject;
+    public List<MapSeedData> TileSeed;
 }
 
 [Serializable]
-public class FloorData
+public class MapFloorData
 {
     public int[] Pos;
     public int FloorType;
 }
 [Serializable]
-public class ObjectData
+public class MapChunkData
 {
     public int[] Pos;
-    public int ObjectType;
+    public int ChunkType;
 }
 
 [Serializable]
-public class SeedTileData
+public class MapSeedData
 {
     public int[] Pos;
     public int SeedType;
@@ -113,13 +111,13 @@ public class MapSaveManager : Singleton<MapSaveManager>
 
     public void UpdateFloor(Vector2Int pos, FloorInteractionType type)
     {
-        FloorData result = mapData.TileFloor.FirstOrDefault(data => data.Pos[0] == pos.x && data.Pos[1] == pos.y );
+        MapFloorData result = mapData.TileFloor.FirstOrDefault(data => data.Pos[0] == pos.x && data.Pos[1] == pos.y );
         //좌표에 데이터가 없을 경우 추가
         if (result == null)
         {
             if (type == FloorInteractionType.None)
                 return;
-            FloorData newdata = new FloorData();
+            MapFloorData newdata = new MapFloorData();
             newdata.FloorType = (int)type;
             newdata.Pos = new int[] { pos.x, pos.y };
             mapData.TileFloor.Add(newdata);
@@ -139,14 +137,14 @@ public class MapSaveManager : Singleton<MapSaveManager>
 
     public void UpdateChunk(Vector2Int pos, ChunkData data)
     {
-        ObjectData result = mapData.TileObject.FirstOrDefault(data => data.Pos[0] == pos.x && data.Pos[1] == pos.y);
+        MapChunkData result = mapData.TileObject.FirstOrDefault(data => data.Pos[0] == pos.x && data.Pos[1] == pos.y);
         //좌표에 데이터가 없을 경우 추가
         if (result == null)
         {
-            if (data.objectType == ObjectType.None)
+            if (data.chunkType == ChunkType.None)
                 return;
-            ObjectData newdata = new ObjectData();
-            newdata.ObjectType = (int)data.objectType;
+            MapChunkData newdata = new MapChunkData();
+            newdata.ChunkType = (int)data.chunkType;
             newdata.Pos = new int[] { pos.x, pos.y };
             mapData.TileObject.Append(newdata);
         }
@@ -154,12 +152,12 @@ public class MapSaveManager : Singleton<MapSaveManager>
         else
         {
             //오브젝트의 종류가 None이되면 좌표 데이터 삭제
-            if (data.objectType == ObjectType.None)
+            if (data.chunkType == ChunkType.None)
             {
                 mapData.TileObject.Remove(result);
                 return;
             }
-            result.ObjectType = (int)data.objectType;
+            result.ChunkType = (int)data.chunkType;
         }
     }
 }

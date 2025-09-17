@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 [Serializable]
@@ -15,6 +12,6 @@ public class Tile
     public Tile()
     {
         this.floorInteractionType = FloorInteractionType.None;
-        this.chunkData = TileControl.Instance.GetChunkDataByID(0);
+        this.chunkData = TileDataBase.Instance.GetChunkDataByID(0);
     }
 }

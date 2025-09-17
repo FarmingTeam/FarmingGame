@@ -111,7 +111,11 @@ public class TimeManager : Singleton<TimeManager>
     public IEnumerator EndDay()
     {
         Debug.Log("End Day");
+        //Refactor : 맵 저장 로직 -> 씬에따라 변수가 바뀌게 설정
+        MapSaveManager.Instance.SaveMap("TestFarm");
         yield return new WaitForSeconds(ReloadTimeDelay);
+        //Refactor : 맵 로드 로직 -> 씬에따라 변수가 바뀌게 설정
+        MapSaveManager.Instance.LoadMap("TestFarm");
         currentCorutine = StartCoroutine(TimeLogic());
     }
 

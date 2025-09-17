@@ -1,13 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using Unity.VisualScripting;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
@@ -41,7 +33,7 @@ public class Map : MonoBehaviour
         Tile currentTile = tiles[lookPos.x, lookPos.y];
 
         //1번 레이어 인터렉션
-        TileControl.Instance.FLOORACTIONPAIR[currentTile.floorInteractionType]?.Interaction(tool, currentTile);
+        TileDataBase.Instance.FLOORACTIONPAIR[currentTile.floorInteractionType]?.Interaction(tool, currentTile);
         MapSaveManager.Instance.UpdateFloor(lookPos, currentTile.floorInteractionType);
         SetTileFloor(lookPos);
 
@@ -69,24 +61,24 @@ public class Map : MonoBehaviour
         //Floor 깔기
         for (int i = 0; i < mapData.TileFloor.Count; i++)
         {
-            FloorData t = mapData.TileFloor[i];
+            MapFloorData t = mapData.TileFloor[i];
             tiles[t.Pos[0], t.Pos[1]].floorInteractionType = (FloorInteractionType)t.FloorType;
             MapControl.Instance.map.SetTileFloor(new Vector2Int(t.Pos[0], t.Pos[1]));
         }
         //Object 깔기
         for (int i = 0; i < mapData.TileObject.Count; i++)
         {
-            ObjectData t = mapData.TileObject[i];
-            ChunkData data = TileControl.Instance.GetChunkDataByID(t.ObjectType);
+            MapChunkData t = mapData.TileObject[i];
+            ChunkData data = TileDataBase.Instance.GetChunkDataByID(t.ChunkType);
             tiles[t.Pos[0], t.Pos[1]].chunkData = data;
             ChunkControl.Instance.SetTileObjectInMap(new Vector2Int(t.Pos[0], t.Pos[1]), data);
         }
         //Seed 깔기
         for (int i = 0; i < mapData.TileSeed.Count; i++)
         {
-            SeedTileData t = mapData.TileSeed[i];
+            MapSeedData t = mapData.TileSeed[i];
             //Refactor : 나중에 단순화
-            tiles[t.Pos[0], t.Pos[1]].seed.InitSeed(TileControl.Instance.GetSeedDataByID(t.SeedType));
+            tiles[t.Pos[0], t.Pos[1]].seed.InitSeed(TileDataBase.Instance.GetSeedDataByID(t.SeedType));
             tiles[t.Pos[0], t.Pos[1]].seed.PlantedDate = t.PlantedDate;
             SetTileSeed(new Vector2Int(t.Pos[0], t.Pos[1]), tiles[t.Pos[0], t.Pos[1]].seed.SeedState());
         }
@@ -94,7 +86,7 @@ public class Map : MonoBehaviour
 
     public void SetTileFloor(Vector2Int index)
     {
-        TileFloor.SetTile((Vector3Int)index, TileControl.Instance.GetTileFloorByType(tiles[index.x, index.y].floorInteractionType).tileBase);
+        TileFloor.SetTile((Vector3Int)index, TileDataBase.Instance.GetTileFloorByType(tiles[index.x, index.y].floorInteractionType).tileBase);
     }
 
     public void SetTileObject(Vector2Int index, TileBase tile)
@@ -130,7 +122,7 @@ public class Map : MonoBehaviour
         Tile InteractionTile = tiles[startPos.x, startPos.y];
         ChunkData changedChunk = null;
         //시작지점 타일 오브젝트 업데이트
-        bool? isChanged = TileControl.Instance.OBJECTACTIONPAIR[InteractionTile.chunkData.interactionType]
+        bool? isChanged = TileDataBase.Instance.OBJECTACTIONPAIR[InteractionTile.chunkData.interactionType]
             ?.Interaction(equipment, tile, out changedChunk);
         //만약 변경사항이 없다면 종료
         if (isChanged != true)

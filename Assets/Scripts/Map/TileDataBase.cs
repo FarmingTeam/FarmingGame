@@ -1,13 +1,10 @@
-using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using JetBrains.Annotations;
 
-//레이어 1번, 2번에 대한 정보 저장용
-public class TileControl : Singleton<TileControl>
+//타일맵 데이터 베이스
+//데이터 필요할 시 TileDataBase에서 찾아서 참조
+public class TileDataBase : Singleton<TileDataBase>
 {
     [SerializeField] public TileFloor[] tileFloors;
     [SerializeField] public ChunkData[] chunkDatas;
@@ -21,11 +18,11 @@ public class TileControl : Singleton<TileControl>
         { FloorInteractionType.Water, new WaterTileBehaviour()}
     };
 
-    readonly public Dictionary<ObjectInteractionType, TileObjectInteraction> OBJECTACTIONPAIR = new Dictionary<ObjectInteractionType, TileObjectInteraction>
+    readonly public Dictionary<ChunkInteractionType, TileObjectInteraction> OBJECTACTIONPAIR = new Dictionary<ChunkInteractionType, TileObjectInteraction>
     {
-        { ObjectInteractionType.None, null},
-        { ObjectInteractionType.Tree, new TreeTileBehaviour()},
-        { ObjectInteractionType.Rock, new RockTileBehaviour()}
+        { ChunkInteractionType.None, null},
+        { ChunkInteractionType.Tree, new TreeTileBehaviour()},
+        { ChunkInteractionType.Rock, new RockTileBehaviour()}
     };
 
     public TileFloor GetTileFloorByType(FloorInteractionType type)
@@ -36,7 +33,7 @@ public class TileControl : Singleton<TileControl>
 
     public ChunkData GetChunkDataByID(int id)
     {
-        ChunkData result = chunkDatas.First(data => data.objectType == (ObjectType)id);
+        ChunkData result = chunkDatas.First(data => data.chunkType == (ChunkType)id);
         return result;
     }
 

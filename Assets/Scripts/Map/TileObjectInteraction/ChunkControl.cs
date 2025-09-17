@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 public class ChunkControl : Singleton<ChunkControl>
 {
+    //타일 초기화
     public List<Vector2Int> SetTileObjectInMap(Vector2Int startPos, ChunkData chunkData)
     {
         List<Vector2Int> result = new List<Vector2Int>();
@@ -22,6 +20,7 @@ public class ChunkControl : Singleton<ChunkControl>
             }
             MapControl.Instance.map.objectGraph.Remove(startPos);
         }
+        //타일 재설정
         for (int i = 0; i < connected.Count; i++)
         {
             if (UpdateTiles(connected[i], chunkData))
@@ -29,9 +28,11 @@ public class ChunkControl : Singleton<ChunkControl>
                 result.Add(connected[i]);
             }
         }
+        //세이브 데이터 변경을 위해 실제 저장할 데이터만 리턴
         return result;
     }
 
+    //변경사항 반영 로직
      bool UpdateTiles(Vector2Int startPos, ChunkData chunkData)
     {
         if (MapControl.Instance.map.objectGraph.ContainsKey(startPos))
