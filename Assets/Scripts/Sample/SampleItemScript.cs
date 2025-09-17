@@ -50,28 +50,22 @@ public class SampleItemScript : MonoBehaviour
 
     //================== UI 관련 =======================================
 
-    //=======일반UI(esc로 닫히지 않으며 게임 화면에 계속 있을 UI)=======
-    void UI열기() //예를들어 툴바(esc로 닫히지 않는 부분)
+    
+    void UI열기() //예를들어 툴바
     {
         UIManager.Instance.OpenUI<UIToolBar>();
     }
 
-    void UI닫기() //예를들어 툴바(esc로 닫히지 않는 부분)
+    void UI닫기() 
     {
         UIManager.Instance.CloseUI<UIToolBar>();
     }
 
-
-    //=========팝업UI(esc로 닫히며, 원한다면 수동으로 닫을수도 있는 팝업ui)=====================
-    void 팝업UI열기() //esc로 닫히는 부류만(예를들어 인벤토리)
+    void 토글기능()
     {
-        UIManager.Instance.OpenPopup<UIInventory>();
+        UIManager.Instance.ToggleUI<UIToolBar>();
     }
 
-
-    void 특정팝업UI닫기(UIInventory inventory) //언제까지나 인벤토리는 예시일뿐 UIPOpup을 상속받은 것들은 다 가능
-    {
-        UIManager.Instance.ClosePopupUI(inventory);
-    }
+    
    
 }
