@@ -10,6 +10,9 @@ public class UISwitch : MonoBehaviour
     public InputActionReference inventoryAction;
     public PlayerInput playerInput;
 
+    // 액션맵 생성
+    public string uiActionMap = "UI";
+
     public PlayerController PlayerController;
 
     private bool isOpen;
@@ -37,15 +40,6 @@ public class UISwitch : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        // 인벤토리 비활성화
-        if (inventoryAction != null)
-        {
-            inventoryAction.action.performed -= ActiveInventory;
-        }
-    }
-
     private void ActiveInventory(InputAction.CallbackContext ctx)
     {
         Toggle();
@@ -53,7 +47,12 @@ public class UISwitch : MonoBehaviour
 
     public void Toggle()
     {
-        
+        UIManager.Instance.OpenPopup<UIInventory>();
+
+        if (playerInput)
+        {
+                playerInput.SwitchCurrentActionMap(uiActionMap);
+        }
     }
 
     // Inventory 인풋을 받아서 인벤토리 창을 끄고 킵니다.

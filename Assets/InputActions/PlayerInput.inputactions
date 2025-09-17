@@ -31,24 +31,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Inventory",
-                    "type": "Value",
-                    "id": "88c596d8-25a3-4e4b-a356-46270e08eb01",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "ESC",
-                    "type": "Value",
-                    "id": "3174b916-8839-44b9-beae-00c8de5ad57b",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -183,10 +165,36 @@
                     "action": "Quickslot",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "72123a86-519f-457d-8788-b20097c947e1",
+            "actions": [
+                {
+                    "name": "Inventory",
+                    "type": "Value",
+                    "id": "c8155a0f-c991-4275-9f53-cd30b7868545",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
+                    "name": "ESC",
+                    "type": "Value",
+                    "id": "f6f67efc-cd38-4891-814b-265016d124b9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
                     "name": "",
-                    "id": "be021196-50b4-4455-b7ae-c11bb21c164b",
+                    "id": "5783b8aa-6917-4d15-a994-6d3919a0d4b5",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
@@ -197,7 +205,7 @@
                 },
                 {
                     "name": "",
-                    "id": "47857f97-6a1d-48f4-bcb4-3532444f6f4c",
+                    "id": "d1284ab9-dbe8-4378-909b-7b2dff9ad828",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
