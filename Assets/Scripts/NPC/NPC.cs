@@ -9,16 +9,19 @@ public class NPC : MonoBehaviour
     public NPCData npcData;
     private List<DialogueRow> dialogues;
     private int currentDialogueIndex = 0;
+    private string npcID;
 
     void Start()
     {
-        // 전체 대사 리스트에서 현재 NPC와 플레이어의 대사를 담고,
-        // DialogIdx 순서로 정렬해서 불러옴
+        string npcID = npcData.NpcID.Trim().ToLower();
+
         dialogues = NpcDialog.Instance.allDialogues
-            .Where(d => d.ConnectNPC == npcData.NpcID || d.ConnectNPC == "P" || d.ConnectNPC == "Player")
+            .Where(d => !string.IsNullOrEmpty(d.ConnectNPC) &&
+                (d.ConnectNPC.Trim().ToLower() == npcID ||
+                 d.ConnectNPC.Trim().ToLower() == "p" ||
+                 d.ConnectNPC.Trim().ToLower() == "player"))
             .OrderBy(d => d.DialogIdx)
             .ToList();
-        currentDialogueIndex = 0;
     }
 
     void OnMouseDown()
@@ -33,16 +36,18 @@ public class NPC : MonoBehaviour
             Debug.Log($"{npcData.NpcName}의 대사가 없습니다.");
             return;
         }
+
         if (currentDialogueIndex < dialogues.Count)
         {
             var dialogue = dialogues[currentDialogueIndex];
             string speaker = "";
+            string connectNPC = dialogue.ConnectNPC?.Trim().ToLower();
 
-            if (dialogue.ConnectNPC == npcData.NpcID)
+            if (connectNPC == npcID)
             {
                 speaker = npcData.NpcName;
             }
-            else if (dialogue.ConnectNPC == "P" || dialogue.ConnectNPC == "Player")
+            else if (connectNPC == "p" || connectNPC == "player")
             {
                 speaker = "플레이어";
             }
@@ -50,6 +55,7 @@ public class NPC : MonoBehaviour
             {
                 speaker = dialogue.ConnectNPC;
             }
+
             Debug.Log($"{speaker}: {dialogue.DialogCon}");
             currentDialogueIndex++;
         }
