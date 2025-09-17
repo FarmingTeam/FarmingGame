@@ -5,12 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class TileSeed
 {
-    public int SeedType = -1;
+    public int seedType = -1;
     private bool _isPlanted = false;
     public bool isPlanted { get { return _isPlanted; } }
     public bool isWatered = false;
-    public int GrowTime = -1;
-    public int PlantedDate = -1;
+    public int growTime = -1;
+    public int plantedDate = -1;
 
     public ItemData itemData;
 
@@ -23,7 +23,7 @@ public class TileSeed
     {
         if (!_isPlanted)
         {
-            if (PlantedDate + GrowTime - TimeManager.Instance.GetActualUpdateDate() <= 0)
+            if (plantedDate + growTime - TimeManager.Instance.GetActualUpdateDate() <= 0)
             {
                 _isPlanted = true;
             }
@@ -40,21 +40,41 @@ public class TileSeed
 
     public void InitSeed(SeedData seed)
     {
-        //Planted Date = Today
-        GrowTime = seed.growTime;
+        seedType = seed.itemID;
+        plantedDate =  TimeManager.Instance.GetActualUpdateDate();
+        growTime = seed.growTime;
         seedTileBase = seed.seedTileBase;
         cropTileBase = seed.cropTileBase;
     }
 
-    public bool Interaction(EquipmentType tool, Tile tile, out TileBase tileBase)
+    public bool Interaction(Equipment tool, Tile tile, out TileBase tileBase)
     {
-        if (SeedType == -1)
+        if (seedType == -1)
         {
+            //씨앗 심기 로직
+            if (tile.floorInteractionType == FloorInteractionType.Dirt && tool.equipmentType == EquipmentType.SeedBasket && tool.equipmentExtra != 0)
+            {
+                try
+                {
+                    SeedData seed = ResourceManager.Instance.GetItem(tool.equipmentExtra) as SeedData;
+                    InitSeed(seed);
+                    tileBase = SeedState();
+                    return true;
+                }
+                catch
+                {
+                    Debug.LogError("올바르지 않은 씨앗 데이터입니다. : " + tool.equipmentExtra);
+                    tileBase = null;
+                    return false;
+                }
+            }
             tileBase = null;
             return false;
         }
 
-        if (_isPlanted)
+        //씨앗 수확 로직
+        //Refactor : 타입 낫 추가되는 대로 낫으로 변경
+        else if (_isPlanted && tool.equipmentType == EquipmentType.Hoe)
         {
             // 드랍 오브젝트 생성(ItemData에서 작물 아이템의 데이터를 끌어와 타일 위에 띄우기)
             GameObject drop = new GameObject($"{itemData.itemName} Drop");
@@ -64,11 +84,29 @@ public class TileSeed
             spr.sprite = itemData.itemIcon;
             spr.sortingOrder = 10;
 
-            tile.seed = new TileSeed();
+            tile.seed.ResetSeed();
             tileBase = null;
             return true;
         }
+
+        //씨앗 파괴 로직
+        else if (tool.equipmentType == EquipmentType.Pickaxe)
+        {
+            tile.seed.ResetSeed();
+            tileBase = null;
+            return true;
+        }
+
         tileBase = null;
         return false;
+    }
+
+    void ResetSeed()
+    {
+        seedType = -1;
+        _isPlanted = false;
+        isWatered = false;
+        growTime = -1;
+        plantedDate = -1;
     }
 }

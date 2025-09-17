@@ -22,7 +22,7 @@ public class Map : MonoBehaviour
     [Header("타일 정보")]
     [SerializeField] public Tile[,] tiles;
 
-    public void OnPlayerInteract(Vector2Int lookPos, EquipmentType tool)
+    public void OnPlayerInteract(Vector2Int lookPos, Equipment tool)
     {
         Debug.Log("플레이어 아이템" + tool);
         //범위 밖 예외처리
@@ -41,8 +41,9 @@ public class Map : MonoBehaviour
         TileObjectAction(currentTile, tool);
 
         //3번 레이어 인터렉션
-        if (tiles[lookPos.x, lookPos.y].seed.Interaction(tool, tiles[lookPos.x, lookPos.y], out TileBase tileBase))
+        if (currentTile.seed.Interaction(tool, currentTile, out TileBase tileBase))
         {
+            MapSaveManager.Instance.UpdateSeed(lookPos, currentTile.seed);
             SetTileSeed(lookPos, tileBase);
         }
     }
@@ -79,7 +80,7 @@ public class Map : MonoBehaviour
             MapSeedData t = mapData.TileSeed[i];
             //Refactor : 나중에 단순화
             tiles[t.Pos[0], t.Pos[1]].seed.InitSeed(TileDataBase.Instance.GetSeedDataByID(t.SeedType));
-            tiles[t.Pos[0], t.Pos[1]].seed.PlantedDate = t.PlantedDate;
+            tiles[t.Pos[0], t.Pos[1]].seed.plantedDate = t.PlantedDate;
             SetTileSeed(new Vector2Int(t.Pos[0], t.Pos[1]), tiles[t.Pos[0], t.Pos[1]].seed.SeedState());
         }
     }
@@ -102,7 +103,7 @@ public class Map : MonoBehaviour
     //Chunk의 경우 Tile이 Chunk 데이터 포함 해야함
     //설치의 경우를 고려할것 -> None에서도 인터렉션이 가능하도록 설정
     //2*2 설치의 경우를 추가로 고려할것 -> 플레이어의 위치 파악 필요
-    public void TileObjectAction(Tile tile, EquipmentType equipment)
+    public void TileObjectAction(Tile tile, Equipment equipment)
     {
         //연결된 시작지점 탐색
         Vector2Int startPos = tile.pos;

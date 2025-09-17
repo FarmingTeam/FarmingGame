@@ -5,12 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class TreeTileBehaviour : TileObjectInteraction
 {
-    public override bool Interaction(EquipmentType tool, Tile tile, out ChunkData chunkData)
+    public override bool Interaction(Equipment tool, Tile tile, out ChunkData chunkData)
     {
-        //만약 도끼를 들고있다면으로 수정
-        if (tool == EquipmentType.Axe)
+        if (tool.equipmentType == EquipmentType.Axe)
         {
             chunkData = TileDataBase.Instance.GetChunkDataByID((int)ChunkType.None);
+            //Drop Wood Item
             return true;
         }
         chunkData = null;

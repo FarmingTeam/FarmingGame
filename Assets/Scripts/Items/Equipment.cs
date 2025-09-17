@@ -11,7 +11,8 @@ public enum EquipmentType
     WateringCan,
     Axe,
     Pickaxe,
-    SeedBasket
+    SeedBasket,
+    Sickle
 }
 
 
@@ -60,6 +61,10 @@ public class Equipment : ScriptableObject
 
             //이거에 대한 equipmentExtra는 seedData
 
+        }
+        else if(equipmentType=="Sickle")
+        {
+            this.equipmentType = EquipmentType.Sickle;
         }
     }
 }

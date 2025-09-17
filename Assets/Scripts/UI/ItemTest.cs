@@ -22,9 +22,10 @@ public class ItemTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            MapControl.Instance.player.inventory.AdditemsByID(1, 1);
-            MapControl.Instance.player.inventory.AdditemsByID(2, 6);
-            MapControl.Instance.player.inventory.AdditemsByID(3, 1);
+            MapControl.Instance.player.inventory.AdditemsByID(1001, 1);
+            MapControl.Instance.player.inventory.AdditemsByID(2001, 6);
+            MapControl.Instance.player.inventory.AdditemsByID(1002, 1);
+            MapControl.Instance.player.inventory.AdditemsByID(2002, 1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
