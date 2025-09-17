@@ -1,11 +1,8 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
-public enum ObjectInteractionType
+public enum ChunkInteractionType
 {
     None = 0,
     Tree,
@@ -17,7 +14,7 @@ public enum ObjectInteractionType
 }
 
 [System.Serializable]
-public enum ObjectType
+public enum ChunkType
 {
     None = 0,
     Stone = 10,
@@ -26,13 +23,6 @@ public enum ObjectType
     Treetype2 = 31,
     Weed = 40
 
-}
-
-[System.Serializable]
-public enum SeedType
-{
-    None = 0,
-    Carrot,
 }
 
 [System.Serializable]
@@ -45,7 +35,7 @@ public struct OneDimensionTileBase
 [CreateAssetMenu(fileName = "ChunkData", menuName = "TileInfo/ChunkData")]
 public class ChunkData : ScriptableObject
 {
-    [SerializeField] public ObjectType objectType;
-    [SerializeField] public ObjectInteractionType interactionType;
+    [SerializeField] public ChunkType chunkType;
+    [SerializeField] public ChunkInteractionType interactionType;
     [SerializeField] public OneDimensionTileBase[] tileBases;
 }
