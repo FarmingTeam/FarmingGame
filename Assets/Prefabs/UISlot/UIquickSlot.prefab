@@ -86,7 +86,6 @@ GameObject:
   - component: {fileID: 6998822826189855265}
   - component: {fileID: 968839627052914500}
   - component: {fileID: 1264037268861154096}
-  - component: {fileID: 8406393743012679415}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -152,20 +151,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8406393743012679415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250771041839422137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf759ebe207b154f9bcc42a211b7067, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quickSlot: {fileID: 0}
-  equipment: {fileID: 0}
 --- !u!1 &4144034434799582767
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,8 +392,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEquipment: {fileID: 0}
-  dragDropEquipment: {fileID: 0}
-  outline: {fileID: 8595409626906972682}
-  slotNumberText: {fileID: 833588273498219192}
-  waterBar: {fileID: 8630653135713468488}
   slotNumber: 0
+  slotNumberText: {fileID: 833588273498219192}
+  image: {fileID: 1264037268861154096}
+  outline: {fileID: 8595409626906972682}
+  waterBar: {fileID: 8630653135713468488}
