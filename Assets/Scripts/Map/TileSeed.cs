@@ -41,6 +41,11 @@ public class TileSeed
     public void InitSeed(SeedData seed)
     {
         seedType = seed.itemID;
+        if (seedType != -1)
+        {
+            int itemID = seedType + 1000;
+            itemData = ResourceManager.Instance.GetItem(itemID);
+        }
         plantedDate =  TimeManager.Instance.GetActualUpdateDate();
         growTime = seed.growTime;
         seedTileBase = seed.seedTileBase;
@@ -104,6 +109,7 @@ public class TileSeed
     void ResetSeed()
     {
         seedType = -1;
+        itemData = null;
         _isPlanted = false;
         isWatered = false;
         growTime = -1;

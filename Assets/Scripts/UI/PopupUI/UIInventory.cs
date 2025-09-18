@@ -48,13 +48,14 @@ public class UIInventory : UIPopup
 
         sortButton.onClick.AddListener(playerInventory.SortInventory);
         
+        StartSettingItem();
         
     }
 
     protected override void OnClose()
     {
-        playerInventory.UnsubscribeOnItemChange(StartSettingItem);
-        sortButton.onClick.RemoveListener(playerInventory.SortInventory);
+        MapControl.Instance.player.inventory.UnsubscribeOnItemChange(StartSettingItem);
+        sortButton.onClick.RemoveListener(MapControl.Instance.player.inventory.SortInventory);
     }
 
     public void StartSettingItem()
