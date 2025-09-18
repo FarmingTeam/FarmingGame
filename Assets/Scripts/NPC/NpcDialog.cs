@@ -11,7 +11,6 @@ public class DialogueRow
     public string DialogCon;
     public string ConnectNPC;
     public string ConnectQuest;
-    public string Comment;
 }
 
 public class NpcDialog : MonoBehaviour
@@ -60,14 +59,13 @@ public class NpcDialog : MonoBehaviour
 
             string[] values = ParseCsvLine(line); //parseCsvLine 메서드 사용 쉼표 구분 매서드
 
-            if (values.Length < 5) continue;
+            if (values.Length < 4) continue;
 
             DialogueRow row = new DialogueRow();
             row.DialogIdx = values[0];
             row.DialogCon = values[1];
             row.ConnectNPC = values[2];
             row.ConnectQuest = values[3];
-            row.Comment = values[4];
 
             allDialogues.Add(row);
         }
@@ -142,11 +140,13 @@ public class NpcDialog : MonoBehaviour
     }
 
     // 퀘스트 필터링 함수 (필요 시 사용)
-    public List<DialogueRow> GetDialoguesByQuest(string questID)
+    public List<DialogueRow> GetDialoguesByQuest(string npcID, string questID)
     {
         return allDialogues
-            .Where(d => d.ConnectQuest != null && d.ConnectQuest.Trim() == questID.Trim())
-            .OrderBy(d => d.DialogIdx)
-            .ToList();
+       .Where(d => d.ConnectNPC != null && d.ConnectQuest != null &&
+                   d.ConnectNPC.Trim().ToLower() == npcID &&
+                   d.ConnectQuest.Trim() == questID)
+       .OrderBy(d => d.DialogIdx)
+       .ToList();
     }
 }
