@@ -16,6 +16,8 @@ public class UISwitch : MonoBehaviour
 
     public PlayerController PlayerController;
 
+    [SerializeField] private UIInventory uiInventory;
+
     private bool isOpen;
     private InputActionMap _uiMap;
     private InputActionMap _playerMap;
@@ -40,6 +42,15 @@ public class UISwitch : MonoBehaviour
 
             if (_uiMap != null && !_uiMap.enabled) _uiMap.Enable();
         }
+
+        if (!uiInventory)
+            uiInventory = FindObjectOfType<UIInventory>(true);
+    }
+
+    private void FindInventory()
+    {
+        // 씬에서 직접 탐색(비활성 포함)
+        uiInventory = FindObjectOfType<UIInventory>(true);
     }
 
 
@@ -54,7 +65,7 @@ public class UISwitch : MonoBehaviour
 
     private void OnDisable()
     {
-        // 인벤토리 활성화
+        // 인벤토리 비활성화
         if (inventoryAction != null)
         {
             inventoryAction.action.performed -= ActiveInventory;
@@ -64,10 +75,16 @@ public class UISwitch : MonoBehaviour
     private void ActiveInventory(InputAction.CallbackContext ctx)
     {
         UIManager.Instance.ToggleUI<UIInventory>();
-        isOpen = !isOpen;
+
+        FindInventory();
+
+        if (uiInventory)
+        {
+            isOpen = uiInventory.gameObject.activeInHierarchy;
+        }
 
         // 플레이어 액션맵만 끄고켜기
-        if (_playerMap != null)
+            if (_playerMap != null)
         {
             if (isOpen)
             {
