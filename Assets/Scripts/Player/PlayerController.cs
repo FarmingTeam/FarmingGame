@@ -59,6 +59,31 @@ public class PlayerController : MonoBehaviour
             if (player.tool.CurrentEquip == null)
                 return;
             MapControl.Instance.map.OnPlayerInteract((Vector2Int)player.tileReader.FrontCell(), player.tool.CurrentEquip);
+
+            var face = tileReader.currentFacing;
+
+            if (face == TileReader.Facing.Up)
+            {
+                animator.SetTrigger("IsOnInteractionBack");
+                Debug.Log("위쪽 상호작용");
+            }
+            else if (face == TileReader.Facing.Down)
+            {
+                animator.SetTrigger("IsOnInteractionFront");
+                Debug.Log("아래쪽 상호작용");
+            }
+            else if (face == TileReader.Facing.Left)
+            {
+                animator.SetTrigger("IsOnInteractionLeft");
+                Debug.Log("왼쪽 상호작용");
+            }
+            else if (face == TileReader.Facing.Right)
+            {
+                animator.SetTrigger("IsOnInteractionRight");
+                Debug.Log("오른쪽 상호작용");
+            }
+            else return;
+
             return;
         }
     }
