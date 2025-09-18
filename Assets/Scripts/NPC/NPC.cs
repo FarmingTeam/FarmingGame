@@ -41,39 +41,6 @@ public class NPC : MonoBehaviour
 
     public void ShowNextDialogue()
     {
-        //if (dialogues == null || dialogues.Count == 0)
-        //{
-        //    Debug.Log($"{npcData.NpcName}의 대사가 없습니다.");
-        //    return;
-        //}
-
-        //if (currentDialogueIndex < dialogues.Count)
-        //{
-        //    var dialogue = dialogues[currentDialogueIndex];
-        //    string speaker = "";
-        //    string connectNPC = dialogue.ConnectNPC?.Trim().ToLower();
-
-        //    if (connectNPC == npcID)
-        //    {
-        //        speaker = npcData.NpcName;
-        //    }
-        //    else if (connectNPC == "p" || connectNPC == "player")
-        //    {
-        //        speaker = "플레이어";
-        //    }
-        //    else
-        //    {
-        //        speaker = dialogue.ConnectNPC;
-        //    }
-
-        //    Debug.Log($"{speaker}: {dialogue.DialogCon}");
-        //    currentDialogueIndex++;
-        //}
-        //else
-        //{
-        //    Debug.Log($"{npcData.NpcName}의 모든 대화를 마쳤습니다.");
-        //    currentDialogueIndex = 0;
-        //}
         if (dialogues == null || currentDialogueIndex >= dialogues.Count)
         {
             UIManager.Instance.CloseUI<DialogueUI>();
