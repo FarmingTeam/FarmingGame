@@ -12,7 +12,7 @@ public class TileReader : MonoBehaviour
     public enum  Facing { Up, Down, Left, Right }
 
     public Facing defaultFacing = Facing.Down;
-    private Facing currentFacing;
+    public Facing currentFacing;
 
     private HashSet<string> obstacleNameSet;
 
