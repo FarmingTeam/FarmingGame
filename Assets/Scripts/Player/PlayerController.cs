@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("오른쪽 상호작용");
             }
             else return;
+            // 스위치문으로 변경 고려할것
 
             return;
         }

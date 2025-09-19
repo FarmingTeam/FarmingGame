@@ -389,6 +389,7 @@ MonoBehaviour:
   pivot: {fileID: 3713053330233328325}
   grid: {fileID: 0}
   defaultFacing: 1
+  currentFacing: 0
 --- !u!114 &6069934278270212078
 MonoBehaviour:
   m_ObjectHideFlags: 0
