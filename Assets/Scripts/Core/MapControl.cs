@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MapControl : Singleton<MapControl>
@@ -13,19 +11,5 @@ public class MapControl : Singleton<MapControl>
     {
         dontDestroyOnLoad = false;
         base.Awake();
-        OnLoad();
-    }
-    protected void Start()
-    {
-        
-    }
-
-    public void OnLoad()
-    {
-        map = Instantiate(mapPrefab);
-        player = Instantiate(playerPrefab);
-        player.InitPos(new Vector3(1, 1, 0));
-        
-
     }
 }

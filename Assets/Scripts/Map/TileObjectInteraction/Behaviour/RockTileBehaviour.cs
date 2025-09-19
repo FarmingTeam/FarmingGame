@@ -5,16 +5,15 @@ using UnityEngine.Tilemaps;
 
 public class RockTileBehaviour : TileObjectInteraction
 {
-    public override bool Interaction(EquipmentType tool, Tile tile, out TileBase tileBase)
+    public override bool Interaction(Equipment tool, Tile tile, out ChunkData chunkData)
     {
-        //만약 곡괭이를 들고있다면으로 수정
-        if (tool == EquipmentType.Pickaxe)
+        if (tool.equipmentType == EquipmentType.Pickaxe)
         {
-            tile.objectInteractionType = ObjectInteractionType.None;
-            tileBase = null;
+            chunkData = TileDataBase.Instance.GetChunkDataByID((int)ChunkType.None);
+            //Drop Rock Item here
             return true;
         }
-        tileBase = null;
+        chunkData = null;
         return false;
     }
 }

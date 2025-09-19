@@ -10,39 +10,45 @@ public class ItemTest : MonoBehaviour
     [SerializeField] Button button3;
 
     // Start is called before the first frame update
-    void Start()
+    /*void Start()
     {
         UIManager.Instance.OpenUI<UIToolBar>();
         UIManager.Instance.OpenUI<UIInventory>();
-        UIManager.Instance.OpenUI<UISeedBasket>();
-    }
+        //UIManager.Instance.OpenUI<UISeedBasket>();
+    }*/
 
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha7))
+        if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            MapControl.Instance.player.inventory.AdditemsByID(1, 1);
-            MapControl.Instance.player.inventory.AdditemsByID(2, 10);
-            MapControl.Instance.player.inventory.AdditemsByID(3, 1);
+            MapControl.Instance.player.inventory.AdditemsByID(1001, 1);
+            MapControl.Instance.player.inventory.AdditemsByID(2001, 6);
+            MapControl.Instance.player.inventory.AdditemsByID(1002, 1);
+            MapControl.Instance.player.inventory.AdditemsByID(2002, 1);
         }
-        if(Input.GetKeyDown(KeyCode.Alpha8))
+        if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            MapControl.Instance.player.inventory.SwitchItemPlaces(5, 0);
+            MapControl.Instance.player.inventory.SaveInventoryStatus();
         }
-        if( Input.GetKeyDown(KeyCode.Alpha9))
+        if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            MapControl.Instance.player.inventory.SubtractItemQuantity(1, 1);
+            MapControl.Instance.player.inventory.LoadInventoryStatus();
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            UIManager.Instance.ToggleUI<UIInventory>();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            UIManager.Instance.OpenUI<UIToolBar>();
         }
     }
-    public void Test()
-    {
-        
-    }
+    
 
     public void Test2()
     {
-        UIManager.Instance.OpenUI<UISeedBasket>();
+
     }
 
     public void Test3()

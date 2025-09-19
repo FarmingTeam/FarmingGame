@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         {
             if (player.tool.CurrentEquip == null)
                 return;
-            MapControl.Instance.map.OnPlayerInteract((Vector2Int)player.tileReader.FrontCell(), player.tool.CurrentEquip.equipmentType);
+            MapControl.Instance.map.OnPlayerInteract((Vector2Int)player.tileReader.FrontCell(), player.tool.CurrentEquip);
             return;
         }
     }

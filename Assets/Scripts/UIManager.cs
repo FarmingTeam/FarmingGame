@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -11,6 +12,12 @@ public class UIManager : Singleton<UIManager>
 
     private bool _isCleaning;
     private Dictionary<string, UIBase> _uiDictionary = new Dictionary<string, UIBase>();
+
+    //이걸통해 팝업ui관리
+    public Stack<UIPopup> uiStack=new Stack<UIPopup>();
+
+
+    private Stack<UIPopup> _tempStack=new Stack<UIPopup>();
 
     Canvas _canvas;
     private void OnEnable()
@@ -34,11 +41,10 @@ public class UIManager : Singleton<UIManager>
     {
         var ui = GetUI<T>();
         ui?.OpenUI();
+       
     }
 
-
-
-
+    //그냥 일반 닫기
     public void CloseUI<T>() where T : UIBase
     {
         if (IsExistUI<T>())
@@ -47,6 +53,43 @@ public class UIManager : Singleton<UIManager>
             ui?.CloseUI();
         }
     }
+
+
+    //토글 기능 필요시
+    public void ToggleUI<T> () where T : UIBase
+    {
+        var ui = GetUI<T>();
+        if (ui.IsActiveInHierarchy())
+        {
+            ui.CloseUI();
+        }
+        else
+        {
+            ui.OpenUI();
+        }
+    }
+
+
+
+
+    //맨 위부터 닫기(esc키와 바인딩)
+    public void CloseTopPopUpUI()
+    {
+        while(uiStack.Count > 0)
+        {
+            var ui = uiStack.Pop();
+            if(ui.IsActiveInHierarchy()==true)
+            {
+                ui.gameObject.SetActive(false);
+                return;
+            }
+            
+        }
+        
+    }
+
+
+
 
     public T GetUI<T>() where T : UIBase
     {

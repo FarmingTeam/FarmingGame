@@ -1,0 +1,48 @@
+{
+  "MapSize": [ 40, 40 ],
+
+  "TileFloor": [
+    {
+      "Pos": [ 0, 0 ],
+      "FloorType": 1
+    },
+    {
+      "Pos": [ 1, 0 ],
+      "FloorType": 1
+    },
+    {
+      "Pos": [ 0, 1 ],
+      "FloorType": 1
+    },
+    {
+      "Pos": [ 2, 2 ],
+      "FloorType": 3
+    }
+  ],
+
+  "TileObject": [
+    {
+      "Pos": [ 7, 5 ],
+      "ChunkType": 30
+    },
+    {
+      "Pos": [ 8, 7 ],
+      "ChunkType": 31
+    }
+  ],
+
+  "TileSeed": [
+    {
+      "Pos" : [ 2, 2 ],
+      "SeedType": 0,
+      "IsPlanted": false,
+      "PlantedDate" : 0
+    },
+    {
+      "Pos" : [ 0, 0 ],
+      "SeedType": 0,
+      "IsPlanted": false,
+      "PlantedDate": 0
+    }
+  ]
+}
