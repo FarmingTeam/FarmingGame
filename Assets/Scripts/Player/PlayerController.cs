@@ -62,28 +62,31 @@ public class PlayerController : MonoBehaviour
 
             var face = tileReader.currentFacing;
 
-            if (face == TileReader.Facing.Up)
+            switch (face)
             {
-                animator.SetTrigger("IsOnInteractionBack");
-                Debug.Log("위쪽 상호작용");
+                case TileReader.Facing.Up:
+                    animator.SetTrigger("IsOnInteractionBack");
+                    Debug.Log("위쪽 상호작용");
+                    break;
+
+                case TileReader.Facing.Down:
+                    animator.SetTrigger("IsOnInteractionFront");
+                    Debug.Log("아래쪽 상호작용");
+                    break;
+
+                case TileReader.Facing.Left:
+                    animator.SetTrigger("IsOnInteractionLeft");
+                    Debug.Log("왼쪽 상호작용");
+                    break;
+
+                case TileReader.Facing.Right:
+                    animator.SetTrigger("IsOnInteractionRight");
+                    Debug.Log("오른쪽 상호작용");
+                    break;
+
+                default:
+                    return;
             }
-            else if (face == TileReader.Facing.Down)
-            {
-                animator.SetTrigger("IsOnInteractionFront");
-                Debug.Log("아래쪽 상호작용");
-            }
-            else if (face == TileReader.Facing.Left)
-            {
-                animator.SetTrigger("IsOnInteractionLeft");
-                Debug.Log("왼쪽 상호작용");
-            }
-            else if (face == TileReader.Facing.Right)
-            {
-                animator.SetTrigger("IsOnInteractionRight");
-                Debug.Log("오른쪽 상호작용");
-            }
-            else return;
-            // 스위치문으로 변경 고려할것
 
             return;
         }
