@@ -67,7 +67,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         if (SCENENAMEDICT[currentScene].IsMap)
         {
             MapSaveManager.Instance.SaveMap(SCENENAMEDICT[currentScene].Name);
-            TimeManager.Instance.SetTimeUI(true);
+            //TimeUI 수정
         }
 
         //씬 로드
@@ -83,7 +83,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         if (SCENENAMEDICT[currentScene].IsMap)
         {
             MapSaveManager.Instance.LoadMap(SCENENAMEDICT[currentScene].Name);
-            TimeManager.Instance.SetTimeUI(false);
+            //TimeUI 수정
         }
     }
 
