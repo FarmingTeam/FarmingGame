@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c863da345ad3e754ab3986c7c86dd72b, type: 3}
   m_Name: TreeType2
   m_EditorClassIdentifier: 
-  chunkType: 31
-  interactionType: 1
+  chunkType: 0
+  interactionType: 0
   tileBases:
   - Tiles:
     - {fileID: 11400000, guid: e5f03fbb538c21c44889bea3d0555d47, type: 2}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c863da345ad3e754ab3986c7c86dd72b, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  chunkType: 10
-  interactionType: 2
+  chunkType: 0
+  interactionType: 0
   tileBases:
   - Tiles:
     - {fileID: 11400000, guid: a1a49573acb27db42b1b6c6b25f7ccc8, type: 2}

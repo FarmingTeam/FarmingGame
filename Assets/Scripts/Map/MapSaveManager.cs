@@ -40,47 +40,21 @@ public class MapSeedData
 public class MapSaveManager : Singleton<MapSaveManager>
 {
     //저장데이터
-    public const string RESOURCEINITIALPATH = "Json/InitialMapData/";
+    public const string RESOURCEINITIALPATH = "MapData/InitialMapJson/";
     public const string MAPTILEPATH = "MapData";
     public const string TILEDATA = "TileData";
     public MapData mapData;
-
-    //Test DataBase
-    public Map[] mapDataBase;
-
-    //Refactor : Debug용 테스트 스크립트, 삭제 필요
-    public Player playerPrefab; 
-    public void Start()
-    {
-        LoadMap("TestFarm");
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-            SaveMap("TestFarm");
-    }
-    //Refactor End
-
+    public const string PLAYERPREFABPATH = "PlayerData/TsetPlayer";
 
     public void LoadMap(string sceneName)
     {
         //맵 프리팹 불러오기
-        //Refactor : MapControl과의 기능 비교 및 확인
 
         if (MapControl.Instance.map == null)
         {
-            Map mapPrefab = mapDataBase.First(data => data.sceneName == sceneName);
+            Map mapPrefab = MapDataBase.Instance.Maps.First(data => data.sceneName == sceneName);
             MapControl.Instance.map = Instantiate(mapPrefab);
         }
-
-        //Refactor : Debug용 테스트 스크립트, 삭제 필요
-        if (MapControl.Instance.player == null)
-        {
-            MapControl.Instance.player = Instantiate(playerPrefab);
-        }
-        MapControl.Instance.player.InitPos(new Vector3(1, 1, 0));
-        //Refactor End
 
         //타일 File 경로 불러오기
         StringBuilder stringBuilder = new StringBuilder();
@@ -104,6 +78,17 @@ public class MapSaveManager : Singleton<MapSaveManager>
 
         //Refactor : Player 로드 로직이 여기에 필요한가
         //그렇다면 MapControl이 이것으로 대체 될 가능성이 있다.
+
+
+        //플레이어가 없다면 플레이어 생성 및 로드
+        //Refactor : 인벤토리 로드 필요할지도
+        if (MapControl.Instance.player == null)
+        {
+            GameObject playerObject = Instantiate(Resources.Load<MonoBehaviour>(PLAYERPREFABPATH)).gameObject;
+            MapControl.Instance.player = playerObject.GetComponent<Player>();
+        }
+        MapControl.Instance.player.InitPos(new Vector3(1, 1, 0));
+        //Refactor End
 
     }
 

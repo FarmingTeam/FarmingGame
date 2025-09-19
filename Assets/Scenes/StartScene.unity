@@ -768,9 +768,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1516232023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 62.225, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 98.5, y: 20.010002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &289246411
@@ -1613,6 +1613,7 @@ GameObject:
   - component: {fileID: 616023779}
   - component: {fileID: 616023782}
   - component: {fileID: 616023781}
+  - component: {fileID: 616023783}
   - component: {fileID: 616023780}
   m_Layer: 5
   m_Name: load button (1)
@@ -1687,7 +1688,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 616023781}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 616023783}
+        m_TargetAssemblyTypeName: SaveLoadButton, Assembly-CSharp
+        m_MethodName: OnLoadButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &616023781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1726,6 +1739,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 616023778}
   m_CullTransparentMesh: 1
+--- !u!114 &616023783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616023778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d75b481b28ea8c41af2cadc836dda0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &625033968
 GameObject:
   m_ObjectHideFlags: 0
@@ -3716,9 +3741,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1516232023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 157.22499, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 79.6, y: 20.010002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1044651829
@@ -4514,9 +4539,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1857005140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 66.325, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 98.5, y: 20.010002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1219578928
@@ -5061,6 +5086,7 @@ GameObject:
   - component: {fileID: 1375141867}
   - component: {fileID: 1375141870}
   - component: {fileID: 1375141869}
+  - component: {fileID: 1375141871}
   - component: {fileID: 1375141868}
   m_Layer: 5
   m_Name: load button
@@ -5135,7 +5161,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1375141869}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1375141871}
+        m_TargetAssemblyTypeName: SaveLoadButton, Assembly-CSharp
+        m_MethodName: OnLoadButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1375141869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5174,6 +5212,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1375141866}
   m_CullTransparentMesh: 1
+--- !u!114 &1375141871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375141866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d75b481b28ea8c41af2cadc836dda0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1424432082
 GameObject:
   m_ObjectHideFlags: 0
@@ -5652,9 +5702,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1857005140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 186.32501, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 113.2, y: 20.010002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1464490848
@@ -6285,9 +6335,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2498270}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 186.32501, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 113.2, y: 20.010002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1663285426
@@ -6663,9 +6713,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 709672290}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 62.225, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 98.5, y: 20.010002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1759399018
@@ -7111,9 +7161,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 709672290}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 157.22499, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 79.6, y: 20.010002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1842051622
@@ -8395,9 +8445,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2498270}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 66.325, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 98.5, y: 20.010002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2105581154
@@ -8508,6 +8558,7 @@ GameObject:
   - component: {fileID: 2113326107}
   - component: {fileID: 2113326110}
   - component: {fileID: 2113326109}
+  - component: {fileID: 2113326111}
   - component: {fileID: 2113326108}
   m_Layer: 5
   m_Name: load button (2)
@@ -8582,7 +8633,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2113326109}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2113326111}
+        m_TargetAssemblyTypeName: SaveLoadButton, Assembly-CSharp
+        m_MethodName: OnLoadButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2113326109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8621,6 +8684,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113326106}
   m_CullTransparentMesh: 1
+--- !u!114 &2113326111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113326106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d75b481b28ea8c41af2cadc836dda0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2136459181
 GameObject:
   m_ObjectHideFlags: 0

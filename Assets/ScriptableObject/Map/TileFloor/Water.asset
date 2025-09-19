@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747bd94c6078f8748a0d3e1bfe61c704, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: 
-  floorType: 3
+  floorType: 0
   tileBase: {fileID: 11400000, guid: 81d33f90fa48a564ba4d2eeedafaf4b4, type: 2}
   tileColor: {r: 1, g: 1, b: 1, a: 1}

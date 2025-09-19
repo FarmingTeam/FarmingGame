@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c863da345ad3e754ab3986c7c86dd72b, type: 3}
   m_Name: Weed
   m_EditorClassIdentifier: 
-  chunkType: 0
-  interactionType: 0
+  chunkType: 40
+  interactionType: 4
   tileBases:
   - Tiles:
     - {fileID: 11400000, guid: fbc28a56c8238864789241dd9068ba4b, type: 2}

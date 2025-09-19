@@ -6,8 +6,17 @@ using UnityEngine;
 //데이터 필요할 시 TileDataBase에서 찾아서 참조
 public class TileDataBase : Singleton<TileDataBase>
 {
-    [SerializeField] public TileFloor[] tileFloors;
-    [SerializeField] public ChunkData[] chunkDatas;
+    const string TILEFLOORDATAPATH = "MapData/TileFloorData";
+    const string CHUNKDATAPATH = "MapData/ChunkData";
+
+    public TileFloor[] tileFloors;
+    public ChunkData[] chunkDatas;
+
+    protected override void Initialize()
+    {
+        tileFloors = Resources.LoadAll<TileFloor>(TILEFLOORDATAPATH);
+        chunkDatas = Resources.LoadAll<ChunkData>(CHUNKDATAPATH);
+    }
 
     readonly public Dictionary<FloorInteractionType, TileFloorInteraction> FLOORACTIONPAIR = new Dictionary<FloorInteractionType, TileFloorInteraction>
     {

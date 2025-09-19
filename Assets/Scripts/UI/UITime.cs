@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TimeUI : MonoBehaviour
+public class UITime : UIBase
 {
     public TMP_Text DateText;
     public TMP_Text HourText;

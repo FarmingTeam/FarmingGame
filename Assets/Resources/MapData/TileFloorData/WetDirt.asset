@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c863da345ad3e754ab3986c7c86dd72b, type: 3}
-  m_Name: Weed
+  m_Script: {fileID: 11500000, guid: 747bd94c6078f8748a0d3e1bfe61c704, type: 3}
+  m_Name: WetDirt
   m_EditorClassIdentifier: 
-  chunkType: 0
-  interactionType: 0
-  tileBases:
-  - Tiles:
-    - {fileID: 11400000, guid: fbc28a56c8238864789241dd9068ba4b, type: 2}
+  floorType: 2
+  tileBase: {fileID: 11400000, guid: a65650b3e2aa6a348a57980d7e1ffcf8, type: 2}
+  tileColor: {r: 0.4575472, g: 0.4575472, b: 1, a: 1}

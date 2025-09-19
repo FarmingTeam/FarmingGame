@@ -34,15 +34,15 @@
   "TileSeed": [
     {
       "Pos" : [ 2, 2 ],
-      "SeedType": 0,
+      "SeedType": 1001,
       "IsPlanted": false,
-      "PlantedDate" : 0
+      "PlantedDate" : 1
     },
     {
       "Pos" : [ 0, 0 ],
-      "SeedType": 0,
+      "SeedType": 1002,
       "IsPlanted": false,
-      "PlantedDate": 0
+      "PlantedDate": 1
     }
   ]
 }

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c863da345ad3e754ab3986c7c86dd72b, type: 3}
-  m_Name: Weed
+  m_Name: TreeType1
   m_EditorClassIdentifier: 
-  chunkType: 0
-  interactionType: 0
+  chunkType: 30
+  interactionType: 1
   tileBases:
   - Tiles:
-    - {fileID: 11400000, guid: fbc28a56c8238864789241dd9068ba4b, type: 2}
+    - {fileID: 11400000, guid: b02cb077734c0b045a9f1c93f06ab0fb, type: 2}

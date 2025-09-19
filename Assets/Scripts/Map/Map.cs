@@ -100,9 +100,6 @@ public class Map : MonoBehaviour
         TileSeed.SetTile((Vector3Int)index, tile);
     }
 
-    //Chunk의 경우 Tile이 Chunk 데이터 포함 해야함
-    //설치의 경우를 고려할것 -> None에서도 인터렉션이 가능하도록 설정
-    //2*2 설치의 경우를 추가로 고려할것 -> 플레이어의 위치 파악 필요
     public void TileObjectAction(Tile tile, Equipment equipment)
     {
         //연결된 시작지점 탐색

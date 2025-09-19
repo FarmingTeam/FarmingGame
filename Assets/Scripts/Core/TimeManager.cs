@@ -17,14 +17,21 @@ public struct GameTime
 public class TimeManager : Singleton<TimeManager>
 {
     public GameTime currentTime;
-    [field:SerializeField]public int resetTime { get; private set; } = 2;
-    [SerializeField] TimeUI timeUI;
+    Coroutine currentCorutine;
+
+    //UI And Path
+    [SerializeField] UITime timeUI;
+    const string TIMEUIPATH = "UI/TimeUICanvas";
+
+    [Header("Time Settings")]
     public float TimeSclae = 1.0f;
     [SerializeField] float ReloadTimeDelay = 2.0f;
-    Coroutine currentCorutine;
+    [field: SerializeField] public int resetTime { get; private set; } = 2;
+
 
     public void Start()
     {
+        timeUI = UIManager.Instance.GetUI<UITime>();
         //만약 저장된 데이터가 있다면 시간정보 추출
 
         //아니라면 초기날짜로 초기화
@@ -76,14 +83,6 @@ public class TimeManager : Singleton<TimeManager>
         }
         return true;
         
-    }
-
-    //Refacotr : 삭제
-    public void TimeLog()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.Append("현재 날짜 : ").Append(currentTime.date).Append(" ").Append(currentTime.hour).Append("시 ").Append(currentTime.minute).Append("분");
-        Debug.Log(stringBuilder.ToString());
     }
 
     public IEnumerator TimeLogic()
