@@ -44,7 +44,7 @@ public class MapSaveManager : Singleton<MapSaveManager>
     public const string MAPTILEPATH = "MapData";
     public const string TILEDATA = "TileData";
     public MapData mapData;
-    public const string PLAYERPREFABPATH = "PlayerData/TsetPlayer";
+    public const string PLAYERPREFABPATH = "PlayerData/TestPlayer";
 
     public void LoadMap(string sceneName)
     {
