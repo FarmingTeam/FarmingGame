@@ -372,8 +372,8 @@ MonoBehaviour:
   animator: {fileID: 2687958841761843714}
   moveSpeed: 2
   rigidbody: {fileID: 3524273182837117606}
-  tileReader: {fileID: 0}
-  player: {fileID: 0}
+  tileReader: {fileID: 7014166395869505413}
+  player: {fileID: 6296383544403047216}
 --- !u!114 &7014166395869505413
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class ItemToPlayer : MonoBehaviour
     public Transform player;
 
     private DroppedItem cachedItem;
+    private float zFixed;
 
     private void Init(ItemData data, int amount = 1)
     {
@@ -36,6 +37,7 @@ public class ItemToPlayer : MonoBehaviour
         {
             cachedItem = player.GetComponentInParent<DroppedItem>();
         }
+
     }
 
     private void Update()
@@ -54,6 +56,7 @@ public class ItemToPlayer : MonoBehaviour
             if (dist <= pickUpDistance)
             {
                 TryCollect();
+                Destroy(gameObject);
             }
         }
     }
