@@ -351,6 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData: {fileID: 11400000, guid: 67e1522b5fbfe294784436025aea7365, type: 2}
   CurrentQuestID: 
+  interactDistance: 1.3
 --- !u!212 &944737518
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -625,6 +626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData: {fileID: 11400000, guid: 5416b89f96f385247b21a452745a4471, type: 2}
   CurrentQuestID: 
+  interactDistance: 1.3
 --- !u!212 &1330874784
 SpriteRenderer:
   m_ObjectHideFlags: 0

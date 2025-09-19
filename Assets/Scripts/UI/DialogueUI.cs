@@ -16,6 +16,7 @@ public class DialogueUI : UIBase
     public Color npcDim = new Color(0.4f, 0.4f, 0.4f, 1f);
     public Color playerBright = Color.white;
     public Color playerDim = new Color(0.4f, 0.4f, 0.4f, 1f);
+    public System.Action OnDialogueScreenClick;
 
     public void SetDialogue(string speaker, string content)
     {
@@ -41,5 +42,14 @@ public class DialogueUI : UIBase
     {
         // "플레이어", "Player" 등 구분자 기준으로 수정 가능
         return speaker.ToLower().Contains("플레이어") || speaker.ToLower().Contains("player");
+    }
+
+    void Update()
+    {
+        // 대화창이 열려있을 때 아무 곳 클릭 → 다음 대화 진행
+        if (Input.GetMouseButtonDown(0) && OnDialogueScreenClick != null)
+        {
+            OnDialogueScreenClick.Invoke();
+        }
     }
 }

@@ -11,6 +11,8 @@ public class NPC : MonoBehaviour
     private int currentDialogueIndex = 0;
     private string npcID;
     public string CurrentQuestID;
+    public float interactDistance = 1.3f;
+    private Transform player;
 
     void Start()
     {
@@ -36,7 +38,42 @@ public class NPC : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (player == null)
+        {
+            GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
+            if (playerGO == null)
+            {
+                Debug.LogWarning("동적 생성된 플레이어 오브젝트를 아직 찾지 못했습니다.");
+                return;
+            }
+            player = playerGO.transform;
+        }
+
+        float dist = Vector2.Distance(
+            new Vector2(transform.position.x, transform.position.y),
+            new Vector2(player.position.x, player.position.y)
+        );
+
+        if (dist <= interactDistance)
+        {
+            StartDialogue();
+            Debug.Log($"Distance between NPC and Player: {dist}");
+        }
+        else
+        {
+            Debug.Log("플레이어가 너무 멀리 있습니다.");
+        }
+    }
+    void StartDialogue()
+    {
         ShowNextDialogue();
+        DialogueUI dialogueUI = UIManager.Instance.GetUI<DialogueUI>();
+        if (dialogueUI != null)
+        {
+            dialogueUI.OnDialogueScreenClick = ShowNextDialogue; // 대화창 클릭 이벤트 할당
+        }
+        UIManager.Instance.OpenUI<DialogueUI>();
+        Time.timeScale = 0f; // 대화 중 타임스케일 0
     }
 
     public void ShowNextDialogue()
@@ -44,6 +81,7 @@ public class NPC : MonoBehaviour
         if (dialogues == null || currentDialogueIndex >= dialogues.Count)
         {
             UIManager.Instance.CloseUI<DialogueUI>();
+            Time.timeScale = 1f;
             currentDialogueIndex = 0;
             return;
         }
