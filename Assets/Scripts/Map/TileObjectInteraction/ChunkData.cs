@@ -7,10 +7,9 @@ public enum ChunkInteractionType
     None = 0,
     Tree,
     Rock,
-    House,
     Weed, 
-    Branch
-
+    Branch,
+    Door
 }
 
 [System.Serializable]
@@ -21,8 +20,9 @@ public enum ChunkType
     Branch = 20,
     Treetype1 = 30,
     Treetype2 = 31,
-    Weed = 40
-
+    Weed = 40,
+    FarmDoor = 50,
+    HouseDoor = 51,
 }
 
 [System.Serializable]

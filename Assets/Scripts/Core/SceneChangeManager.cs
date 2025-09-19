@@ -65,7 +65,10 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
         //전처리
         if (SCENENAMEDICT[currentScene].IsMap)
+        {
             MapSaveManager.Instance.SaveMap(SCENENAMEDICT[currentScene].Name);
+            TimeManager.Instance.SetTimeUI(true);
+        }
 
         //씬 로드
         stringBuilder.Append(SCENENAMEDICT[scenename].Name).Append(SCENENAMETAIL);
@@ -78,7 +81,10 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (SCENENAMEDICT[currentScene].IsMap)
+        {
             MapSaveManager.Instance.LoadMap(SCENENAMEDICT[currentScene].Name);
+            TimeManager.Instance.SetTimeUI(false);
+        }
     }
 
     protected override void OnDestroy()

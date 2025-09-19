@@ -1,0 +1,16 @@
+{
+  "MapSize": [ 10, 10 ],
+
+  "TileFloor": [
+  ],
+
+  "TileObject": [
+    {
+      "Pos": [ 0, 5 ],
+      "ChunkType": 51
+    }
+  ],
+
+  "TileSeed": [
+  ]
+}

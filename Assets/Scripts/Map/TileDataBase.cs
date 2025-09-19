@@ -30,7 +30,9 @@ public class TileDataBase : Singleton<TileDataBase>
     {
         { ChunkInteractionType.None, null},
         { ChunkInteractionType.Tree, new TreeTileBehaviour()},
-        { ChunkInteractionType.Rock, new RockTileBehaviour()}
+        { ChunkInteractionType.Rock, new RockTileBehaviour()},
+        { ChunkInteractionType.Door, new DoorTileBehaviour()}
+
     };
 
     public TileFloor GetTileFloorByType(FloorInteractionType type)
